@@ -24,7 +24,7 @@ include = [
 
 [dependencies]
 unicode-width = "0.1.7"
-icu_segmenter_lstm = { version = "0.1", path = "../segmenter_lstm" }
+icu_segmenter_lstm = { git = "https://github.com/unicode-org/icu4x", rev = "a8377791ffc70c7c6f3aa7f6aa27023e0e59aaca" }
 serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 lazy_static = "1.0"
