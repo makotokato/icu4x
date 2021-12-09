@@ -134,7 +134,7 @@ dependencies = [
  "rand_distr",
  "rand_pcg",
  "strum",
- "writeable",
+ "writeable 0.2.1",
 ]
 
 [[package]]
@@ -637,7 +637,18 @@ dependencies = [
  "ryu",
  "smallvec",
  "static_assertions",
- "writeable",
+ "writeable 0.2.1",
+]
+
+[[package]]
+name = "fixed_decimal"
+version = "0.2.1"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "smallvec",
+ "static_assertions",
+ "writeable 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -965,20 +976,36 @@ checksum = "71a816c97c42258aa5834d07590b718b4c9a598944cd39a52dc25b351185d678"
 name = "icu"
 version = "0.4.0"
 dependencies = [
- "fixed_decimal",
- "icu_calendar",
- "icu_codepointtrie",
- "icu_datetime",
- "icu_decimal",
- "icu_locale_canonicalizer",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_properties",
- "icu_provider",
- "icu_testdata",
- "icu_uniset",
- "writeable",
+ "fixed_decimal 0.2.1",
+ "icu_calendar 0.4.0",
+ "icu_codepointtrie 0.3.0",
+ "icu_datetime 0.4.0",
+ "icu_decimal 0.4.0",
+ "icu_locale_canonicalizer 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_properties 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "icu_uniset 0.4.0",
+ "writeable 0.2.1",
+]
+
+[[package]]
+name = "icu"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "fixed_decimal 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_calendar 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_datetime 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_decimal 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locale_canonicalizer 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locid_macros 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_plurals 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_properties 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -991,11 +1018,11 @@ version = "0.4.0"
 dependencies = [
  "criterion",
  "ecma402_traits",
- "icu",
- "icu_locid",
- "icu_plurals",
- "icu_provider",
- "icu_testdata",
+ "icu 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
  "serde",
  "serde_json",
 ]
@@ -1029,7 +1056,16 @@ name = "icu_calendar"
 version = "0.4.0"
 dependencies = [
  "displaydoc",
- "icu",
+ "icu 0.4.0",
+ "tinystr",
+]
+
+[[package]]
+name = "icu_calendar"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
  "tinystr",
 ]
 
@@ -1041,21 +1077,21 @@ dependencies = [
  "diplomat",
  "diplomat-runtime",
  "dlmalloc",
- "fixed_decimal",
+ "fixed_decimal 0.2.1",
  "freertos-rust",
- "icu_decimal",
- "icu_locale_canonicalizer",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_properties",
- "icu_provider",
+ "icu_decimal 0.4.0",
+ "icu_locale_canonicalizer 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_properties 0.4.0",
+ "icu_provider 0.4.0",
  "icu_provider_blob",
- "icu_provider_fs",
- "icu_testdata",
+ "icu_provider_fs 0.4.0",
+ "icu_testdata 0.4.0",
  "log",
  "tinystr",
- "writeable",
+ "writeable 0.2.1",
 ]
 
 [[package]]
@@ -1066,8 +1102,19 @@ dependencies = [
  "postcard",
  "serde",
  "toml",
- "yoke",
- "zerovec",
+ "yoke 0.3.1",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "icu_codepointtrie"
+version = "0.3.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "serde",
+ "yoke 0.3.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "zerovec 0.5.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1077,20 +1124,20 @@ dependencies = [
  "clap",
  "eyre",
  "futures",
- "icu_locid",
- "icu_properties",
- "icu_provider",
+ "icu_locid 0.4.0",
+ "icu_properties 0.4.0",
+ "icu_provider 0.4.0",
  "icu_provider_blob",
  "icu_provider_cldr",
- "icu_provider_fs",
+ "icu_provider_fs 0.4.0",
  "icu_provider_uprops",
- "icu_testdata",
+ "icu_testdata 0.4.0",
  "log",
  "reqwest",
  "serde",
  "simple_logger",
  "tokio",
- "writeable",
+ "writeable 0.2.1",
 ]
 
 [[package]]
@@ -1101,23 +1148,43 @@ dependencies = [
  "criterion",
  "displaydoc",
  "either",
- "icu",
+ "icu 0.4.0",
  "icu_benchmark_macros",
- "icu_calendar",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_provider",
- "icu_testdata",
- "litemap",
+ "icu_calendar 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "litemap 0.2.2",
  "num_enum",
  "serde",
  "serde-tuple-vec-map",
  "serde_json",
  "smallvec",
  "tinystr",
- "writeable",
- "zerovec",
+ "writeable 0.2.1",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "icu_datetime"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "either",
+ "icu_calendar 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_plurals 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "litemap 0.2.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "num_enum",
+ "serde",
+ "smallvec",
+ "tinystr",
+ "writeable 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "zerovec 0.5.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1126,19 +1193,32 @@ version = "0.4.0"
 dependencies = [
  "criterion",
  "displaydoc",
- "fixed_decimal",
+ "fixed_decimal 0.2.1",
  "getrandom",
- "icu",
+ "icu 0.4.0",
  "icu_benchmark_macros",
- "icu_locid",
- "icu_locid_macros",
- "icu_provider",
- "icu_testdata",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
  "rand",
  "rand_distr",
  "rand_pcg",
  "serde",
- "writeable",
+ "writeable 0.2.1",
+]
+
+[[package]]
+name = "icu_decimal"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "fixed_decimal 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "serde",
+ "writeable 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1148,13 +1228,13 @@ dependencies = [
  "criterion",
  "displaydoc",
  "formatted_string_builder",
- "icu_locid",
- "icu_provider",
+ "icu_locid 0.4.0",
+ "icu_provider 0.4.0",
  "postcard",
  "regex",
  "serde",
  "serde_json",
- "zerovec",
+ "zerovec 0.5.0",
 ]
 
 [[package]]
@@ -1162,13 +1242,25 @@ name = "icu_locale_canonicalizer"
 version = "0.4.0"
 dependencies = [
  "criterion",
- "icu_locid",
- "icu_locid_macros",
- "icu_provider",
- "icu_testdata",
- "litemap",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "litemap 0.2.2",
  "serde",
  "serde_json",
+ "tinystr",
+]
+
+[[package]]
+name = "icu_locale_canonicalizer"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "litemap 0.2.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "serde",
  "tinystr",
 ]
 
@@ -1178,20 +1270,41 @@ version = "0.4.0"
 dependencies = [
  "criterion",
  "displaydoc",
- "icu",
+ "icu 0.4.0",
  "icu_benchmark_macros",
  "serde",
  "serde_json",
  "tinystr",
- "writeable",
+ "writeable 0.2.1",
+]
+
+[[package]]
+name = "icu_locid"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "serde",
+ "tinystr",
+ "writeable 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
 name = "icu_locid_macros"
 version = "0.4.0"
 dependencies = [
- "icu",
- "icu_locid",
+ "icu 0.4.0",
+ "icu_locid 0.4.0",
+ "proc-macro-crate",
+ "tinystr",
+]
+
+[[package]]
+name = "icu_locid_macros"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
  "proc-macro-crate",
  "tinystr",
 ]
@@ -1202,7 +1315,7 @@ version = "0.1.1"
 dependencies = [
  "displaydoc",
  "iai",
- "writeable",
+ "writeable 0.2.1",
 ]
 
 [[package]]
@@ -1211,17 +1324,31 @@ version = "0.4.0"
 dependencies = [
  "criterion",
  "displaydoc",
- "fixed_decimal",
- "icu",
+ "fixed_decimal 0.2.1",
+ "icu 0.4.0",
  "icu_benchmark_macros",
- "icu_locid",
- "icu_locid_macros",
- "icu_provider",
- "icu_testdata",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
  "num_enum",
  "serde",
  "serde_json",
- "zerovec",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "icu_plurals"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "fixed_decimal 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "num_enum",
+ "serde",
+ "zerovec 0.5.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1229,14 +1356,28 @@ name = "icu_properties"
 version = "0.4.0"
 dependencies = [
  "displaydoc",
- "icu",
- "icu_codepointtrie",
- "icu_provider",
- "icu_testdata",
- "icu_uniset",
+ "icu 0.4.0",
+ "icu_codepointtrie 0.3.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "icu_uniset 0.4.0",
  "num_enum",
  "serde",
- "zerovec",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "icu_properties"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "icu_codepointtrie 0.3.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_uniset 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "num_enum",
+ "serde",
+ "zerovec 0.5.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1245,16 +1386,32 @@ version = "0.4.0"
 dependencies = [
  "displaydoc",
  "erased-serde",
- "icu_locid",
- "icu_locid_macros",
- "icu_provider_macros",
- "litemap",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_provider_macros 0.4.0",
+ "litemap 0.2.2",
  "serde",
  "serde_json",
  "static_assertions",
  "tinystr",
- "writeable",
- "yoke",
+ "writeable 0.2.1",
+ "yoke 0.3.1",
+]
+
+[[package]]
+name = "icu_provider"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "erased-serde",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider_macros 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "litemap 0.2.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "serde",
+ "tinystr",
+ "writeable 0.2.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "yoke 0.3.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1262,18 +1419,18 @@ name = "icu_provider_blob"
 version = "0.4.0"
 dependencies = [
  "erased-serde",
- "icu",
- "icu_locid",
- "icu_locid_macros",
- "icu_provider",
- "icu_testdata",
- "litemap",
+ "icu 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "litemap 0.2.2",
  "log",
  "postcard",
  "serde",
- "writeable",
- "yoke",
- "zerovec",
+ "writeable 0.2.1",
+ "yoke 0.3.1",
+ "zerovec 0.5.0",
 ]
 
 [[package]]
@@ -1282,18 +1439,18 @@ version = "0.4.0"
 dependencies = [
  "dirs",
  "displaydoc",
- "icu_datetime",
- "icu_decimal",
+ "icu_datetime 0.4.0",
+ "icu_decimal 0.4.0",
  "icu_list",
- "icu_locale_canonicalizer",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_provider",
- "icu_testdata",
+ "icu_locale_canonicalizer 0.4.0",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
  "itertools",
  "json",
- "litemap",
+ "litemap 0.2.2",
  "log",
  "mktemp",
  "reqwest",
@@ -1317,15 +1474,29 @@ dependencies = [
  "displaydoc",
  "erased-serde",
  "icu_benchmark_macros",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_provider",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_provider 0.4.0",
  "log",
  "serde",
  "serde-json-core",
  "serde_json",
  "static_assertions",
+]
+
+[[package]]
+name = "icu_provider_fs"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "erased-serde",
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "serde",
+ "serde-json-core",
+ "serde_json",
 ]
 
 [[package]]
@@ -1338,21 +1509,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "icu_provider_macros"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "icu_provider_uprops"
 version = "0.4.0"
 dependencies = [
  "displaydoc",
  "eyre",
- "icu_codepointtrie",
- "icu_properties",
- "icu_provider",
- "icu_testdata",
- "icu_uniset",
+ "icu_codepointtrie 0.3.0",
+ "icu_properties 0.4.0",
+ "icu_provider 0.4.0",
+ "icu_testdata 0.4.0",
+ "icu_uniset 0.4.0",
  "log",
  "serde",
  "tinystr",
  "toml",
- "zerovec",
+ "zerovec 0.5.0",
 ]
 
 [[package]]
@@ -1360,11 +1541,11 @@ name = "icu_segmenter"
 version = "0.1.0"
 dependencies = [
  "criterion",
- "icu",
- "icu_provider",
- "icu_provider_fs",
- "icu_segmenter_lstm",
- "icu_testdata",
+ "icu 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider_fs 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_segmenter_lstm 0.1.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_testdata 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
  "lazy_static",
  "serde",
  "serde-json-core",
@@ -1377,13 +1558,26 @@ dependencies = [
 name = "icu_segmenter_lstm"
 version = "0.1.0"
 dependencies = [
- "icu_provider",
- "litemap",
+ "icu_provider 0.4.0",
+ "litemap 0.2.2",
  "ndarray",
  "serde",
  "serde_json",
  "unicode-segmentation",
- "yoke",
+ "yoke 0.3.1",
+]
+
+[[package]]
+name = "icu_segmenter_lstm"
+version = "0.1.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "litemap 0.2.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "ndarray",
+ "serde",
+ "unicode-segmentation",
+ "yoke 0.3.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1392,15 +1586,25 @@ version = "0.4.0"
 dependencies = [
  "cargo_metadata",
  "displaydoc",
- "icu_locid",
- "icu_locid_macros",
- "icu_plurals",
- "icu_provider",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
+ "icu_plurals 0.4.0",
+ "icu_provider 0.4.0",
  "icu_provider_blob",
- "icu_provider_fs",
+ "icu_provider_fs 0.4.0",
  "serde",
  "serde_json",
- "writeable",
+ "writeable 0.2.1",
+]
+
+[[package]]
+name = "icu_testdata"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "icu_locid 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "icu_provider_fs 0.4.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1410,13 +1614,26 @@ dependencies = [
  "criterion",
  "displaydoc",
  "icu_benchmark_macros",
- "litemap",
+ "litemap 0.2.2",
  "postcard",
  "serde",
  "serde_json",
  "tinystr",
- "yoke",
- "zerovec",
+ "yoke 0.3.1",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "icu_uniset"
+version = "0.4.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "displaydoc",
+ "litemap 0.2.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "serde",
+ "tinystr",
+ "yoke 0.3.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
+ "zerovec 0.5.0 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -1514,10 +1731,19 @@ dependencies = [
  "bytecheck",
  "criterion",
  "icu_benchmark_macros",
- "icu_locid",
- "icu_locid_macros",
+ "icu_locid 0.4.0",
+ "icu_locid_macros 0.4.0",
  "postcard",
  "rkyv",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "litemap"
+version = "0.2.2"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
  "serde",
  "serde_json",
 ]
@@ -2996,13 +3222,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "writeable"
+version = "0.2.1"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+
+[[package]]
 name = "yoke"
 version = "0.3.1"
 dependencies = [
  "bincode",
  "serde",
  "stable_deref_trait",
- "yoke-derive",
+ "yoke-derive 0.1.2",
+]
+
+[[package]]
+name = "yoke"
+version = "0.3.1"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "serde",
+ "stable_deref_trait",
+ "yoke-derive 0.1.2 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]
@@ -3013,8 +3254,19 @@ dependencies = [
  "quote",
  "syn",
  "synstructure",
- "yoke",
- "zerovec",
+ "yoke 0.3.1",
+ "zerovec 0.5.0",
+]
+
+[[package]]
+name = "yoke-derive"
+version = "0.1.2"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "synstructure",
 ]
 
 [[package]]
@@ -3032,7 +3284,16 @@ dependencies = [
  "rand_pcg",
  "serde",
  "serde_json",
- "yoke",
+ "yoke 0.3.1",
+]
+
+[[package]]
+name = "zerovec"
+version = "0.5.0"
+source = "git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2#64c3859ae91ab7881c3f8161f0f200daba7438f2"
+dependencies = [
+ "serde",
+ "yoke 0.3.1 (git+https://github.com/unicode-org/icu4x?rev=64c3859ae91ab7881c3f8161f0f200daba7438f2)",
 ]
 
 [[package]]

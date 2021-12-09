@@ -25,8 +25,8 @@ include = [
 
 [dependencies]
 unicode-width = "0.1.7"
-icu_provider = { version = "0.4", path = "../../provider/core" }
-icu_segmenter_lstm = { version = "0.1", path = "../segmenter_lstm" }
+icu_provider = { git = "https://github.com/unicode-org/icu4x", rev = "64c3859ae91ab7881c3f8161f0f200daba7438f2" }
+icu_segmenter_lstm = { git = "https://github.com/unicode-org/icu4x", rev = "64c3859ae91ab7881c3f8161f0f200daba7438f2" }
 serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 lazy_static = "1.0"
@@ -36,9 +36,9 @@ criterion = "0.3"
 serde-json-core = { version = "0.4", features = ["std"] }
 
 [build-dependencies]
-icu_provider_fs = { version = "0.4", path = "../../provider/fs", features = ["provider_json"] }
-icu = { version = "0.4", path = "../../components/icu" }
-icu_testdata = { version = "0.4", path = "../../provider/testdata" }
+icu_provider_fs = { git = "https://github.com/unicode-org/icu4x", rev = "64c3859ae91ab7881c3f8161f0f200daba7438f2", features = ["provider_json"] }
+icu = { git = "https://github.com/unicode-org/icu4x", rev = "64c3859ae91ab7881c3f8161f0f200daba7438f2" }
+icu_testdata = { git = "https://github.com/unicode-org/icu4x", rev = "64c3859ae91ab7881c3f8161f0f200daba7438f2" }
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.5"
 
