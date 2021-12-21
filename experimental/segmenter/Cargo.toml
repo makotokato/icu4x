@@ -22,6 +22,7 @@ include = [
     "LICENSE",
     "README.md"
 ]
+build = "build.rs"
 
 [dependencies]
 unicode-width = "0.1.7"
