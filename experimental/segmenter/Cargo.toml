@@ -15,6 +15,7 @@ categories = ["internationalization"]
 # Keep this in sync with other crates unless there are exceptions
 include = [
     "src/**/*",
+    "data/*",
     "examples/**/*",
     "benches/**/*",
     "tests/**/*",
@@ -23,7 +24,6 @@ include = [
     "LICENSE",
     "README.md"
 ]
-build = "build.rs"
 
 [dependencies]
 unicode-width = "0.1.7"
