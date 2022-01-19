@@ -4,6 +4,7 @@
 
 extern crate unicode_width;
 
+use crate::dictionary::DictionarySegmenter;
 use crate::indices::*;
 use crate::language::*;
 use crate::lb_define::*;
@@ -13,16 +14,18 @@ use alloc::vec;
 use alloc::vec::Vec;
 use core::char;
 use core::str::CharIndices;
+use icu_locid_macros::langid;
 use icu_provider::prelude::*;
+use litemap::LiteMap;
 use unicode_width::UnicodeWidthChar;
 
 // Use the LSTM when the feature is enabled.
 #[cfg(feature = "lstm")]
-use crate::lstm::get_line_break_utf16;
+use crate::complex::segmenter_break_utf16;
 
 // No-op function when LSTM is disabled.
 #[cfg(not(feature = "lstm"))]
-fn get_line_break_utf16(_: &[u16]) -> Option<Vec<usize>> {
+fn segmenter_break_utf16(_: &[u16]) -> Option<Vec<usize>> {
     None
 }
 
@@ -111,12 +114,16 @@ impl Default for LineBreakOptions {
 pub struct LineBreakSegmenter {
     options: LineBreakOptions,
     payload: DataPayload<LineBreakDataV1Marker>,
+    lao_payload: DataPayload<UCharDictionaryBreakDataV1Marker>,
+    khmer_payload: DataPayload<UCharDictionaryBreakDataV1Marker>,
 }
 
 impl LineBreakSegmenter {
     pub fn try_new<D>(provider: &D) -> Result<Self, DataError>
     where
-        D: ResourceProvider<LineBreakDataV1Marker> + ?Sized,
+        D: ResourceProvider<LineBreakDataV1Marker>
+            + ResourceProvider<UCharDictionaryBreakDataV1Marker>
+            + ?Sized,
     {
         Self::try_new_with_options(provider, Default::default())
     }
@@ -126,16 +133,57 @@ impl LineBreakSegmenter {
         options: LineBreakOptions,
     ) -> Result<Self, DataError>
     where
-        D: ResourceProvider<LineBreakDataV1Marker> + ?Sized,
+        D: ResourceProvider<LineBreakDataV1Marker>
+            + ResourceProvider<UCharDictionaryBreakDataV1Marker>
+            + ?Sized,
     {
         let payload = provider
             .load_resource(&DataRequest::default())?
             .take_payload()?;
-        Ok(Self { options, payload })
+
+        let khmer_payload = provider
+            .load_resource(&DataRequest {
+                options: ResourceOptions {
+                    variant: None,
+                    langid: Some(langid!("km")),
+                },
+                metadata: Default::default(),
+            })?
+            .take_payload()?;
+        let lao_payload = provider
+            .load_resource(&DataRequest {
+                options: ResourceOptions {
+                    variant: None,
+                    langid: Some(langid!("lo")),
+                },
+                metadata: Default::default(),
+            })?
+            .take_payload()?;
+
+        Ok(Self {
+            options: options,
+            payload: payload,
+            khmer_payload: khmer_payload,
+            lao_payload: lao_payload,
+        })
     }
 
     /// Create a line break iterator for an `str` (a UTF-8 string).
     pub fn segment_str<'l, 's>(&'l self, input: &'s str) -> LineBreakIterator<'l, 's, char> {
+        let mut map = LiteMap::new();
+        match DictionarySegmenter::try_new(self.khmer_payload.clone()) {
+            Ok(segmenter) => {
+                let _ = map.try_append(Language::Khmer, segmenter);
+            }
+            _ => {}
+        };
+        match DictionarySegmenter::try_new(self.lao_payload.clone()) {
+            Ok(segmenter) => {
+                let _ = map.try_append(Language::Lao, segmenter);
+            }
+            _ => {}
+        };
+
         LineBreakIterator {
             iter: input.char_indices(),
             len: input.len(),
@@ -143,6 +191,7 @@ impl LineBreakSegmenter {
             result_cache: Vec::new(),
             data: self.payload.get(),
             options: &self.options,
+            dictionary_segmenters: map,
         }
     }
 
@@ -158,6 +207,7 @@ impl LineBreakSegmenter {
             result_cache: Vec::new(),
             data: self.payload.get(),
             options: &self.options,
+            dictionary_segmenters: LiteMap::new(),
         }
     }
 
@@ -166,6 +216,20 @@ impl LineBreakSegmenter {
         &'l self,
         input: &'s [u16],
     ) -> LineBreakIterator<'l, 's, Utf16Char> {
+        let mut map = LiteMap::new();
+        match DictionarySegmenter::try_new(self.khmer_payload.clone()) {
+            Ok(segmenter) => {
+                let _ = map.try_append(Language::Khmer, segmenter);
+            }
+            _ => {}
+        };
+        match DictionarySegmenter::try_new(self.lao_payload.clone()) {
+            Ok(segmenter) => {
+                let _ = map.try_append(Language::Lao, segmenter);
+            }
+            _ => {}
+        };
+
         LineBreakIterator {
             iter: Utf16Indices::new(input),
             len: input.len(),
@@ -173,6 +237,7 @@ impl LineBreakSegmenter {
             result_cache: Vec::new(),
             data: self.payload.get(),
             options: &self.options,
+            dictionary_segmenters: map,
         }
     }
 }
@@ -366,7 +431,10 @@ fn use_complex_breaking_utf32(property_table: &LineBreakPropertyTable<'_>, codep
     );
 
     line_break_property == SA
-        && matches!(get_language(codepoint), Language::Thai | Language::Burmese)
+        && matches!(
+            get_language(codepoint),
+            Language::Thai | Language::Burmese | Language::Khmer | Language::Lao
+        )
 }
 
 /*
@@ -421,6 +489,7 @@ pub struct LineBreakIterator<'l, 's, Y: LineBreakType<'l, 's> + ?Sized> {
     result_cache: Vec<usize>,
     data: &'l LineBreakDataV1<'l>,
     options: &'l LineBreakOptions,
+    dictionary_segmenters: LiteMap<Language, DictionarySegmenter>,
 }
 
 impl<'l, 's, Y: LineBreakType<'l, 's>> Iterator for LineBreakIterator<'l, 's, Y> {
@@ -651,10 +720,19 @@ impl<'l, 's> LineBreakType<'l, 's> for char {
     }
 
     fn get_line_break_by_platform_fallback(
-        _: &LineBreakIterator<Self>,
+        line_break_iterator: &LineBreakIterator<Self>,
         input: &[u16],
     ) -> Vec<usize> {
-        if let Some(mut ret) = get_line_break_utf16(input) {
+        if get_language(input[0] as u32) == Language::Khmer {
+            if let Some(segmenter) = &line_break_iterator
+                .dictionary_segmenters
+                .get(&Language::Khmer)
+            {
+                return segmenter.segment_utf16(input).collect();
+            }
+        }
+
+        if let Some(mut ret) = segmenter_break_utf16(input) {
             ret.push(input.len());
             return ret;
         }
@@ -752,10 +830,19 @@ impl<'l, 's> LineBreakType<'l, 's> for Utf16Char {
     }
 
     fn get_line_break_by_platform_fallback(
-        _: &LineBreakIterator<Self>,
+        line_break_iterator: &LineBreakIterator<Self>,
         input: &[u16],
     ) -> Vec<usize> {
-        if let Some(mut ret) = get_line_break_utf16(input) {
+        if get_language(input[0] as u32) == Language::Khmer {
+            if let Some(segmenter) = &line_break_iterator
+                .dictionary_segmenters
+                .get(&Language::Khmer)
+            {
+                return segmenter.segment_utf16(input).collect();
+            }
+        }
+
+        if let Some(mut ret) = segmenter_break_utf16(input) {
             ret.push(input.len());
             return ret;
         }

@@ -6,9 +6,6 @@ use crate::language::*;
 
 use alloc::string::String;
 use alloc::string::ToString;
-use alloc::vec::Vec;
-use core::char::decode_utf16;
-use core::str::Chars;
 use icu_provider::DataPayload;
 use icu_segmenter_lstm::lstm::Lstm;
 use icu_segmenter_lstm::structs;
@@ -29,63 +26,22 @@ lazy_static! {
 }
 
 // LSTM model depends on language, So we have to switch models per language.
-fn get_best_lstm_model(codepoint: u32) -> Lstm {
+pub fn get_best_lstm_model(codepoint: u32) -> Option<Lstm> {
     // TODO:
     // DataPayLoad isn't thread safe. We need anything static version.
     let lang = get_language(codepoint);
     match lang {
-        Language::Thai => Lstm::try_new(DataPayload::from_owned(THAI_LSTM.clone())).unwrap(),
-        Language::Burmese => Lstm::try_new(DataPayload::from_owned(BURMESE_LSTM.clone())).unwrap(),
-        _ => panic!("Unsupported"),
-    }
-}
-
-/// This struct is an iterator that returns the string per language from the
-/// given string.
-///
-/// Actually supported LSTM model is Thai and Burmese only. If using other
-/// code point, it causes panic.
-struct LanguageIterator<'a> {
-    input: Chars<'a>,
-    last: Option<char>,
-}
-
-impl<'a> LanguageIterator<'a> {
-    pub fn new(input: &'a str) -> Self {
-        let mut input = input.chars();
-        let last = input.next();
-        Self { input, last }
-    }
-}
-
-impl<'a> Iterator for LanguageIterator<'a> {
-    type Item = String;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let mut s = "".to_string();
-
-        let lang = get_language(self.last? as u32);
-        s.push(self.last.unwrap());
-        loop {
-            let c = self.input.next();
-            if c.is_none() {
-                self.last = None;
-                break;
-            }
-            self.last = c;
-            let new_lang = get_language(c.unwrap() as u32);
-            if lang != new_lang {
-                break;
-            }
-            s.push(c.unwrap());
+        Language::Thai => Some(Lstm::try_new(DataPayload::from_owned(THAI_LSTM.clone())).unwrap()),
+        Language::Burmese => {
+            Some(Lstm::try_new(DataPayload::from_owned(BURMESE_LSTM.clone())).unwrap())
         }
-        Some(s)
+        _ => None,
     }
 }
 
 // A word break iterator using LSTM model. Input string have to be same language.
 
-struct LstmSegmenterIterator {
+pub struct LstmSegmenterIterator {
     input: String,
     bies_str: String,
     pos: usize,
@@ -119,7 +75,7 @@ impl LstmSegmenterIterator {
     }
 }
 
-struct LstmSegmenterIteratorUtf16 {
+pub struct LstmSegmenterIteratorUtf16 {
     bies_str: String,
     pos: usize,
 }
@@ -146,120 +102,5 @@ impl LstmSegmenterIteratorUtf16 {
             bies_str: lstm_output,
             pos: 0,
         }
-    }
-}
-
-pub fn get_line_break_utf8(input: &str) -> Option<Vec<usize>> {
-    let mut result: Vec<usize> = Vec::new();
-    let mut lang_iter = LanguageIterator::new(input);
-    let mut offset = 0;
-    loop {
-        let str_per_lang = lang_iter.next();
-        if str_per_lang.is_none() {
-            break;
-        }
-        if offset != 0 {
-            result.push(offset);
-        }
-
-        let str_per_lang = str_per_lang.unwrap();
-        let lstm = get_best_lstm_model(str_per_lang.chars().next().unwrap() as u32);
-        let lstm_iter = LstmSegmenterIterator::new(&lstm, &str_per_lang);
-        let mut r: Vec<usize> = lstm_iter.map(|n| offset + n).collect();
-        result.append(&mut r);
-        offset += str_per_lang.len();
-    }
-    if result.is_empty() {
-        return None;
-    }
-    Some(result)
-}
-
-pub fn get_line_break_utf16(input: &[u16]) -> Option<Vec<usize>> {
-    let s: String = decode_utf16(input.iter().cloned())
-        .map(|r| r.unwrap())
-        .collect();
-    let mut result: Vec<usize> = Vec::new();
-    let mut offset = 0;
-    for str_per_lang in LanguageIterator::new(&s) {
-        if offset != 0 {
-            // language break
-            result.push(offset);
-        }
-
-        let lstm = get_best_lstm_model(str_per_lang.chars().next().unwrap() as u32);
-        let lstm_iter = LstmSegmenterIteratorUtf16::new(&lstm, &str_per_lang);
-        let mut r: Vec<usize> = lstm_iter.map(|n| offset + n).collect();
-        result.append(&mut r);
-        offset += str_per_lang.chars().fold(0, |n, c| n + c.len_utf16());
-    }
-    if result.is_empty() {
-        return None;
-    }
-    Some(result)
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::lstm::get_line_break_utf16;
-    use crate::lstm::get_line_break_utf8;
-
-    #[test]
-    fn thai_word_break() {
-        const TEST_STR: &str = "ภาษาไทยภาษาไทย";
-
-        let breaks = get_line_break_utf8(TEST_STR);
-        assert_eq!(breaks.unwrap(), [12, 21, 33], "Thai test");
-    }
-
-    #[test]
-    fn thai_word_break_utf16() {
-        let text: [u16; 14] = [
-            0x0e20, 0x0e32, 0x0e29, 0x0e32, 0x0e44, 0x0e17, 0x0e22, 0x0e20, 0x0e32, 0x0e29, 0x0e32,
-            0x0e44, 0x0e17, 0x0e22,
-        ];
-        let breaks = get_line_break_utf16(&text);
-        assert_eq!(breaks.unwrap(), [4, 7, 11], "Thai test");
-
-        let text: [u16; 4] = [0x0e20, 0x0e32, 0x0e29, 0x0e32];
-        let breaks = get_line_break_utf16(&text);
-        assert_eq!(breaks, None, "Thai test");
-    }
-
-    #[test]
-    fn burmese_word_break() {
-        // "Burmese Language" in Burmese
-        const TEST_STR: &str = "မြန်မာဘာသာစကား";
-
-        let breaks = get_line_break_utf8(TEST_STR);
-        // LSTM model breaks more characters, but it is better to return [30].
-        assert_eq!(breaks.unwrap(), [12, 18, 30], "Burmese test");
-    }
-
-    #[test]
-    fn burmese_word_break_utf16() {
-        // "Burmese Language" in Burmese
-        let text: [u16; 14] = [
-            0x1019, 0x103c, 0x1014, 0x103a, 0x1019, 0x102c, 0x1018, 0x102c, 0x101e, 0x102c, 0x1005,
-            0x1000, 0x102c, 0x1038,
-        ];
-        let breaks = get_line_break_utf16(&text);
-        // LSTM model breaks more characters, but it is better to return [10].
-        assert_eq!(breaks.unwrap(), [4, 6, 10], "Burmese utf-16 test");
-    }
-
-    #[test]
-    fn combined_word_break() {
-        const TEST_STR_THAI: &str = "ภาษาไทยภาษาไทย";
-        const TEST_STR_BURMESE: &str = "ဗမာနွယ်ဘာသာစကားမျာ";
-        let mut sample = String::from(TEST_STR_THAI);
-        sample.push_str(TEST_STR_BURMESE);
-
-        let breaks = get_line_break_utf8(&sample);
-        assert_eq!(
-            breaks.unwrap(),
-            [12, 21, 33, 42, 51, 63, 75, 87],
-            "Combined test"
-        );
     }
 }

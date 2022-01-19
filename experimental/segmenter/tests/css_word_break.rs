@@ -171,7 +171,6 @@ fn wordbreak_normal() {
 }
 
 #[test]
-#[ignore = "We don't have km breaking rule yet"]
 fn wordbreak_normal_km() {
     // from css/css-text/word-break/word-break-normal-km-000.html
     let _s = "ភាសាខ្មែរភាសាខ្មែរភាសាខ្មែរ";
@@ -179,7 +178,7 @@ fn wordbreak_normal_km() {
 }
 
 #[test]
-#[ignore = "We don't have lo breaking rule yet"]
+#[ignore = "Default metadata is khmer only/"]
 fn wordbreak_normal_lo() {
     // from css/css-text/word-break/word-break-normal-lo-000.html
     let _s = "ພາສາລາວພາສາລາວພາສາລາວ";

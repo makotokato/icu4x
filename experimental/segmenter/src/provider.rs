@@ -87,3 +87,29 @@ impl Default for LineBreakRuleTable<'static> {
         }
     }
 }
+
+#[icu_provider::data_struct(UCharDictionaryBreakDataV1Marker = "segmenter/uchartrie@1")]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(
+    feature = "provider_serde",
+    derive(serde::Serialize, serde::Deserialize)
+)]
+pub struct UCharDictionaryBreakDataV1<'data> {
+    /// Property table for line breaking.
+    #[cfg_attr(feature = "provider_serde", serde(borrow))]
+    pub trie_data: ZeroVec<'data, u16>,
+}
+
+// Test data if khmer dictionary
+const KHMER_DICTIONARY: &[u8; 798374] = include_bytes!("../tests/testdata/km.dict.bin");
+
+impl<'data> Default for UCharDictionaryBreakDataV1<'data> {
+    fn default() -> Self {
+        let trie_data = unsafe {
+            core::mem::transmute::<&[u8; 798374], &[u16; (798374 / 2)]>(KHMER_DICTIONARY)
+        };
+        Self {
+            trie_data: ZeroVec::from_slice(trie_data),
+        }
+    }
+}

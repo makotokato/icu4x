@@ -8,15 +8,15 @@ use alloc::vec::Vec;
 use core::str::CharIndices;
 use icu_provider::DataError;
 
+use crate::complex::segmenter_break_utf16;
+use crate::complex::segmenter_break_utf8;
 use crate::indices::{Latin1Indices, Utf16Indices};
-use crate::lstm::get_line_break_utf16;
-use crate::lstm::get_line_break_utf8;
 use crate::rule_segmenter::*;
 
 include!(concat!(env!("OUT_DIR"), "/generated_word_table.rs"));
 
 fn get_complex_language_break(input: &[u16]) -> Vec<usize> {
-    if let Some(mut ret) = get_line_break_utf16(input) {
+    if let Some(mut ret) = segmenter_break_utf16(input) {
         ret.push(input.len());
         return ret;
     }
@@ -24,7 +24,7 @@ fn get_complex_language_break(input: &[u16]) -> Vec<usize> {
 }
 
 fn get_complex_language_break_utf8(input: &str) -> Vec<usize> {
-    if let Some(mut ret) = get_line_break_utf8(input) {
+    if let Some(mut ret) = segmenter_break_utf8(input) {
         ret.push(input.len());
         return ret;
     }

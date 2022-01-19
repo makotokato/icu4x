@@ -155,6 +155,8 @@ mod property_table;
 mod rule_segmenter;
 mod rule_table;
 
+mod complex;
+mod dictionary;
 mod grapheme;
 mod sentence;
 mod word;
@@ -169,18 +171,6 @@ extern crate lazy_static;
 #[cfg(feature = "lstm")]
 mod lstm;
 
-// No-op functions when LSTM is disabled.
-#[cfg(not(feature = "lstm"))]
-mod lstm {
-    use alloc::vec::Vec;
-    pub fn get_line_break_utf16(_: &[u16]) -> Option<Vec<usize>> {
-        None
-    }
-    pub fn get_line_break_utf8(_: &str) -> Option<Vec<usize>> {
-        None
-    }
-}
-
 pub use crate::grapheme::{
     GraphemeClusterBreakIterator, GraphemeClusterBreakIteratorLatin1,
     GraphemeClusterBreakIteratorUtf16, GraphemeClusterBreakSegmenter,
@@ -193,3 +183,5 @@ pub use crate::sentence::{
 pub use crate::word::{
     WordBreakIterator, WordBreakIteratorLatin1, WordBreakIteratorUtf16, WordBreakSegmenter,
 };
+
+pub use crate::dictionary::{DictionaryBreakIterator, DictionarySegmenter};

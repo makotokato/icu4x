@@ -30,8 +30,12 @@ skip_optional_dependencies = true
 
 [dependencies]
 unicode-width = "0.1.7"
+icu_char16trie = { version = "0.1", path = "../char16trie" }
+icu_locid = { version = "0.5", path = "../../components/locid" }
+icu_locid_macros = { version = "0.5", path = "../../components/locid/macros"}
 icu_provider = { version = "0.5", path = "../../provider/core", features = ["macros"] }
 icu_segmenter_lstm = { version = "0.1", path = "../segmenter_lstm", optional = true }
+litemap = { version = "0.3", path = "../../utils/litemap" }
 serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 lazy_static = { version = "1.0", features = ["spin_no_std"] }
