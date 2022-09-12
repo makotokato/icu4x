@@ -18,7 +18,8 @@ include = [
     "examples/**/*",
     "benches/**/*",
     "tests/**/*",
-    "include/**/*",
+    "c/include/**/*",
+    "cpp/include/**/*",
     "Cargo.toml",
     "LICENSE",
     "README.md"
