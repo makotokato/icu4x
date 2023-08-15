@@ -9,8 +9,22 @@ use zerovec::ule::AsULE;
 use zerovec::ZeroSlice;
 
 // Polyfill float operations with libm in case we're no_std.
-#[allow(unused_imports)]
-use num_traits::Float;
+#[cfg(feature = "no_std")]
+trait CoreFloat {
+    fn exp(self) -> Self;
+    fn tanh(self) -> Self;
+}
+
+#[cfg(feature = "no_std")]
+impl CoreFloat for f32 {
+    fn exp(self) -> Self {
+        libm::expf(self)
+    }
+
+    fn tanh(self) -> Self {
+        libm::tanhf(self)
+    }
+}
 
 /// `tanh` computes the tanh function for a scalar value.
 #[inline]
