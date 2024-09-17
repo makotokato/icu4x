@@ -204,6 +204,7 @@ macro_rules! registry(
             icu::segmenter::provider::SegmenterBreakSentenceV1: SegmenterBreakSentenceV1,
             icu::segmenter::provider::SegmenterBreakWordOverrideV1: SegmenterBreakWordOverrideV1,
             icu::segmenter::provider::SegmenterBreakWordV1: SegmenterBreakWordV1,
+            icu::segmenter::provider::SegmenterBudouxAutoV1: SegmenterBudouxAutoV1,
             icu::time::provider::iana::TimeZoneIanaNamesV1: TimeZoneIanaNamesV1,
             icu::time::provider::iana::TimeZoneIanaMapV1: TimeZoneIanaMapV1,
             icu::time::provider::windows::TimeZoneWindowsV1: TimeZoneWindowsV1,

@@ -183,6 +183,10 @@ pub enum LineBreakWordOption {
     /// Breaking is forbidden within "word".
     /// <https://drafts.csswg.org/css-text-3/#valdef-word-break-keep-all>
     KeepAll,
+
+    ///
+    /// <https://drafts.csswg.org/css-text-4/#valdef-word-break-auto-phrase>
+    AutoPhrase,
 }
 
 /// Options to tailor line-breaking behavior.
@@ -764,6 +768,12 @@ pub trait LineBreakType: crate::private::Sealed + Sized + RuleBreakType {
         iterator: &mut LineBreakIterator<'_, '_, Self>,
         left_codepoint: Self::CharType,
     ) -> Option<usize>;
+
+    #[doc(hidden)]
+    fn line_handle_budoux_segmenter(
+        iterator: &mut LineBreakIterator<'_, '_, Self>,
+        left_codepoint: Self::CharType,
+    ) -> Option<usize>;
 }
 
 /// Implements the [`Iterator`] trait over the line break opportunities of the given string.
@@ -910,6 +920,10 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 }
                 // I may have to fetch text until non-SA character?.
             }
+
+            if self.options.word_option == LineBreakWordOption::AutoPhrase
+                && (left_prop == ID || left_prop == CJ)
+            {}
 
             // If break_state is equals or grater than 0, it is alias of property.
             match self.data.get_break_state_from_table(left_prop, right_prop) {
@@ -1111,6 +1125,13 @@ impl LineBreakType for Utf8 {
     ) -> Option<usize> {
         line_handle_complex_language_utf8(iter, left_codepoint)
     }
+
+    fn line_handle_budoux_segmenter(
+        iterator: &mut LineBreakIterator<'_, '_, Self>,
+        left_codepoint: Self::CharType,
+    ) -> Option<usize> {
+        None
+    }
 }
 
 impl LineBreakType for PotentiallyIllFormedUtf8 {
@@ -1133,16 +1154,23 @@ impl LineBreakType for PotentiallyIllFormedUtf8 {
     ) -> Option<usize> {
         line_handle_complex_language_utf8(iter, left_codepoint)
     }
+
+    fn line_handle_budoux_segmenter(
+        iterator: &mut LineBreakIterator<'_, '_, Self>,
+        left_codepoint: Self::CharType,
+    ) -> Option<usize> {
+        None
+    }
 }
-/// line_handle_complex_language impl for UTF8 iterators
-fn line_handle_complex_language_utf8<T>(
+
+// get string with same complex context
+fn get_complex_context_str<T>(
     iter: &mut LineBreakIterator<'_, '_, T>,
     left_codepoint: char,
-) -> Option<usize>
+) -> Option<String>
 where
     T: LineBreakType<CharType = char>,
 {
-    // word segmenter doesn't define break rules for some languages such as Thai.
     let start_iter = iter.iter.clone();
     let start_point = iter.current_pos_data;
     let mut s = String::new();
@@ -1160,10 +1188,22 @@ where
             break;
         }
     }
-
-    // Restore iterator to move to head of complex string
     iter.iter = start_iter;
     iter.current_pos_data = start_point;
+    return Some(s);
+}
+
+/// line_handle_complex_language impl for UTF8 iterators
+fn line_handle_complex_language_utf8<T>(
+    iter: &mut LineBreakIterator<'_, '_, T>,
+    left_codepoint: char,
+) -> Option<usize>
+where
+    T: LineBreakType<CharType = char>,
+{
+    // word segmenter doesn't define break rules for some languages such as Thai.
+    let s = get_complex_context_str::<T>(iter, left_codepoint)?;
+
     let breaks = iter.complex.complex_language_segment_str(&s);
     iter.result_cache = breaks;
     let first_pos = *iter.result_cache.first()?;
@@ -1203,6 +1243,13 @@ impl LineBreakType for Latin1 {
     fn line_handle_complex_language(
         _: &mut LineBreakIterator<Self>,
         _: Self::CharType,
+    ) -> Option<usize> {
+        unreachable!()
+    }
+
+    fn line_handle_budoux_segmenter(
+        iterator: &mut LineBreakIterator<'_, '_, Self>,
+        left_codepoint: Self::CharType,
     ) -> Option<usize> {
         unreachable!()
     }
@@ -1275,6 +1322,13 @@ impl LineBreakType for Utf16 {
                 return Some(iterator.len);
             }
         }
+    }
+
+    fn line_handle_budoux_segmenter(
+        iterator: &mut LineBreakIterator<'_, '_, Self>,
+        left_codepoint: Self::CharType,
+    ) -> Option<usize> {
+        None
     }
 }
 

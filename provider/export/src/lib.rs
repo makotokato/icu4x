@@ -243,6 +243,7 @@ impl ExportDriver {
             "Khmer_codepoints_exclusive_model4_heavy".into(),
             "Lao_codepoints_exclusive_model4_heavy".into(),
             "Thai_codepoints_exclusive_model4_heavy".into(),
+            "budoux".into(),
         ])
     }
 

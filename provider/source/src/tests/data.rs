@@ -678,6 +678,11 @@ impl SourceDataProvider {
                         ("Thai_graphclust_model4_heavy/weights.json", include_bytes!("../../tests/data/lstm/Thai_graphclust_model4_heavy/weights.json").as_slice())
                     ].into_iter().collect(),
                 )))),
+                segmenter_budoux_paths: Some(Arc::new(SerdeCache::new(AbstractFs::Memory(
+                    [
+                        ("budoux-0.6.2/budoux/models/ja.json", include_bytes!("../../tests/data/budoux/budoux-0.6.2/budoux/models/ja.json").as_slice()),
+                    ].into_iter().collect(),
+                )))),
                 tzdb_paths: Some(Arc::new(TzdbCache { root: AbstractFs::Memory(
                     [
                         ("africa", include_bytes!("../../tests/data/tzdb/africa").as_slice()),

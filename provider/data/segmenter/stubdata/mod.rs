@@ -8,6 +8,7 @@ include!("segmenter_lstm_auto_v1.rs.data");
 include!("segmenter_break_word_v1.rs.data");
 include!("segmenter_break_word_override_v1.rs.data");
 include!("segmenter_break_sentence_override_v1.rs.data");
+include!("segmenter_budoux_auto_v1.rs.data");
 /// Marks a type as a data provider. You can then use macros like
 /// `impl_core_helloworld_v1` to add implementations.
 ///
@@ -46,5 +47,6 @@ macro_rules! impl_data_provider {
         impl_segmenter_break_word_v1!($provider);
         impl_segmenter_break_word_override_v1!($provider);
         impl_segmenter_break_sentence_override_v1!($provider);
+        impl_segmenter_budoux_auto_v1!($provider);
     };
 }

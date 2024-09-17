@@ -203,6 +203,10 @@ const LSTM_GLOB: &[&str] = &[
     "Thai_graphclust_model4_heavy/weights.json",
 ];
 
+const BUDOUX_GLOB: &[&str] = &[
+    "budoux-0.6.2/budoux/models/ja.json",
+];
+
 const TZDB_GLOB: &[&str] = &[
     "africa",
     "antarctica",

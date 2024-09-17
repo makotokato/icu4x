@@ -79,6 +79,7 @@ pub struct SourceDataProvider {
     cldr_paths: Option<Arc<CldrCache>>,
     icuexport_paths: Option<Arc<SerdeCache>>,
     segmenter_lstm_paths: Option<Arc<SerdeCache>>,
+    segmenter_budoux_paths: Option<Arc<SerdeCache>>,
     tzdb_paths: Option<Arc<TzdbCache>>,
     trie_type: TrieType,
     collation_root_han: CollationRootHan,
@@ -115,6 +116,9 @@ impl SourceDataProvider {
     /// The segmentation LSTM model tag that has been verified to work with this version of `SourceDataProvider`.
     pub const TESTED_SEGMENTER_LSTM_TAG: &'static str = "v0.1.0";
 
+    ///
+    pub const TESTED_SEGMENTER_BUDOUX_TAG: &'static str = "v0.1.0";
+
     /// The TZDB tag that has been verified to work with this version of `SourceDataProvider`.
     pub const TESTED_TZDB_TAG: &'static str = "2025a";
 
@@ -137,6 +141,7 @@ impl SourceDataProvider {
                     .with_cldr_for_tag(Self::TESTED_CLDR_TAG)
                     .with_icuexport_for_tag(Self::TESTED_ICUEXPORT_TAG)
                     .with_segmenter_lstm_for_tag(Self::TESTED_SEGMENTER_LSTM_TAG)
+                    .with_segmenter_budoux_for_tag(Self::TESTED_SEGMENTER_BUDOUX_TAG)
                     .with_tzdb_for_tag(Self::TESTED_TZDB_TAG)
             })
             .clone()
@@ -152,6 +157,7 @@ impl SourceDataProvider {
             cldr_paths: None,
             icuexport_paths: None,
             segmenter_lstm_paths: None,
+            segmenter_budoux_paths: None,
             tzdb_paths: None,
             trie_type: Default::default(),
             timezone_horizon: Date::try_new_iso(2015, 1, 1).unwrap(),
@@ -188,6 +194,15 @@ impl SourceDataProvider {
     pub fn with_segmenter_lstm(self, root: &Path) -> Result<Self, DataError> {
         Ok(Self {
             segmenter_lstm_paths: Some(Arc::new(SerdeCache::new(AbstractFs::new(root)?))),
+            ..self
+        })
+    }
+
+    /// Adds segmenter BudouX source data to the provider. The path should point to a local
+    /// `models` directory.
+    pub fn with_segmenter_budoux(self, root: &Path) -> Result<Self, DataError> {
+        Ok(Self {
+            segmenter_budoux_paths: Some(Arc::new(SerdeCache::new(AbstractFs::new(root)?))),
             ..self
         })
     }
@@ -256,6 +271,17 @@ impl SourceDataProvider {
         }
     }
 
+    ///
+    #[cfg(feature = "networking")]
+    pub fn with_segmenter_budoux_for_tag(self, _tag: &str) -> Self {
+        Self {
+            segmenter_budoux_paths: Some(Arc::new(SerdeCache::new(AbstractFs::new_from_url(
+                format!("https://github.com/google/budoux/archive/refs/tags/v0.6.2.zip"),
+            )))),
+            ..self
+        }
+    }
+
     /// Adds timezone database source data to the provider. The data will be downloaded from GitHub
     /// using the given tag (see [GitHub](https://github.com/eggert/tz)).
     ///
@@ -284,6 +310,9 @@ impl SourceDataProvider {
     const MISSING_SEGMENTER_LSTM_ERROR: DataError = DataError::custom(
         "Missing segmenter data. Use `.with_segmenter_lstm[_for_tag]` to set segmenter data.",
     );
+    const MISSING_SEGMENTER_BUDOUX_ERROR: DataError = DataError::custom(
+        "Missing segmenter data. Use `.with_segmenter_budoux[_for_tag]` to set segmenter data.",
+    );
 
     const MISSING_TZDB_ERROR: DataError =
         DataError::custom("Missing tzdb data. Use `.with_tzdb[_for_tag]` to set tzdb data.");
@@ -306,6 +335,12 @@ impl SourceDataProvider {
         e == Self::MISSING_SEGMENTER_LSTM_ERROR
     }
 
+    /// Identifies errors that are due to missing segmenter BudouX data.
+    pub fn is_missing_segmenter_budoux_error(mut e: DataError) -> bool {
+        e.marker = None;
+        e == Self::MISSING_SEGMENTER_BUDOUX_ERROR
+    }
+
     /// Identifies errors that are due to missing TZDB data.
     pub fn is_missing_tzdb_error(mut e: DataError) -> bool {
         e.marker = None;
@@ -326,6 +361,12 @@ impl SourceDataProvider {
         self.segmenter_lstm_paths
             .as_deref()
             .ok_or(Self::MISSING_SEGMENTER_LSTM_ERROR)
+    }
+
+    fn segmenter_budoux(&self) -> Result<&SerdeCache, DataError> {
+        self.segmenter_budoux_paths
+            .as_deref()
+            .ok_or(Self::MISSING_SEGMENTER_BUDOUX_ERROR)
     }
 
     fn tzdb(&self) -> Result<&TzdbCache, DataError> {

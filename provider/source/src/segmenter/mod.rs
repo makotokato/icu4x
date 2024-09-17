@@ -27,6 +27,7 @@ use std::ops::RangeInclusive;
 use std::sync::OnceLock;
 use zerovec::ZeroVec;
 
+mod budoux;
 mod dictionary;
 mod lstm;
 

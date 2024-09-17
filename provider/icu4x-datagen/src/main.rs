@@ -120,6 +120,17 @@ struct Cli {
     segmenter_lstm_root: Option<PathBuf>,
 
     #[arg(long, value_name = "TAG", default_value = "latest")]
+    #[arg(help = "Path to a local segmentation BudouX directory.")]
+    #[cfg_attr(not(feature = "networking"), arg(hide = true))]
+    #[cfg(feature = "provider")]
+    segmenter_budoux_tag: String,
+
+    #[arg(long, value_name = "PATH")]
+    #[arg(help = "Path to a local segmentation BudouX directory.")]
+    #[cfg(feature = "provider")]
+    segmenter_budoux_root: Option<PathBuf>,
+
+    #[arg(long, value_name = "TAG", default_value = "latest")]
     #[arg(
         help = "Download tzdb from this IANA tag (https://data.iana.org/time-zones/releases/)\n\
                   Use 'latest' for the latest version verified to work with this version of the binary.\n\
@@ -417,6 +428,22 @@ fn main() -> eyre::Result<()> {
                 }
             };
 
+            p = match (cli.segmenter_budoux_root, cli.segmenter_budoux_tag.as_str()) {
+                (Some(path), _) => p.with_segmenter_budoux(&path)?,
+                #[cfg(feature = "networking")]
+                (_, "latest") => {
+                    p.with_segmenter_lstm_for_tag(SourceDataProvider::TESTED_SEGMENTER_BUDOUX_TAG)
+                }
+                #[cfg(feature = "networking")]
+                (_, tag) => p.with_segmenter_lstm_for_tag(tag),
+                #[cfg(not(feature = "networking"))]
+                (None, _) => {
+                    eyre::bail!(
+                        "Downloading data from tags requires the `networking` Cargo feature"
+                    )
+                }
+            };
+
             p = match (cli.tzdb_root, cli.tzdb_tag.as_str()) {
                 (Some(path), _) => p.with_tzdb(&path)?,
                 #[cfg(feature = "networking")]
@@ -518,6 +545,7 @@ fn main() -> eyre::Result<()> {
             "laodict".into(),
             "Thai_codepoints_exclusive_model4_heavy".into(),
             "thaidict".into(),
+            "budoux".into(),
         ])
     } else {
         driver.with_segmenter_models(cli.segmenter_models.clone())

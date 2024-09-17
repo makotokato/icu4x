@@ -18,6 +18,9 @@
 mod lstm;
 pub use lstm::*;
 
+mod budoux;
+pub use budoux::*;
+
 use crate::options::WordType;
 use icu_collections::codepointtrie::CodePointTrie;
 use icu_provider::prelude::*;
@@ -54,6 +57,7 @@ const _: () = {
     impl_segmenter_break_word_v1!(Baked);
     impl_segmenter_break_word_override_v1!(Baked);
     impl_segmenter_break_sentence_override_v1!(Baked);
+    impl_segmenter_budou_x_auto_v1!(Baked);
 };
 
 icu_provider::data_marker!(
@@ -120,6 +124,14 @@ icu_provider::data_marker!(
     RuleBreakData<'static>,
     is_singleton = true
 );
+icu_provider::data_marker!(
+    /// `SegmenterBudouxAutoV1`
+    SegmenterBudouxAutoV1,
+    "segmenter/budoux/auto/v1",
+    BudouXData<'static>,
+    #[cfg(feature = "datagen")]
+    attributes_domain = "segmenter"
+);
 
 pub use crate::word::inner::WordTypeULE;
 
@@ -135,6 +147,7 @@ pub const MARKERS: &[DataMarkerInfo] = &[
     SegmenterDictionaryAutoV1::INFO,
     SegmenterDictionaryExtendedV1::INFO,
     SegmenterLstmAutoV1::INFO,
+    SegmenterBudouxAutoV1::INFO,
 ];
 
 /// Pre-processed Unicode data in the form of tables to be used for rule-based breaking.

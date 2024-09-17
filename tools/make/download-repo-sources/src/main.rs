@@ -200,6 +200,17 @@ fn main() -> eyre::Result<()> {
         &mut Default::default(),
     )?;
 
+    std::fs::remove_dir_all(out_root.join("tests/data/budoux"))?;
+    extract_zip(
+        cached(&format!(
+            "https://github.com/google/budoux/archive/refs/tags/v0.6.2.zip",
+        ))
+        .with_context(|| "Failed to download BUDOUX ZIP".to_owned())?,
+        BUDOUX_GLOB.iter().copied().map(String::from).collect(),
+        out_root.join("tests/data/budoux"),
+        &mut Default::default(),
+    )?;
+
     std::fs::remove_dir_all(out_root.join("tests/data/tzdb"))?;
     extract_tar(
         cached(&format!(

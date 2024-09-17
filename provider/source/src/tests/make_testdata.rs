@@ -68,6 +68,7 @@ fn make_testdata() {
     .with_segmenter_models([
         "thaidict".into(),
         "Thai_codepoints_exclusive_model4_heavy".into(),
+        "budoux".into(),
     ])
     .with_marker_attributes_filter("units", |attrs| {
         let (_length, unit) = attrs.as_str().split_once('-').unwrap();
