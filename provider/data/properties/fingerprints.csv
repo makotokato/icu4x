@@ -11,6 +11,7 @@ propnames/from/hst@1, <singleton>, 182B, 136B, bdcb96569690b32c
 propnames/from/jt@1, <singleton>, 177B, 131B, b45c742d4b17ceb
 propnames/from/lb@1, <singleton>, 1007B, 963B, bb6e2daf75e2057f
 propnames/from/sc@1, <singleton>, 3684B, 3640B, d1ed7fca398b05b8
+propnames/from/vo@1, <singleton>, 142B, 96B, dc3fa385fe8c930e
 propnames/to/long/linear/GCB@1, <singleton>, 173B, 151B, 9feae38a09898348
 propnames/to/long/linear/InSC@1, <singleton>, 607B, 585B, 36e854e09df6ac36
 propnames/to/long/linear/SB@1, <singleton>, 132B, 109B, 1bddbfc00ea789cb
@@ -22,6 +23,7 @@ propnames/to/long/linear/hst@1, <singleton>, 112B, 89B, e8f111da1618e61d
 propnames/to/long/linear/jt@1, <singleton>, 111B, 88B, d9b49c75470a1afa
 propnames/to/long/linear/lb@1, <singleton>, 620B, 598B, 6ee04a546e351ffb
 propnames/to/long/linear/sc@1, <singleton>, 1986B, 1964B, 9b97b7f85684632c
+propnames/to/long/linear/vo@1, <singleton>, 88B, 65B, 999b8470b3ec6912
 propnames/to/long/sparse/ccc@1, <singleton>, 697B, 652B, 440a07537c221a20
 propnames/to/short/linear/GCB@1, <singleton>, 101B, 78B, 3f593af98eec2820
 propnames/to/short/linear/InSC@1, <singleton>, 607B, 585B, 36e854e09df6ac36
@@ -33,6 +35,7 @@ propnames/to/short/linear/gc@1, <singleton>, 148B, 125B, a6da6a4499b7361b
 propnames/to/short/linear/hst@1, <singleton>, 50B, 27B, 6ce2e73552656f98
 propnames/to/short/linear/jt@1, <singleton>, 46B, 23B, 4f7c0d697e2b792f
 propnames/to/short/linear/lb@1, <singleton>, 221B, 199B, 808bb5403b659e4
+propnames/to/short/linear/vo@1, <singleton>, 42B, 19B, 65d8585e92dafe9f
 propnames/to/short/linear4/sc@1, <singleton>, 828B, 806B, d488da3356b27392
 propnames/to/short/sparse/ccc@1, <singleton>, 523B, 478B, aa23b3caa16eae5e
 props/AHex@1, <singleton>, 56B, 26B, 779017d199091bbe
@@ -114,4 +117,5 @@ props/print@1, <singleton>, 5704B, 5675B, 6a229bd6833a7c00
 props/sc@1, <singleton>, 25066B, 25011B, 4d50c0338f0d9041
 props/scx@1, <singleton>, 26790B, 26712B, 4b40c33681dbf6bc
 props/segstart@1, <singleton>, 1776B, 1747B, 273e23a4efbe8690
+props/vo@1, <singleton>, 3124B, 3066B, fedc17f2ac140bc
 props/xdigit@1, <singleton>, 576B, 547B, cc42318553e030b3

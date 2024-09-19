@@ -219,6 +219,11 @@ impl NormalizedPropertyNameStr {
     marker(LineBreakNameToValueV1Marker, "propnames/from/lb@1", singleton),
     marker(ScriptNameToValueV1Marker, "propnames/from/sc@1", singleton),
     marker(SentenceBreakNameToValueV1Marker, "propnames/from/SB@1", singleton),
+    marker(
+        VerticalOrientationNameToValueV1Marker,
+        "propnames/from/vo@1",
+        singleton
+    ),
     marker(WordBreakNameToValueV1Marker, "propnames/from/WB@1", singleton)
 )]
 #[cfg_attr(feature = "datagen", derive(serde::Serialize, databake::Bake))]
@@ -365,6 +370,16 @@ pub struct PropertyEnumToValueNameSparseMapV1<'data> {
     marker(
         SentenceBreakValueToShortNameV1Marker,
         "propnames/to/short/linear/SB@1",
+        singleton
+    ),
+    marker(
+        VerticalOrientationValueToLongNameV1Marker,
+        "propnames/to/long/linear/vo@1",
+        singleton
+    ),
+    marker(
+        VerticalOrientationValueToShortNameV1Marker,
+        "propnames/to/short/linear/vo@1",
         singleton
     ),
     marker(

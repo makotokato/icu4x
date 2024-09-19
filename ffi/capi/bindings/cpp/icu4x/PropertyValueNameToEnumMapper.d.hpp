@@ -52,6 +52,8 @@ public:
 
   inline static diplomat::result<std::unique_ptr<icu4x::PropertyValueNameToEnumMapper>, icu4x::DataError> load_script(const icu4x::DataProvider& provider);
 
+  inline static diplomat::result<std::unique_ptr<icu4x::PropertyValueNameToEnumMapper>, icu4x::DataError> load_vertical_orientation(const icu4x::DataProvider& provider);
+
   inline const icu4x::capi::PropertyValueNameToEnumMapper* AsFFI() const;
   inline icu4x::capi::PropertyValueNameToEnumMapper* AsFFI();
   inline static const icu4x::PropertyValueNameToEnumMapper* FromFFI(const icu4x::capi::PropertyValueNameToEnumMapper* ptr);

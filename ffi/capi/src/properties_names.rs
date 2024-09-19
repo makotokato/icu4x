@@ -206,6 +206,21 @@ pub mod ffi {
                 .erase(),
             )))
         }
+
+        #[diplomat::rust_link(icu_properties::props::VerticalOrientation, Struct)]
+        #[diplomat::attr(supports = fallible_constructors, named_constructor = "vertical_orientation")]
+        pub fn load_vertical_orientation(
+            provider: &DataProvider,
+        ) -> Result<Box<PropertyValueNameToEnumMapper>, DataError> {
+            Ok(Box::new(PropertyValueNameToEnumMapper(
+                call_constructor_unstable!(
+                    icu_properties::PropertyParser::<icu_properties::props::VerticalOrientation>::new [r => Ok(r.static_to_owned())],
+                    icu_properties::PropertyParser::<icu_properties::props::VerticalOrientation>::try_new_unstable,
+                    provider,
+                )?
+                .erase(),
+            )))
+        }
     }
 
     /// A type capable of looking up General Category mask values from a string name.

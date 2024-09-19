@@ -1492,3 +1492,72 @@ impl_value_getter! {
         JoiningTypeValueToLongNameV1Marker / SINGLETON_JOINING_TYPE_VALUE_TO_LONG_NAME_V1_MARKER;
     }
 }
+
+impl_value_getter! {
+    impl VerticalOrientation {
+        /// Return a [`PropertyParser`], capable of looking up values
+        /// from strings for the `Vertical_Orientation` enumerated property.
+        ///
+        /// ✨ *Enabled with the `compiled_data` Cargo feature.*
+        ///
+        /// [📚 Help choosing a constructor](icu_provider::constructors)
+        ///
+        /// # Example
+        ///
+        /// ```
+        /// use icu::properties::VerticalOrientation;
+        ///
+        /// let lookup = VerticalOrientation::name_to_enum_mapper();
+        /// // short name for value
+        /// assert_eq!(lookup.get_strict("R"), Some(VerticalOrientation::Rotated));
+        /// assert_eq!(lookup.get_strict("Tr"), Some(VerticalOrientation::TransformedRotated));
+        /// // long name for value
+        /// assert_eq!(lookup.get_strict("Rotated"), Some(VerticalOrientation::Rotated));
+        /// assert_eq!(lookup.get_strict("Transformed_Rotated"), Some(VerticalOrientation::TransformedRotated));
+        /// // name has incorrect casing
+        /// assert_eq!(lookup.get_strict("TRANSFORMED_ROTATED"), None);
+        /// // loose matching of name
+        /// assert_eq!(lookup.get_loose("TRANSFORMED_ROTATED"), Some(VerticalOrientation::TransformedRotated);
+        /// // fake property
+        /// assert_eq!(lookup.get_strict("No_Rotated"), None);
+        /// ```
+        VerticalOrientationNameToValueV1Marker / SINGLETON_VERTICAL_ORIENTATION_NAME_TO_VALUE_V1_MARKER;
+        Linear:
+        /// Return a [`PropertyEnumToValueNameLinearMapper`], capable of looking up short names
+        /// for values of the `Vertical_Orientation` enumerated property.
+        ///
+        /// ✨ *Enabled with the `compiled_data` Cargo feature.*
+        ///
+        /// [📚 Help choosing a constructor](icu_provider::constructors)
+        ///
+        /// # Example
+        ///
+        /// ```
+        /// use icu::properties::VerticalOrientation;
+        ///
+        /// let lookup = VerticalOrientation::enum_to_short_name_mapper();
+        /// assert_eq!(lookup.get(VerticalOrientation::Rotated), Some("R"));
+        /// assert_eq!(lookup.get(VerticalOrientation::TransformedRotated), Some("Tr"));
+        /// assert_eq!(lookup.get(VerticalOrientation::Upright), Some("U"));
+        /// ```
+        VerticalOrientationValueToShortNameV1Marker / SINGLETON_VERTICAL_ORIENTATION_VALUE_TO_SHORT_NAME_V1_MARKER;
+        /// Return a [`PropertyEnumToValueNameLinearMapper`], capable of looking up long names
+        /// for values of the `Vertical_Orientation` enumerated property.
+        ///
+        /// ✨ *Enabled with the `compiled_data` Cargo feature.*
+        ///
+        /// [📚 Help choosing a constructor](icu_provider::constructors)
+        ///
+        /// # Example
+        ///
+        /// ```
+        /// use icu::properties::VerticalOrientation;
+        ///
+        /// let lookup = VerticalOrientation::enum_to_long_name_mapper();
+        /// assert_eq!(lookup.get(VerticalOrientation::Rotated), Some("Rotated"));
+        /// assert_eq!(lookup.get(VerticalOrientation::TransformedRotated), Some("Transformed_Rotated"));
+        /// assert_eq!(lookup.get(VerticalOrientation::Upright), Some("Upright"));
+        /// ```
+        VerticalOrientationValueToLongNameV1Marker / SINGLETON_VERTICAL_ORIENTATION_VALUE_TO_LONG_NAME_V1_MARKER;
+    }
+}

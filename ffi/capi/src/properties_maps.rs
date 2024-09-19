@@ -9,7 +9,8 @@ pub mod ffi {
     use alloc::boxed::Box;
     use icu_properties::props::{
         BidiClass, EastAsianWidth, GeneralCategory, GraphemeClusterBreak, HangulSyllableType,
-        IndicSyllabicCategory, JoiningType, LineBreak, Script, SentenceBreak, WordBreak,
+        IndicSyllabicCategory, JoiningType, LineBreak, Script, SentenceBreak, VerticalOrientation,
+        WordBreak,
     };
 
     use crate::errors::ffi::DataError;
@@ -247,6 +248,18 @@ pub mod ffi {
             Ok(convert_8(call_constructor_unstable!(
                 icu_properties::CodePointMapData::<JoiningType>::new [r => Ok(r.static_to_owned())],
                 icu_properties::CodePointMapData::<JoiningType>::try_new_unstable,
+                provider,
+            )?))
+        }
+
+        #[diplomat::rust_link(icu::properties::props::VerticalOrientation, Struct)]
+        #[diplomat::attr(supports = fallible_constructors, named_constructor = "vertical_orientation")]
+        pub fn load_vertical_orientation(
+            provider: &DataProvider,
+        ) -> Result<Box<CodePointMapData8>, DataError> {
+            Ok(convert_8(call_constructor_unstable!(
+                icu_properties::CodePointMapData::<VerticalOrientation>::new [r => Ok(r.static_to_owned())],
+                icu_properties::CodePointMapData::<VerticalOrientation>::try_new_unstable,
                 provider,
             )?))
         }

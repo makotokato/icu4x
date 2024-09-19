@@ -528,6 +528,15 @@ expand!(
         ),
         "jt"
     ),
+    (
+        VerticalOrientationV1Marker,
+        VerticalOrientationNameToValueV1Marker,
+        (
+            linear: VerticalOrientationValueToShortNameV1Marker,
+            VerticalOrientationValueToLongNameV1Marker
+        ),
+        "vo"
+    ),
 );
 
 #[cfg(test)]

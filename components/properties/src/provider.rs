@@ -36,8 +36,9 @@ pub use names::{
     LineBreakValueToShortNameV1Marker, ScriptNameToValueV1Marker, ScriptValueToLongNameV1Marker,
     ScriptValueToShortNameV1Marker, SentenceBreakNameToValueV1Marker,
     SentenceBreakValueToLongNameV1Marker, SentenceBreakValueToShortNameV1Marker,
-    WordBreakNameToValueV1Marker, WordBreakValueToLongNameV1Marker,
-    WordBreakValueToShortNameV1Marker,
+    VerticalOrientationNameToValueV1Marker, VerticalOrientationValueToLongNameV1Marker,
+    VerticalOrientationValueToShortNameV1Marker, WordBreakNameToValueV1Marker,
+    WordBreakValueToLongNameV1Marker, WordBreakValueToShortNameV1Marker,
 };
 
 pub use crate::props::gc::GeneralCategoryULE;
@@ -183,6 +184,10 @@ const _: () = {
     impl_unified_ideograph_v1_marker!(Baked);
     impl_uppercase_v1_marker!(Baked);
     impl_variation_selector_v1_marker!(Baked);
+    impl_vertical_orientation_name_to_value_v1_marker!(Baked);
+    impl_vertical_orientation_v1_marker!(Baked);
+    impl_vertical_orientation_value_to_long_name_v1_marker!(Baked);
+    impl_vertical_orientation_value_to_short_name_v1_marker!(Baked);
     impl_white_space_v1_marker!(Baked);
     impl_word_break_name_to_value_v1_marker!(Baked);
     impl_word_break_v1_marker!(Baked);
@@ -309,6 +314,10 @@ pub const MARKERS: &[DataMarkerInfo] = &[
     SentenceBreakV1Marker::INFO,
     SentenceBreakValueToLongNameV1Marker::INFO,
     SentenceBreakValueToShortNameV1Marker::INFO,
+    VerticalOrientationNameToValueV1Marker::INFO,
+    VerticalOrientationV1Marker::INFO,
+    VerticalOrientationValueToLongNameV1Marker::INFO,
+    VerticalOrientationValueToShortNameV1Marker::INFO,
     WordBreakNameToValueV1Marker::INFO,
     WordBreakV1Marker::INFO,
     WordBreakValueToLongNameV1Marker::INFO,
@@ -547,6 +556,11 @@ data_struct_generic!(
     marker(LineBreakV1Marker, LineBreak, "props/lb@1"),
     marker(ScriptV1Marker, Script, "props/sc@1"),
     marker(SentenceBreakV1Marker, SentenceBreak, "props/SB@1"),
+    marker(
+        VerticalOrientationV1Marker,
+        VerticalOrientation,
+        "props/vo@1"
+    ),
     marker(WordBreakV1Marker, WordBreak, "props/WB@1"),
 );
 

@@ -105,6 +105,8 @@ icu::properties::props::Script::to_u32#FnInStruct
 icu::properties::props::Script::try_from_u32#FnInStruct
 icu::properties::props::SentenceBreak::to_u32#FnInStruct
 icu::properties::props::SentenceBreak::try_from_u32#FnInStruct
+icu::properties::props::VerticalOrientation::to_u32#FnInStruct
+icu::properties::props::VerticalOrientation::try_from_u32#FnInStruct
 icu::properties::props::WordBreak::to_u32#FnInStruct
 icu::properties::props::WordBreak::try_from_u32#FnInStruct
 icu::properties::script::ScriptMapper#Struct

@@ -159,6 +159,17 @@ final class PropertyValueNameToEnumMapper implements ffi.Finalizable {
     }
     return PropertyValueNameToEnumMapper._fromFfi(result.union.ok, []);
   }
+
+  /// See the [Rust documentation for `VerticalOrientation`](https://docs.rs/icu_properties/latest/icu_properties/props/struct.VerticalOrientation.html) for more information.
+  ///
+  /// Throws [DataError] on failure.
+  factory PropertyValueNameToEnumMapper.verticalOrientation(DataProvider provider) {
+    final result = _icu4x_PropertyValueNameToEnumMapper_load_vertical_orientation_mv1(provider._ffi);
+    if (!result.isOk) {
+      throw DataError.values[result.union.err];
+    }
+    return PropertyValueNameToEnumMapper._fromFfi(result.union.ok, []);
+  }
 }
 
 @meta.ResourceIdentifier('icu4x_PropertyValueNameToEnumMapper_destroy_mv1')
@@ -225,3 +236,8 @@ external _ResultOpaqueInt32 _icu4x_PropertyValueNameToEnumMapper_load_sentence_b
 @ffi.Native<_ResultOpaqueInt32 Function(ffi.Pointer<ffi.Opaque>)>(isLeaf: true, symbol: 'icu4x_PropertyValueNameToEnumMapper_load_script_mv1')
 // ignore: non_constant_identifier_names
 external _ResultOpaqueInt32 _icu4x_PropertyValueNameToEnumMapper_load_script_mv1(ffi.Pointer<ffi.Opaque> provider);
+
+@meta.ResourceIdentifier('icu4x_PropertyValueNameToEnumMapper_load_vertical_orientation_mv1')
+@ffi.Native<_ResultOpaqueInt32 Function(ffi.Pointer<ffi.Opaque>)>(isLeaf: true, symbol: 'icu4x_PropertyValueNameToEnumMapper_load_vertical_orientation_mv1')
+// ignore: non_constant_identifier_names
+external _ResultOpaqueInt32 _icu4x_PropertyValueNameToEnumMapper_load_vertical_orientation_mv1(ffi.Pointer<ffi.Opaque> provider);

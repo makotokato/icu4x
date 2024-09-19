@@ -40,4 +40,6 @@ export class PropertyValueNameToEnumMapper {
     static loadSentenceBreak(provider: DataProvider): PropertyValueNameToEnumMapper;
 
     static loadScript(provider: DataProvider): PropertyValueNameToEnumMapper;
+
+    static loadVerticalOrientation(provider: DataProvider): PropertyValueNameToEnumMapper;
 }

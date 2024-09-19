@@ -12,6 +12,7 @@ include!("hangul_syllable_type_name_to_value_v1_marker.rs.data");
 include!("joining_type_name_to_value_v1_marker.rs.data");
 include!("line_break_name_to_value_v1_marker.rs.data");
 include!("script_name_to_value_v1_marker.rs.data");
+include!("vertical_orientation_name_to_value_v1_marker.rs.data");
 include!("grapheme_cluster_break_value_to_long_name_v1_marker.rs.data");
 include!("indic_syllabic_category_value_to_long_name_v1_marker.rs.data");
 include!("sentence_break_value_to_long_name_v1_marker.rs.data");
@@ -23,6 +24,7 @@ include!("hangul_syllable_type_value_to_long_name_v1_marker.rs.data");
 include!("joining_type_value_to_long_name_v1_marker.rs.data");
 include!("line_break_value_to_long_name_v1_marker.rs.data");
 include!("script_value_to_long_name_v1_marker.rs.data");
+include!("vertical_orientation_value_to_long_name_v1_marker.rs.data");
 include!("canonical_combining_class_value_to_long_name_v1_marker.rs.data");
 include!("grapheme_cluster_break_value_to_short_name_v1_marker.rs.data");
 include!("indic_syllabic_category_value_to_short_name_v1_marker.rs.data");
@@ -34,6 +36,7 @@ include!("general_category_value_to_short_name_v1_marker.rs.data");
 include!("hangul_syllable_type_value_to_short_name_v1_marker.rs.data");
 include!("joining_type_value_to_short_name_v1_marker.rs.data");
 include!("line_break_value_to_short_name_v1_marker.rs.data");
+include!("vertical_orientation_value_to_short_name_v1_marker.rs.data");
 include!("script_value_to_short_name_v1_marker.rs.data");
 include!("canonical_combining_class_value_to_short_name_v1_marker.rs.data");
 include!("ascii_hex_digit_v1_marker.rs.data");
@@ -115,6 +118,7 @@ include!("print_v1_marker.rs.data");
 include!("script_v1_marker.rs.data");
 include!("script_with_extensions_property_v1_marker.rs.data");
 include!("segment_starter_v1_marker.rs.data");
+include!("vertical_orientation_v1_marker.rs.data");
 include!("xdigit_v1_marker.rs.data");
 /// Marks a type as a data provider. You can then use macros like
 /// `impl_core_helloworld_v1` to add implementations.
@@ -158,6 +162,7 @@ macro_rules! impl_data_provider {
         impl_joining_type_name_to_value_v1_marker!($provider);
         impl_line_break_name_to_value_v1_marker!($provider);
         impl_script_name_to_value_v1_marker!($provider);
+        impl_vertical_orientation_name_to_value_v1_marker!($provider);
         impl_grapheme_cluster_break_value_to_long_name_v1_marker!($provider);
         impl_indic_syllabic_category_value_to_long_name_v1_marker!($provider);
         impl_sentence_break_value_to_long_name_v1_marker!($provider);
@@ -169,6 +174,7 @@ macro_rules! impl_data_provider {
         impl_joining_type_value_to_long_name_v1_marker!($provider);
         impl_line_break_value_to_long_name_v1_marker!($provider);
         impl_script_value_to_long_name_v1_marker!($provider);
+        impl_vertical_orientation_value_to_long_name_v1_marker!($provider);
         impl_canonical_combining_class_value_to_long_name_v1_marker!($provider);
         impl_grapheme_cluster_break_value_to_short_name_v1_marker!($provider);
         impl_indic_syllabic_category_value_to_short_name_v1_marker!($provider);
@@ -180,6 +186,7 @@ macro_rules! impl_data_provider {
         impl_hangul_syllable_type_value_to_short_name_v1_marker!($provider);
         impl_joining_type_value_to_short_name_v1_marker!($provider);
         impl_line_break_value_to_short_name_v1_marker!($provider);
+        impl_vertical_orientation_value_to_short_name_v1_marker!($provider);
         impl_script_value_to_short_name_v1_marker!($provider);
         impl_canonical_combining_class_value_to_short_name_v1_marker!($provider);
         impl_ascii_hex_digit_v1_marker!($provider);
@@ -261,6 +268,7 @@ macro_rules! impl_data_provider {
         impl_script_v1_marker!($provider);
         impl_script_with_extensions_property_v1_marker!($provider);
         impl_segment_starter_v1_marker!($provider);
+        impl_vertical_orientation_v1_marker!($provider);
         impl_xdigit_v1_marker!($provider);
     };
 }
@@ -284,6 +292,7 @@ macro_rules! impl_any_provider {
                     h if h == <icu::properties::provider::JoiningTypeNameToValueV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::JoiningTypeNameToValueV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::LineBreakNameToValueV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::LineBreakNameToValueV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::ScriptNameToValueV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::ScriptNameToValueV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
+                    h if h == <icu::properties::provider::VerticalOrientationNameToValueV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::VerticalOrientationNameToValueV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::GraphemeClusterBreakValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::GraphemeClusterBreakValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::IndicSyllabicCategoryValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::IndicSyllabicCategoryValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::SentenceBreakValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::SentenceBreakValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
@@ -295,6 +304,7 @@ macro_rules! impl_any_provider {
                     h if h == <icu::properties::provider::JoiningTypeValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::JoiningTypeValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::LineBreakValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::LineBreakValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::ScriptValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::ScriptValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
+                    h if h == <icu::properties::provider::VerticalOrientationValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::VerticalOrientationValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::CanonicalCombiningClassValueToLongNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::CanonicalCombiningClassValueToLongNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::GraphemeClusterBreakValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::GraphemeClusterBreakValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::IndicSyllabicCategoryValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::IndicSyllabicCategoryValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
@@ -306,6 +316,7 @@ macro_rules! impl_any_provider {
                     h if h == <icu::properties::provider::HangulSyllableTypeValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::HangulSyllableTypeValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::JoiningTypeValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::JoiningTypeValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::LineBreakValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::LineBreakValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
+                    h if h == <icu::properties::provider::VerticalOrientationValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::VerticalOrientationValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::ScriptValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::ScriptValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::CanonicalCombiningClassValueToShortNameV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::CanonicalCombiningClassValueToShortNameV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::AsciiHexDigitV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::AsciiHexDigitV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
@@ -387,6 +398,7 @@ macro_rules! impl_any_provider {
                     h if h == <icu::properties::provider::ScriptV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::ScriptV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::ScriptWithExtensionsPropertyV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::ScriptWithExtensionsPropertyV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::SegmentStarterV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::SegmentStarterV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
+                    h if h == <icu::properties::provider::VerticalOrientationV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::VerticalOrientationV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     h if h == <icu::properties::provider::XdigitV1Marker as icu_provider::DataMarker>::INFO.path.hashed() => icu_provider::DataProvider::<icu::properties::provider::XdigitV1Marker>::load(self, req).map(icu_provider::DataResponse::wrap_into_any_response),
                     _ => Err(icu_provider::DataErrorKind::MarkerNotFound.with_req(marker, req)),
                 }

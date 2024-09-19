@@ -202,6 +202,17 @@ final class CodePointMapData8 implements ffi.Finalizable {
     }
     return CodePointMapData8._fromFfi(result.union.ok, []);
   }
+
+  /// See the [Rust documentation for `VerticalOrientation`](https://docs.rs/icu/latest/icu/properties/props/struct.VerticalOrientation.html) for more information.
+  ///
+  /// Throws [DataError] on failure.
+  factory CodePointMapData8.verticalOrientation(DataProvider provider) {
+    final result = _icu4x_CodePointMapData8_load_vertical_orientation_mv1(provider._ffi);
+    if (!result.isOk) {
+      throw DataError.values[result.union.err];
+    }
+    return CodePointMapData8._fromFfi(result.union.ok, []);
+  }
 }
 
 @meta.ResourceIdentifier('icu4x_CodePointMapData8_destroy_mv1')
@@ -288,3 +299,8 @@ external _ResultOpaqueInt32 _icu4x_CodePointMapData8_load_sentence_break_mv1(ffi
 @ffi.Native<_ResultOpaqueInt32 Function(ffi.Pointer<ffi.Opaque>)>(isLeaf: true, symbol: 'icu4x_CodePointMapData8_load_joining_type_mv1')
 // ignore: non_constant_identifier_names
 external _ResultOpaqueInt32 _icu4x_CodePointMapData8_load_joining_type_mv1(ffi.Pointer<ffi.Opaque> provider);
+
+@meta.ResourceIdentifier('icu4x_CodePointMapData8_load_vertical_orientation_mv1')
+@ffi.Native<_ResultOpaqueInt32 Function(ffi.Pointer<ffi.Opaque>)>(isLeaf: true, symbol: 'icu4x_CodePointMapData8_load_vertical_orientation_mv1')
+// ignore: non_constant_identifier_names
+external _ResultOpaqueInt32 _icu4x_CodePointMapData8_load_vertical_orientation_mv1(ffi.Pointer<ffi.Opaque> provider);
