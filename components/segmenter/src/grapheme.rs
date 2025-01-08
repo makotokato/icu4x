@@ -30,6 +30,13 @@ pub struct GraphemeClusterBreakIterator<'l, 's, Y: RuleBreakType<'l, 's> + ?Size
 
 derive_usize_iterator_with_type!(GraphemeClusterBreakIterator);
 
+impl<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized> GraphemeClusterBreakIterator<'l, 's, Y> {
+    /// Set iterator position to the first boundary by specified offset.
+    pub fn preceding(&mut self, offset: usize) -> Option<usize> {
+        self.0.advance_containing_segment(offset)
+    }
+}
+
 /// Grapheme cluster break iterator for an `str` (a UTF-8 string).
 ///
 /// For examples of use, see [`GraphemeClusterSegmenter`].

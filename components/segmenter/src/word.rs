@@ -93,6 +93,11 @@ impl<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized> WordBreakIterator<'l, 's, Y> {
     pub fn is_word_like(&self) -> bool {
         self.word_type().is_word_like()
     }
+
+    /// Set iterator position to the first boundary by specified offset.
+    pub fn preceding(&mut self, offset: usize) -> Option<usize> {
+        self.0.advance_containing_segment(offset)
+    }
 }
 
 /// Word break iterator for an `str` (a UTF-8 string).
@@ -559,6 +564,11 @@ impl<'l, 's> RuleBreakType<'l, 's> for WordBreakTypeUtf8 {
     ) -> Option<usize> {
         handle_complex_language_utf8(iter, left_codepoint)
     }
+
+    fn follow_safe_break(_iter: &mut RuleBreakIterator<Self>, _offset: usize) -> bool {
+        // CharIndices doesn't have a random access feature.
+        false
+    }
 }
 
 #[derive(Debug)]
@@ -578,6 +588,11 @@ impl<'l, 's> RuleBreakType<'l, 's> for WordBreakTypePotentiallyIllFormedUtf8 {
         left_codepoint: Self::CharType,
     ) -> Option<usize> {
         handle_complex_language_utf8(iter, left_codepoint)
+    }
+
+    fn follow_safe_break(_iter: &mut RuleBreakIterator<Self>, _offset: usize) -> bool {
+        // Utf8CharIndices doesn't have a random access feature.
+        false
     }
 }
 
@@ -700,6 +715,24 @@ impl<'s> RuleBreakType<'_, 's> for WordBreakTypeUtf16 {
             if iter.is_eof() {
                 iter.result_cache.clear();
                 return Some(iter.len);
+            }
+        }
+    }
+
+    fn follow_safe_break(iter: &mut RuleBreakIterator<Self>, offset: usize) -> bool {
+        let mut current_pos_data = iter.iter.containing(offset);
+        loop {
+            if let Some(pos) = current_pos_data {
+                let prop = iter.get_break_property(pos.1);
+                if iter.data.safe_break_before.get(prop as usize).unwrap_or(0) != 0 {
+                    // TODO fill data.
+                    //iter.boundary_property = previous_left_prop;
+                    iter.current_pos_data = current_pos_data;
+                    return true;
+                }
+                current_pos_data = iter.iter.previous();
+            } else {
+                return false;
             }
         }
     }

@@ -16578,5 +16578,7 @@
   "last_codepoint_property": 54,
   "sot_property": 66,
   "eot_property": 67,
-  "complex_property": 46
+  "complex_property": 46,
+  "safe_break_before": [],
+  "safe_break_after": []
 }

@@ -116,6 +116,14 @@ pub struct RuleBreakData<'data> {
     /// The index of "SA" state (or 127 if the complex language isn't handled) for
     /// [`Self::break_state_table`].
     pub complex_property: u8,
+
+    ///
+    #[cfg_attr(feature = "serde", serde(borrow))]
+    pub safe_break_before: ZeroVec<'data, u8>,
+
+    ///
+    #[cfg_attr(feature = "serde", serde(borrow))]
+    pub safe_break_after: ZeroVec<'data, u8>,
 }
 
 /// char16trie data for dictionary break

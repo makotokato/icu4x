@@ -7584,5 +7584,26 @@
   "last_codepoint_property": 17,
   "sot_property": 24,
   "eot_property": 25,
-  "complex_property": 127
+  "complex_property": 127,
+  "safe_break_before": [
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "safe_break_after": []
 }

@@ -31,6 +31,9 @@ pub trait RuleBreakType<'l, 's>: crate::private::Sealed {
         iter: &mut RuleBreakIterator<'l, 's, Self>,
         left_codepoint: Self::CharType,
     ) -> Option<usize>;
+
+    /// Move iterator to last safe break position before offset.
+    fn follow_safe_break(iter: &mut RuleBreakIterator<'l, 's, Self>, offset: usize) -> bool;
 }
 
 /// Implements the [`Iterator`] trait over the segmenter boundaries of the given string.
@@ -216,7 +219,7 @@ impl<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized> RuleBreakIterator<'l, 's, Y> {
         self.current_pos_data.map(|(_, codepoint)| codepoint)
     }
 
-    fn get_break_property(&self, codepoint: Y::CharType) -> u8 {
+    pub(crate) fn get_break_property(&self, codepoint: Y::CharType) -> u8 {
         // Note: Default value is 0 == UNKNOWN
         if let Some(locale_override) = &self.locale_override {
             let property = locale_override
@@ -260,6 +263,126 @@ impl<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized> RuleBreakIterator<'l, 's, Y> {
     pub fn is_word_like(&self) -> bool {
         self.word_type().is_word_like()
     }
+
+    // Advance our iterator to safe break point.
+    fn advance_iter_to_safe_break(&mut self, offset: usize) {
+        let mut previous_iter = self.iter.clone();
+        let mut previous_pos_data = self.current_pos_data;
+        let mut previous_boundary_property = self.boundary_property;
+        let mut previous_prop;
+        let mut current_prop = None;
+
+        // UTF-16 and Latin-1 have optimized random access.
+        if Y::follow_safe_break(self, offset) {
+            return;
+        }
+
+        // No optimize path. Advance iterator until safe break point.
+        loop {
+            previous_boundary_property = self.boundary_property;
+
+            self.advance_iter();
+            if self.is_eof() {
+                self.iter = previous_iter;
+                self.current_pos_data = previous_pos_data;
+                self.boundary_property = previous_boundary_property;
+                break;
+            }
+
+            previous_prop = current_prop;
+            current_prop = self.get_current_break_property();
+
+            if let Some(current_position) = self.get_current_position() {
+                if offset < current_position {
+                    self.iter = previous_iter;
+                    self.current_pos_data = previous_pos_data;
+                    self.boundary_property = previous_boundary_property;
+                    break;
+                }
+
+                if let Some(prop) = current_prop {
+                    let is_break = self.data.safe_break_before.get(prop as usize).unwrap_or(0);
+                    if is_break != 0 {
+                        previous_iter = self.iter.clone();
+                        previous_pos_data = self.current_pos_data;
+                        previous_boundary_property = self.boundary_property;
+                        continue;
+                    }
+                }
+
+                if let Some(prop) = previous_prop {
+                    let is_break = self.data.safe_break_after.get(prop as usize).unwrap_or(0);
+                    if is_break != 0 {
+                        previous_iter = self.iter.clone();
+                        previous_pos_data = self.current_pos_data;
+                        previous_boundary_property = self.boundary_property;
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+
+    pub(crate) fn advance_containing_segment(&mut self, offset: usize) -> Option<usize> {
+        if let Some(&first_result) = self.result_cache.first() {
+            // TODO
+            return None;
+        }
+
+        if offset >= self.len {
+            return None;
+        }
+
+        if self.is_eof() {
+            let previous_iter = self.iter.clone();
+            let previous_boundary_property = self.boundary_property;
+            if let Some(new_offset) = self.next() {
+                if new_offset > offset {
+                    self.iter = previous_iter;
+                    self.current_pos_data = None;
+                    self.boundary_property = previous_boundary_property;
+                    return Some(0);
+                }
+            } else {
+                return None;
+            }
+        }
+
+        if let Some(current_position) = self.get_current_position() {
+            if offset < current_position {
+                return None;
+            } else if offset == current_position {
+                return Some(current_position);
+            }
+
+            // Optimizing random access, we advance the iterator to safe's character.
+            // Some properties becomes start of segment, so we can advance to it.
+
+            self.result_cache.clear();
+            self.advance_iter_to_safe_break(offset);
+
+            loop {
+                let previous_iter = self.iter.clone();
+                let previous_pos_data = self.current_pos_data;
+                let previous_boundary_property = self.boundary_property;
+
+                if let Some(new_offset) = self.next() {
+                    if new_offset == offset {
+                        return self.get_current_position();
+                    }
+                    if new_offset > offset {
+                        self.iter = previous_iter;
+                        self.current_pos_data = previous_pos_data;
+                        self.boundary_property = previous_boundary_property;
+                        return self.get_current_position();
+                    }
+                    continue;
+                }
+                return None;
+            }
+        }
+        None
+    }
 }
 
 #[derive(Debug)]
@@ -280,6 +403,11 @@ impl<'s> RuleBreakType<'_, 's> for RuleBreakTypeUtf8 {
         _: Self::CharType,
     ) -> Option<usize> {
         unreachable!()
+    }
+
+    fn follow_safe_break(_iter: &mut RuleBreakIterator<Self>, _offset: usize) -> bool {
+        // CharIndices doesn't have a random access feature.
+        false
     }
 }
 
@@ -302,6 +430,11 @@ impl<'s> RuleBreakType<'_, 's> for RuleBreakTypePotentiallyIllFormedUtf8 {
     ) -> Option<usize> {
         unreachable!()
     }
+
+    fn follow_safe_break(_iter: &mut RuleBreakIterator<Self>, _offset: usize) -> bool {
+        // Utf8CharIndices doesn't have a random access feature.
+        false
+    }
 }
 
 #[derive(Debug)]
@@ -322,6 +455,39 @@ impl<'s> RuleBreakType<'_, 's> for RuleBreakTypeLatin1 {
         _: Self::CharType,
     ) -> Option<usize> {
         unreachable!()
+    }
+
+    // Rewind iterator until safe break point
+    fn follow_safe_break(iter: &mut RuleBreakIterator<Self>, offset: usize) -> bool {
+        let mut current_pos_data = iter.iter.containing(offset);
+        let mut previous_pos_data = None;
+        loop {
+            if let Some(pos) = current_pos_data {
+                let prop = iter.get_break_property(pos.1);
+                if iter.data.safe_break_before.get(prop as usize).unwrap_or(0) != 0 {
+                    iter.boundary_property = if let Some(prev) = iter.iter.previous() {
+                        iter.get_break_property(prev.1)
+                    } else {
+                        // Reach head
+                        0
+                    };
+                    iter.current_pos_data = current_pos_data;
+                    return true;
+                }
+                if iter.data.safe_break_after.get(prop as usize).unwrap_or(0) != 0 {
+                    if previous_pos_data.is_some() {
+                        iter.boundary_property = prop;
+                        iter.current_pos_data = previous_pos_data;
+                        return true;
+                    }
+                }
+                previous_pos_data = current_pos_data;
+                current_pos_data = iter.iter.previous();
+            } else {
+                break;
+            }
+        }
+        false
     }
 }
 
@@ -347,5 +513,36 @@ impl<'s> RuleBreakType<'_, 's> for RuleBreakTypeUtf16 {
         _: Self::CharType,
     ) -> Option<usize> {
         unreachable!()
+    }
+
+    fn follow_safe_break(iter: &mut RuleBreakIterator<Self>, offset: usize) -> bool {
+        let mut current_pos_data = iter.iter.containing(offset);
+        let mut previous_pos_data = None;
+        loop {
+            if let Some(pos) = current_pos_data {
+                let prop = iter.get_break_property(pos.1);
+                if iter.data.safe_break_before.get(prop as usize).unwrap_or(0) != 0 {
+                    iter.boundary_property = if let Some(prev) = iter.iter.previous() {
+                        iter.get_break_property(prev.1)
+                    } else {
+                        // Reach head
+                        0
+                    };
+                    iter.current_pos_data = current_pos_data;
+                    return true;
+                }
+                if iter.data.safe_break_after.get(prop as usize).unwrap_or(0) != 0 {
+                    if previous_pos_data.is_some() {
+                        iter.boundary_property = prop;
+                        iter.current_pos_data = previous_pos_data;
+                        return true;
+                    }
+                }
+                previous_pos_data = current_pos_data;
+                current_pos_data = iter.iter.previous();
+            } else {
+                return false;
+            }
+        }
     }
 }

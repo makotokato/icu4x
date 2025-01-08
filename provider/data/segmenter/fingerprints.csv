@@ -7,8 +7,8 @@ dictionary/for/word/line/extended/v1, und/thaidict, 225002B, 224981B, f2d574736b
 dictionary/for/word/only/auto/v1, <lookup>, 43B, 1 identifiers
 dictionary/for/word/only/auto/v1, <total>, 2007134B, 2007113B, 1 unique payloads
 dictionary/for/word/only/auto/v1, und/cjdict, 2007134B, 2007113B, f7552d2848b39b0d
-grapheme/cluster/break/data/v2, <singleton>, 9836B, 9730B, 48b8793855ce3f6f
-line/break/data/v2, <singleton>, 19872B, 19767B, 765afed5083e597f
+grapheme/cluster/break/data/v2, <singleton>, 9902B, 9750B, 75028ce5a718de00
+line/break/data/v2, <singleton>, 19920B, 19769B, b18514c02d85e970
 lstm/for/word/line/auto/v1, <lookup>, 199B, 4 identifiers
 lstm/for/word/line/auto/v1, <total>, 310517B, 309331B, 4 unique payloads
 lstm/for/word/line/auto/v1, und/Burmese_codepoints_exclusive_model4_heavy, 91365B, 91070B, 6e46dc061672ffe5
@@ -18,9 +18,9 @@ lstm/for/word/line/auto/v1, und/Thai_codepoints_exclusive_model4_heavy, 72327B, 
 sentence/break/data/override/v1, <lookup>, 35B, 1 identifiers
 sentence/break/data/override/v1, <total>, 332B, 273B, 1 unique payloads
 sentence/break/data/override/v1, el, 332B, 273B, 745d858a06d47385
-sentence/break/data/v2, <singleton>, 14528B, 14422B, da95c51c93946d95
+sentence/break/data/v2, <singleton>, 14591B, 14439B, 4ae9f618559105b3
 word/break/data/override/v1, <lookup>, 40B, 2 identifiers
 word/break/data/override/v1, <total>, 556B, 496B, 1 unique payloads
 word/break/data/override/v1, fi, 556B, 496B, e523305ca615559e
 word/break/data/override/v1, sv, -> fi
-word/break/data/v2, <singleton>, 14768B, 14663B, ca0e9def272a3e47
+word/break/data/v2, <singleton>, 14837B, 14686B, 2a78c28c19e2faaa

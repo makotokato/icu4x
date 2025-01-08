@@ -11491,5 +11491,29 @@
   "last_codepoint_property": 20,
   "sot_property": 41,
   "eot_property": 42,
-  "complex_property": 20
+  "complex_property": 20,
+  "safe_break_before": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+  ],
+  "safe_break_after": []
 }

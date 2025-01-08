@@ -594,6 +594,39 @@ fn generate_rule_break_data(
         }
     }
 
+    let mut safe_break_before = Vec::new();
+    let mut safe_break_after = Vec::new();
+    match &*segmenter.segmenter_type {
+        "word" => {
+            for i in 0..simple_properties_count {
+                if properties_names[i] == "WSegSpace" || properties_names[i] == "CR" {
+                    safe_break_before.push(1 as u8);
+                } else {
+                    safe_break_before.push(0 as u8);
+                }
+            }
+        }
+        "grapheme" => {
+            for i in 0..simple_properties_count {
+                if properties_names[i] == "Control" || properties_names[i] == "CR" {
+                    safe_break_before.push(1 as u8);
+                } else {
+                    safe_break_before.push(0 as u8);
+                }
+            }
+        }
+        "sentence" => {
+            for i in 0..simple_properties_count {
+                if properties_names[i] == "Sep" || properties_names[i] == "LF" {
+                    safe_break_after.push(1 as u8);
+                } else {
+                    safe_break_after.push(0 as u8);
+                }
+            }
+        }
+        _ => {}
+    };
+
     RuleBreakData {
         property_table: CodePointTrieBuilder {
             data: CodePointTrieBuilderData::ValuesByCodePoint(&properties_map),
@@ -634,6 +667,8 @@ fn generate_rule_break_data(
             .unwrap_or(127)
             .try_into()
             .unwrap(),
+        safe_break_before: safe_break_before.into(),
+        safe_break_after: safe_break_after.into(),
     }
 }
 

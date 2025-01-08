@@ -48,6 +48,13 @@ pub struct SentenceBreakIterator<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized>(
 
 derive_usize_iterator_with_type!(SentenceBreakIterator);
 
+impl<'l, 's, Y: RuleBreakType<'l, 's> + ?Sized> SentenceBreakIterator<'l, 's, Y> {
+    /// Set iterator position to the first boundary by specified offset.
+    pub fn preceding(&mut self, offset: usize) -> Option<usize> {
+        self.0.advance_containing_segment(offset)
+    }
+}
+
 /// Sentence break iterator for an `str` (a UTF-8 string).
 ///
 /// For examples of use, see [`SentenceSegmenter`].
@@ -200,6 +207,7 @@ impl SentenceSegmenter {
             locale_override,
         })
     }
+
     /// Creates a sentence break iterator for a potentially ill-formed UTF8 string
     ///
     /// Invalid characters are treated as REPLACEMENT CHARACTER

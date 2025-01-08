@@ -20,6 +20,25 @@ impl<'a> Latin1Indices<'a> {
             iter: input,
         }
     }
+
+    // Update iterator with the offset
+    pub(crate) fn containing(&mut self, offset: usize) -> Option<(usize, u8)> {
+        self.front_offset = offset;
+        self.iter
+            .get(self.front_offset)
+            .map(|ch| (self.front_offset, *ch))
+    }
+
+    // Update iterator by rewinding
+    pub(crate) fn previous(&mut self) -> Option<(usize, u8)> {
+        if self.front_offset == 0 {
+            return None;
+        }
+        self.front_offset -= 1;
+        self.iter
+            .get(self.front_offset)
+            .map(|ch| (self.front_offset, *ch))
+    }
 }
 
 impl Iterator for Latin1Indices<'_> {
@@ -53,6 +72,92 @@ impl<'a> Utf16Indices<'a> {
             iter: input,
         }
     }
+
+    pub(crate) fn containing(&mut self, offset: usize) -> Option<(usize, u32)> {
+        if let Some(ch) = self.iter.get(offset) {
+            let mut ch = *ch as u32;
+            if (ch & 0xfc00) == 0xd800 {
+                if let Some(next) = self.iter.get(offset + 1) {
+                    let next = *next as u32;
+                    ch = ((ch & 0x3ff) << 10) + (next & 0x3ff) + 0x10000;
+                    self.front_offset = offset + 2;
+                    return Some((offset, ch));
+                }
+                self.front_offset = offset + 1;
+                return Some((offset, ch));
+            }
+
+            if (ch & 0xfc00) == 0xdc00 {
+                self.front_offset = offset + 1;
+                if let Some(previous) = self.iter.get(offset - 1) {
+                    let previous = *previous as u32;
+                    ch = ((previous & 0x3ff) << 10) + (ch & 0x3ff) + 0x10000;
+                    return Some((offset - 1, ch));
+                }
+                return Some((offset, ch));
+            }
+
+            self.front_offset = offset + 1;
+            return Some((offset, ch));
+        }
+
+        self.front_offset = self.iter.len();
+        None
+    }
+
+    pub(crate) fn previous(&mut self) -> Option<(usize, u32)> {
+        let prev = self.peek_back()?;
+        self.front_offset = prev.0;
+        Some(prev)
+        /*
+                if self.front_offset == 0 {
+                    return None;
+                }
+                self.front_offset -= 1;
+                let (index, ch) = self
+                    .iter
+                    .get(self.front_offset)
+                    .map(|ch| (self.front_offset, *ch))?;
+
+                if (ch & 0xfc00) != 0xdc00 {
+                    return Some((index, ch as u32));
+                }
+
+                if let Some(prev) = self.iter.get(self.front_offset - 1) {
+                    if (prev & 0xfc00) == 0xd800 {
+                        let ch = Self::surrogate_to_ucs4(*prev, ch);
+                        self.front_offset -= 1;
+                        return Some((index - 1, ch));
+                    }
+                }
+                Some((index, ch as u32))
+        */
+    }
+
+    pub(crate) fn peek_back(&self) -> Option<(usize, u32)> {
+        if self.front_offset == 0 {
+            return None;
+        }
+        let offset = self.front_offset - 1;
+        let (index, ch) = self.iter.get(offset).map(|ch| (offset, *ch))?;
+
+        if (ch & 0xfc00) != 0xdc00 || offset == 0 {
+            return Some((offset, ch as u32));
+        }
+
+        if let Some(prev) = self.iter.get(offset - 1) {
+            if (prev & 0xfc00) == 0xd800 {
+                let ch = Self::surrogate_to_ucs4(*prev, ch);
+                return Some((index - 1, ch));
+            }
+        }
+        Some((index, ch as u32))
+    }
+
+    #[inline]
+    fn surrogate_to_ucs4(high: u16, low: u16) -> u32 {
+        (((high as u32) & 0x3ff) << 10) + ((low as u32) & 0x3ff) + 0x10000
+    }
 }
 
 impl Iterator for Utf16Indices<'_> {
@@ -65,20 +170,19 @@ impl Iterator for Utf16Indices<'_> {
             (self.front_offset - 1, *ch)
         })?;
 
-        let mut ch = ch as u32;
         if (ch & 0xfc00) != 0xd800 {
-            return Some((index, ch));
+            return Some((index, ch as u32));
         }
 
         if let Some(next) = self.iter.get(self.front_offset) {
-            let next = *next as u32;
             if (next & 0xfc00) == 0xdc00 {
                 // Combine low and high surrogates to UTF-32 code point.
-                ch = ((ch & 0x3ff) << 10) + (next & 0x3ff) + 0x10000;
+                let ch = Self::surrogate_to_ucs4(ch, *next);
                 self.front_offset += 1;
+                return Some((index, ch));
             }
         }
-        Some((index, ch))
+        Some((index, ch as u32))
     }
 }
 
@@ -104,6 +208,35 @@ mod tests {
     }
 
     #[test]
+    fn latin1_indices_containing() {
+        let latin1 = [0x30, 0x31, 0x32];
+        let mut indices = Latin1Indices::new(&latin1);
+        let n = indices.containing(2).unwrap();
+        assert_eq!(n.0, 2);
+        assert_eq!(n.1, 0x32);
+        let n = indices.containing(4);
+        assert_eq!(n, None);
+    }
+
+    #[test]
+    fn latin1_indices_previous() {
+        let latin1 = [0x30, 0x31, 0x32];
+        let mut indices = Latin1Indices::new(&latin1);
+        indices.next();
+        let n = indices.next().unwrap();
+        assert_eq!(n.0, 1);
+        assert_eq!(n.1, 0x31);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 1);
+        assert_eq!(n.1, 0x31);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 0);
+        assert_eq!(n.1, 0x30);
+        let n = indices.previous();
+        assert_eq!(n, None);
+    }
+
+    #[test]
     fn utf16_indices() {
         let utf16 = [0xd83d, 0xde03, 0x0020, 0xd83c, 0xdf00, 0xd800, 0x0020];
         let mut indices = Utf16Indices::new(&utf16);
@@ -124,6 +257,55 @@ mod tests {
         assert_eq!(n.0, 6);
         assert_eq!(n.1, 0x0020);
         let n = indices.next();
+        assert_eq!(n, None);
+    }
+
+    #[test]
+    fn utf16_indices_containing() {
+        let utf16 = [0xd83d, 0xde03, 0x0020, 0xd83c, 0xdf00, 0xd800, 0x0020];
+        let mut indices = Utf16Indices::new(&utf16);
+        let n = indices.containing(0).unwrap();
+        assert_eq!(n.0, 0);
+        assert_eq!(n.1, 0x1f603);
+        let n = indices.containing(4).unwrap();
+        assert_eq!(n.0, 3);
+        assert_eq!(n.1, 0x1f300);
+        let n = indices.next().unwrap();
+        assert_eq!(n.0, 5);
+        assert_eq!(n.1, 0xd800);
+    }
+
+    #[test]
+    fn utf16_indices_previous() {
+        let utf16 = [0xd83d, 0xde03, 0x0020, 0xd83c, 0xdf00, 0xd800, 0x0020];
+        let mut indices = Utf16Indices::new(&utf16);
+        indices.next();
+        let n = indices.next().unwrap();
+        assert_eq!(n.0, 2);
+        assert_eq!(n.1, 0x20);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 2);
+        assert_eq!(n.1, 0x20);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 0);
+        assert_eq!(n.1, 0x1f603);
+        indices.next();
+        let n = indices.next().unwrap();
+        assert_eq!(n.0, 2);
+        assert_eq!(n.1, 0x20);
+        let n = indices.next().unwrap();
+        assert_eq!(n.0, 3);
+        assert_eq!(n.1, 0x1f300);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 3);
+        assert_eq!(n.1, 0x1f300);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 2);
+        assert_eq!(n.1, 0x20);
+        let n = indices.previous().unwrap();
+        assert_eq!(n.0, 0);
+        assert_eq!(n.1, 0x1f603);
+        let n = indices.previous();
         assert_eq!(n, None);
     }
 }

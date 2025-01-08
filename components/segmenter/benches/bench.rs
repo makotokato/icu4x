@@ -8,6 +8,7 @@ use icu_segmenter::LineBreakOptions;
 use icu_segmenter::LineBreakStrictness;
 use icu_segmenter::LineBreakWordOption;
 use icu_segmenter::LineSegmenter;
+use icu_segmenter::WordSegmenter;
 
 // Example is MIT license.
 const TEST_STR_EN: &str = "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.";
@@ -136,10 +137,39 @@ fn line_break_iter_utf16(c: &mut Criterion) {
     }
 }
 
+fn word_break_iter_containing_utf8(c: &mut Criterion) {
+    let mut group = c.benchmark_group("Word Break/Containing UTF8");
+
+    let segmenter_auto = WordSegmenter::new_auto();
+    group.bench_function("En", |b| {
+        b.iter(|| {
+            black_box(&segmenter_auto)
+                .segment_str(black_box(TEST_STR_EN))
+                .containing(200)
+        })
+    });
+}
+
+fn word_break_iter_containing_utf16(c: &mut Criterion) {
+    let mut group = c.benchmark_group("Word Break/Containing UTF16");
+
+    let utf16_en: Vec<u16> = TEST_STR_EN.encode_utf16().collect();
+    let segmenter_auto = WordSegmenter::new_auto();
+    group.bench_function("En", |b| {
+        b.iter(|| {
+            black_box(&segmenter_auto)
+                .segment_utf16(black_box(&utf16_en))
+                .containing(200)
+        })
+    });
+}
+
 criterion_group!(
     benches,
     line_break_iter_latin1,
     line_break_iter_utf8,
-    line_break_iter_utf16
+    line_break_iter_utf16,
+    word_break_iter_containing_utf8,
+    word_break_iter_containing_utf16
 );
 criterion_main!(benches);
