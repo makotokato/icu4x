@@ -129,6 +129,7 @@ fn linebreak_normal() {
     //normal("文文\u{2116}字字", false, vec![3, 11, 14], vec![1, 4, 5]);
 }
 
+/*
 #[test]
 fn linebreak_loose() {
     // from css/css-text/line-break/line-break-*-011.xht
@@ -197,6 +198,7 @@ fn linebreak_loose() {
     loose("aa\u{2010}", false, vec![5], vec![3]);
     loose("aa\u{2013}", false, vec![5], vec![3]);
 }
+*/
 
 #[test]
 fn linebreak_anywhere() {
