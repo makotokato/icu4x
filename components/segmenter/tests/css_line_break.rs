@@ -190,8 +190,8 @@ fn linebreak_loose() {
     loose("文\u{fe19}文", true, vec![3, 6, 9], vec![1, 2, 3]);
 
     // css/css-text/line-break/line-break-loose-hyphens-001.html
-    //loose("文\u{2010}文", true, vec![3, 6, 9], vec![1, 2, 3]);
-    //loose("文\u{2013}文", true, vec![3, 6, 9], vec![1, 2, 3]);
+    loose("文\u{2010}文", true, vec![3, 6, 9], vec![1, 2, 3]);
+    loose("文\u{2013}文", true, vec![3, 6, 9], vec![1, 2, 3]);
 
     // css/css-text/line-break/line-break-loose-hyphens-003.html
     loose("aa\u{2010}", false, vec![5], vec![3]);

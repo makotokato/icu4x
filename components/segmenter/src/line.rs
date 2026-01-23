@@ -759,8 +759,8 @@ fn is_break_utf32_by_loose(
     right_prop: u8,
     ja_zh: bool,
 ) -> Option<bool> {
-    // breaks before hyphens
-    if right_prop == BA || right_prop == BA_EASTASIAN {
+    // breaks before hyphens (Old Unicode's BA / Unicode 17's HH)
+    if right_prop == HH {
         if (left_prop == ID || left_prop == ID_EASTASIAN)
             && (right_codepoint == 0x2010 || right_codepoint == 0x2013)
         {
