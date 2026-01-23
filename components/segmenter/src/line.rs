@@ -135,23 +135,25 @@ const RI: u8 = 57;
 #[allow(dead_code)]
 const SA: u8 = 58;
 #[allow(dead_code)]
-const SP: u8 = 59;
+const SA_MC_MN: u8 = 59;
 #[allow(dead_code)]
-const SY: u8 = 60;
+const SP: u8 = 60;
 #[allow(dead_code)]
-const VF: u8 = 61;
+const SY: u8 = 61;
 #[allow(dead_code)]
-const VI: u8 = 62;
+const VF: u8 = 62;
 #[allow(dead_code)]
-const WJ: u8 = 63;
+const VI: u8 = 63;
 #[allow(dead_code)]
-const XX: u8 = 64;
+const WJ: u8 = 64;
 #[allow(dead_code)]
-const XX_EXTPICT: u8 = 65;
+const XX: u8 = 65;
 #[allow(dead_code)]
-const ZW: u8 = 66;
+const XX_EXTPICT: u8 = 66;
 #[allow(dead_code)]
-const ZWJ: u8 = 67;
+const ZW: u8 = 67;
+#[allow(dead_code)]
+const ZWJ: u8 = 68;
 
 /// An enum specifies the strictness of line-breaking rules. It can be passed as
 /// an argument when creating a line segmenter.
@@ -746,7 +748,7 @@ impl RuleBreakData<'_> {
             LineBreakWordOption::Normal,
         );
 
-        line_break_property == SA
+        line_break_property == SA || line_break_property == SA_MC_MN
     }
 }
 
@@ -791,10 +793,10 @@ fn is_break_utf32_by_loose(
         {
             return Some(ja_zh);
         }
-    } else if (right_prop == IN || right_prop == IN_EASTASIAN) {
+    } else if right_prop == IN || right_prop == IN_EASTASIAN {
         // breaks between inseparable characters such as U+2025, U+2026 i.e. characters with the Unicode Line Break property IN
         return Some(true);
-    } else if (right_prop == EX || right_prop == EX_EASTASIAN) {
+    } else if right_prop == EX || right_prop == EX_EASTASIAN {
         // breaks before certain centered punctuation marks:
         if right_codepoint == 0xFF01 || right_codepoint == 0xFF1F {
             return Some(ja_zh);
@@ -910,7 +912,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             // NOTE(egg): The special-casing of `LineBreakStrictness::Anywhere` allows us to pass
             // a test, but eventually that option should just be simplified to call the extended
             // grapheme cluster segmenter.
-            if ((right_prop == CM || right_prop == CM_EASTASIAN)
+            if ((right_prop == CM || right_prop == CM_EASTASIAN || right_prop == SA_MC_MN)
                 || (right_prop == ZWJ && self.options.strictness != LineBreakStrictness::Anywhere))
                 && left_prop != BK
                 && left_prop != CR
@@ -929,7 +931,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
 
             // CSS word-break property handling
             match (self.options.word_option, left_prop, right_prop) {
-                (LineBreakWordOption::BreakAll, AL | AL_EASTASIAN | NU | SA, _) => {
+                (LineBreakWordOption::BreakAll, AL | AL_EASTASIAN | NU | SA | SA_MC_MN, _) => {
                     left_prop = ID;
                 }
                 //  typographic letter units shouldn't be break
@@ -1043,7 +1045,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                             return Some(self.len);
                         };
 
-                        if (prop == CM || prop == CM_EASTASIAN || prop == ZWJ)
+                        if (prop == CM || prop == CM_EASTASIAN || prop == SA_MC_MN || prop == ZWJ)
                             && left_prop_pre_lb9 != BK
                             && left_prop_pre_lb9 != CR
                             && left_prop_pre_lb9 != LF

@@ -190,6 +190,9 @@ name = "RI"
 name = "SA"
 
 [[tables]]
+name = "SA_MC_MN"
+
+[[tables]]
 name = "SP"
 
 [[tables]]
@@ -358,6 +361,12 @@ right = "QU_PI"
 # LB15a
 name = "QU"
 left = "CM_EastAsian"
+right = "QU_PI"
+
+[[tables]]
+# LB15a
+name = "QU"
+left = "SA_MC_MN"
 right = "QU_PI"
 
 [[tables]]
@@ -700,14 +709,14 @@ interm_break_state = true
 
 [[tables]]
 #LB20a
-name = "BK_HY_LB20A"
+name = "SP_HY_LB20A"
 left = "LF"
 right = "HY"
 interm_break_state = true
 
 [[tables]]
 #LB20a
-name = "BK_HY_LB20A"
+name = "SP_HY_LB20A"
 left = "LF"
 right = "HH"
 interm_break_state = true
@@ -816,6 +825,12 @@ right = "CM_EastAsian"
 
 [[tables]]
 # LB9
+name = "QU_PF"
+left = "QU_PF"
+right = "SA_MC_MN"
+
+[[tables]]
+# LB9
 name = "QU_PI"
 left = "QU_PI"
 right = "CM"
@@ -825,6 +840,12 @@ right = "CM"
 name = "QU_PI"
 left = "QU_PI"
 right = "CM_EastAsian"
+
+[[tables]]
+# LB9
+name = "QU_PI"
+left = "QU_PI"
+right = "SA_MC_MN"
 
 [[tables]]
 # LB25
@@ -1052,7 +1073,7 @@ break_state = true
 
 [[rules]]
 # LB3
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_LB15B", "QU_LB15B", "RI_RI" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_LB15B", "QU_LB15B", "RI_RI", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25" ]
 right = [ "eot" ]
 break_state = true
 
@@ -1190,7 +1211,7 @@ break_state = true
 
 [[rules]]
 # LB16
-left = [ "CL", "CL_EastAsian", "CP", "CL_CP_SP" ]
+left = [ "CL", "CL_EastAsian", "CP", "CL_CP_SP", "NU_SY_CL_LB25", "NU_SY_CP_LB25" ]
 right = [ "CJ", "NS", "NS_EastAsian" ] # NS = CJ or NS
 break_state = false
 
@@ -1243,6 +1264,12 @@ left = [ "AI", "AL", "BA", "CL", "CM", "EB", "EX", "GL", "ID", "IN", "NS", "OP",
 break_state = false
 
 [[rules]]
+# LB19a
+right = [ "QU_PF" ]
+left = [ "Any" ]
+break_state = false
+
+[[rules]]
 # LB20
 left = [ "CB" ]
 right = [ "Any" ]
@@ -1257,7 +1284,14 @@ break_state = true
 [[rules]]
 # LB20a
 left = [ "BK_HY_LB20A", "SP_HY_LB20A" ]
-right = [ "AL", "HL" ]
+right = [ "AL", "AL_EastAsian", "AL_DottedCircle", "HL" ]
+break_state = false
+
+[[rules]]
+# LB20a (sot?)
+# (LB1 AL = AI, AL, SA or XX)
+left = [ "HH", "HY" ]
+right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "XX", "XX_ExtPict", "SA" ]
 break_state = false
 
 [[rules]]
@@ -1299,8 +1333,9 @@ break_state = false
 [[rules]]
 # LB23
 # (LB1 AL = AI, AL, SA or XX)
+# (LB1 CM = SA_MC_MN)
 # (LB10 AL = CM)
-left = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "XX", "XX_ExtPict", "HL", "CM", "CM_EastAsian", "ZWJ" ]
+left = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "XX", "XX_ExtPict", "HL", "CM", "CM_EastAsian", "SA_MC_MN", "ZWJ" ]
 right = [ "NU" ]
 break_state = false
 

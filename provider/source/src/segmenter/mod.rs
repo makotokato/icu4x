@@ -189,6 +189,13 @@ fn generate_rule_break_data(
         properties_names.iter().position(|n| n.eq(s))
     }
 
+    fn is_cjk_fullwidth(eaw: CodePointMapDataBorrowed<EastAsianWidth>, codepoint: u32) -> bool {
+        matches!(
+            eaw.get32(codepoint),
+            EastAsianWidth::Ambiguous | EastAsianWidth::Fullwidth | EastAsianWidth::Wide
+        )
+    }
+
     fn is_east_asian(eaw: CodePointMapDataBorrowed<EastAsianWidth>, codepoint: u32) -> bool {
         matches!(
             eaw.get32(codepoint),
@@ -380,6 +387,7 @@ fn generate_rule_break_data(
                         || p.name == "PR_EAW"
                         || p.name == "QU_PI"
                         || p.name == "QU_PF"
+                        || p.name == "SA_MC_MN"
                         || p.name == "AI_EastAsian"
                         || p.name == "AL_DottedCircle"
                         || p.name == "AL_EastAsian"
@@ -418,13 +426,13 @@ fn generate_rule_break_data(
                                 }
 
                                 LineBreak::PostfixNumeric => {
-                                    if p.name == "PO_EAW" && is_east_asian(eaw, i) {
+                                    if p.name == "PO_EAW" && is_cjk_fullwidth(eaw, i) {
                                         properties_map[i as usize] = property_index;
                                     }
                                 }
 
                                 LineBreak::PrefixNumeric => {
-                                    if p.name == "PR_EAW" && is_east_asian(eaw, i) {
+                                    if p.name == "PR_EAW" && is_cjk_fullwidth(eaw, i) {
                                         properties_map[i as usize] = property_index;
                                     }
                                 }
@@ -471,6 +479,15 @@ fn generate_rule_break_data(
 
                                 LineBreak::CombiningMark => {
                                     if p.name == "CM_EastAsian" && is_east_asian(eaw, i) {
+                                        properties_map[i as usize] = property_index;
+                                    }
+                                }
+
+                                LineBreak::ComplexContext => {
+                                    if p.name == "SA_MC_MN"
+                                        && (gc.get32(i) == GeneralCategory::NonspacingMark
+                                            || gc.get32(i) == GeneralCategory::SpacingMark)
+                                    {
                                         properties_map[i as usize] = property_index;
                                     }
                                 }
@@ -982,7 +999,7 @@ mod tests {
         // }
 
         const CM: u8 = 18;
-        const XX: u8 = 64;
+        const XX: u8 = 65;
         const ID: u8 = 36;
 
         assert_eq!(data.property_table.get32(0x20000), ID);
