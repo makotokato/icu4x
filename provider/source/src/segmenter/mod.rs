@@ -171,6 +171,9 @@ fn generate_rule_break_data(
         right_index: usize,
         break_state: BreakState,
     ) {
+        if left_index == 55 && right_index == 4 {
+            println!("break_state: QU_PF AL {:?}", break_state);
+        }
         if left_index == 59 && right_index == 31 {
             println!("break_state: HH {:?}", break_state);
         }
@@ -426,12 +429,14 @@ fn generate_rule_break_data(
                                 }
 
                                 LineBreak::PostfixNumeric => {
+                                    // For CSS
                                     if p.name == "PO_EAW" && is_cjk_fullwidth(eaw, i) {
                                         properties_map[i as usize] = property_index;
                                     }
                                 }
 
                                 LineBreak::PrefixNumeric => {
+                                    // For CSS
                                     if p.name == "PR_EAW" && is_cjk_fullwidth(eaw, i) {
                                         properties_map[i as usize] = property_index;
                                     }

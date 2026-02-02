@@ -1501,6 +1501,8 @@ mod tests {
         // LB999
         assert_eq!(is_break(BA, GL), true);
         assert_eq!(is_break(BA, GL_EASTASIAN), true);
+
+        assert_eq!(is_break(QU_PF, AL), false);
     }
 
     #[test]
