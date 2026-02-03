@@ -906,12 +906,12 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             let is_sot = self.get_current_position().unwrap_or(0) == 0;
             if is_sot {
                 // LB20a hack
-                if left_prop == HY || left_prop == HH {
+                if left_prop == HY || left_prop == HH || left_prop = QU_PI {
                     left_prop = match self
                         .data
                         .get_break_state_from_table(self.data.sot_property, left_prop)
                     {
-                        BreakState::Index(mut index) => index,
+                        BreakState::Index(index) => index,
                         _ => left_prop,
                     }
                 }
@@ -999,6 +999,16 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     return result;
                 }
                 // I may have to fetch text until non-SA character?.
+            }
+
+            if left_prop == SP && right_prop == IS {
+                // LB15c (SP / IS NU)
+                if let Some((_, next_char)) = self.peek_iter() {
+                    let next_prop = self.get_linebreak_property(next_char);
+                    if next_prop == NU {
+                        return self.get_current_position();
+                    }
+                }
             }
 
             // If break_state is equals or grater than 0, it is alias of property.
@@ -1128,6 +1138,10 @@ enum StringBoundaryPosType {
 impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
     fn advance_iter(&mut self) {
         self.current_pos_data = self.iter.next();
+    }
+
+    fn peek_iter(&self) -> Option<(usize, Y::CharType)> {
+        self.iter.clone().next()
     }
 
     fn is_eof(&self) -> bool {

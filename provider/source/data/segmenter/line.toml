@@ -1405,7 +1405,7 @@ break_state = false
 
 [[rules]]
 # LB25
-left = [ "PO", "PO_EAW", "PR", "PR_EAW", "HY", "SOT_HY_LB20A", "IS", "NU", "PO_OP_LB25", "PO_OP_IS_LB25", "PR_OP_LB25", "PR_OP_IS_LB25" ]
+left = [ "PO", "PO_EAW", "PR", "PR_EAW", "HY", "SOT_HY_LB20A", "IS", "NU", "NU_IS_LB25", "NU_SY_LB25", "PO_OP_LB25", "PO_OP_IS_LB25", "PR_OP_LB25", "PR_OP_IS_LB25" ]
 right = [ "NU" ]
 break_state = false
 
