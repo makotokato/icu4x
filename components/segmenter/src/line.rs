@@ -929,6 +929,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 && right_prop == SA_MC_MN
                 && self.options.strictness != LineBreakStrictness::Anywhere
             {
+                // Use dictionary or LSTM instead of rules
                 lb9_left = None;
                 lb8a_after_lb9 = false;
             } else if ((right_prop == CM || right_prop == CM_EASTASIAN || right_prop == SA_MC_MN)
