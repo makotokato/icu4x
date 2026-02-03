@@ -249,6 +249,18 @@ name = "QU_SP_LB15A"
 left = "QU_PI"
 right = "SP"
 
+[[tables]]
+#LB20a
+name = "SOT_QU_PI_LB15A"
+left = "sot"
+right = "QU_PI"
+
+[[tables]]
+# LB15a
+name = "QU_SP_LB15A"
+left = "SOT_QU_PI_LB15A"
+right = "SP"
+
 # The following transitions are X QU_PI → QU unless X is a state that
 # implies we are after (sot | BK | CR | LF | NL | OP | QU | GL | SP | ZW).
 # We therefore reach the state QU_PI only if we match the initial
@@ -435,23 +447,23 @@ name = "QU"
 left = "SOT_HY_LB20A"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "ID"
-right = "QU_PI"
+#name = "QU"
+#left = "ID"
+#right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "ID_CN"
-right = "QU_PI"
+#name = "QU"
+#left = "ID_CN"
+#right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "ID_EastAsian"
-right = "QU_PI"
+#name = "QU"
+#left = "ID_EastAsian"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -603,12 +615,6 @@ name = "QU"
 left = "RI_RI"
 right = "QU_PI"
 # End of the X QU_PI → QU transitions.
-
-[[tables]]
-# LB15a
-name = "QU_SP_LB15A"
-left = "QU_PI"
-right = "SP"
 
 [[tables]]
 # LB15a
@@ -1212,7 +1218,7 @@ break_state = false
 
 [[rules]]
 # LB15a
-left = [ "QU_SP_LB15A" ]
+left = [ "QU_SP_LB15A", "SOT_QU_PI_LB15A" ]
 right = [ "Any" ]
 break_state = false
 
@@ -1260,7 +1266,7 @@ break_state = false
 
 [[rules]]
 # LB19
-left = [ "QU", "QU_PI" ]
+left = [ "QU", "QU_PI", "SOT_QU_PI_LB15A" ]
 right = [ "Any" ]
 break_state = false
 
@@ -1278,7 +1284,7 @@ break_state = false
 
 [[rules]]
 # LB19a
-left = [ "QU_PF", "QU_PI", "QU" ]
+left = [ "QU_PF", "QU_PI", "QU", "SOT_QU_PI_LB15A" ]
 right = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "H3", "HL", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 

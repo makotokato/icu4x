@@ -906,7 +906,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             let is_sot = self.get_current_position().unwrap_or(0) == 0;
             if is_sot {
                 // LB20a hack
-                if left_prop == HY || left_prop == HH || left_prop = QU_PI {
+                if left_prop == HY || left_prop == HH || left_prop == QU_PI {
                     left_prop = match self
                         .data
                         .get_break_state_from_table(self.data.sot_property, left_prop)
