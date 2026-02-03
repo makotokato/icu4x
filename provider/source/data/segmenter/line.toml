@@ -1200,13 +1200,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
-right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "IS", "SY" ]
-break_state = false
-
-[[rules]]
-# LB13
-left = [ "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI" ]
+left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "IS", "SY" ]
 break_state = false
 
@@ -1503,7 +1497,7 @@ break_state = false
 [[rules]]
 # LB30
 # (LB1 AL = AI, AL, SA or XX)
-left = [ "CP" ]
+left = [ "CP", "NU_SY_CP_LB25" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "NU", "XX", "XX_ExtPict", "SA" ]
 break_state = false
 
@@ -1533,25 +1527,19 @@ break_state = false
 
 [[rules]]
 # LB31
-left = [ "AK_VI" ]
-right = [ "Any" ]
-break_state = true
-
-[[rules]]
-# LB31
 left = [ "AL_DottedCircle_LB28A" ]
 right = [ "Any" ]
 break_state = true
 
 [[rules]]
 # LB31
-left = [ "NU_IS_LB25" ]
+left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25" ]
 right = [ "Any" ]
 break_state = true
 
 [[rules]]
 # LB31
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+left = [ "Any" ]
 right = [ "Any" ]
 break_state = true
 

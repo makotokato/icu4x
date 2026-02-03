@@ -1001,7 +1001,10 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 // I may have to fetch text until non-SA character?.
             }
 
-            if left_prop == SP && right_prop == IS {
+            if self.options.strictness != LineBreakStrictness::Anywhere
+                && left_prop == SP
+                && right_prop == IS
+            {
                 // LB15c (SP / IS NU)
                 if let Some((_, next_char)) = self.peek_iter() {
                     let next_prop = self.get_linebreak_property(next_char);
