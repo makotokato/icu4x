@@ -1202,7 +1202,7 @@ break_state = false
 [[rules]]
 # LB13
 left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI" ]
-right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "IS", "SY" ]
+right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
 [[rules]]
@@ -1228,6 +1228,12 @@ break_state = false
 left = [ "QU_PF", "QU_LB15B", "CB_QU_LB15B" ]
 right = [ "eot" ]
 break_state = true
+
+[[rules]]
+# LB15d
+left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A", "RI_RI", "B2_SP", "CL_CP_SP", "NU_SY_CP_LB25" ]
+right = [ "IS" ]
+break_state = false
 
 [[rules]]
 # LB16
