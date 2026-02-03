@@ -181,7 +181,6 @@ mod tests {
     use crate::{GraphemeClusterSegmenter, LineSegmenter, WordSegmenter};
     use icu_provider::prelude::*;
 
-    /*
     #[test]
     fn burmese_dictionary_test() {
         let segmenter = LineSegmenter::new_dictionary(Default::default());
@@ -194,7 +193,6 @@ mod tests {
         let result: Vec<usize> = segmenter.segment_utf16(&s_utf16).collect();
         assert_eq!(result, vec![0, 6, 8, 14, 16, 22, 24]);
     }
-    */
 
     #[test]
     fn cj_dictionary_test() {
@@ -248,11 +246,11 @@ mod tests {
         let segmenter = LineSegmenter::new_dictionary(Default::default());
         let s = "ភាសាខ្មែរភាសាខ្មែរភាសាខ្មែរ";
         let result: Vec<usize> = segmenter.segment_str(s).collect();
-        //assert_eq!(result, vec![0, 27, 54, 81]);
+        assert_eq!(result, vec![0, 27, 54, 81]);
 
         let s_utf16: Vec<u16> = s.encode_utf16().collect();
         let result: Vec<usize> = segmenter.segment_utf16(&s_utf16).collect();
-        //assert_eq!(result, vec![0, 9, 18, 27]);
+        assert_eq!(result, vec![0, 9, 18, 27]);
     }
 
     #[test]

@@ -766,6 +766,7 @@ interm_break_state = true
 name = "BK_HY_LB20A"
 left = "ZW"
 right = "HY"
+interm_break_state = true
 
 [[tables]]
 #LB20a

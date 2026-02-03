@@ -925,7 +925,13 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             // NOTE(egg): The special-casing of `LineBreakStrictness::Anywhere` allows us to pass
             // a test, but eventually that option should just be simplified to call the extended
             // grapheme cluster segmenter.
-            if ((right_prop == CM || right_prop == CM_EASTASIAN || right_prop == SA_MC_MN)
+            if (left_prop == SA || left_prop == SA_MC_MN)
+                && right_prop == SA_MC_MN
+                && self.options.strictness != LineBreakStrictness::Anywhere
+            {
+                lb9_left = None;
+                lb8a_after_lb9 = false;
+            } else if ((right_prop == CM || right_prop == CM_EASTASIAN || right_prop == SA_MC_MN)
                 || (right_prop == ZWJ && self.options.strictness != LineBreakStrictness::Anywhere))
                 && left_prop != BK
                 && left_prop != CR
@@ -1424,6 +1430,8 @@ mod tests {
         assert_eq!(get_linebreak_property('\u{16FE4}'), GL_EASTASIAN);
         assert_eq!(get_linebreak_property('\u{05BE}'), HH);
         assert_eq!(get_linebreak_property('\u{EFFFD}'), XX);
+        assert_eq!(get_linebreak_property('\u{1019}'), SA);
+        assert_eq!(get_linebreak_property('\u{103C}'), SA_MC_MN);
     }
 
     #[test]
