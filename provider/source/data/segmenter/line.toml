@@ -250,7 +250,7 @@ left = "QU_PI"
 right = "SP"
 
 [[tables]]
-#LB20a
+#LB15a/LB19a
 name = "SOT_QU_PI_LB15A"
 left = "sot"
 right = "QU_PI"
@@ -699,6 +699,12 @@ right = "QU_PI"
 interm_break_state = true
 
 [[tables]]
+#LB19a
+name = "SOT_QU_PF"
+left = "sot"
+right = "QU_PF"
+
+[[tables]]
 # LB20a
 name = "SP_HY_LB20A"
 left = "BK"
@@ -852,14 +858,32 @@ right = "CM"
 
 [[tables]]
 # LB9
+name = "SOT_QU_PF"
+left = "SOT_QU_PF"
+right = "CM"
+
+[[tables]]
+# LB9
 name = "QU_PF"
 left = "QU_PF"
 right = "CM_EastAsian"
 
 [[tables]]
 # LB9
+name = "SOT_QU_PF"
+left = "SOT_QU_PF"
+right = "CM_EastAsian"
+
+[[tables]]
+# LB9
 name = "QU_PF"
 left = "QU_PF"
+right = "SA_MC_MN"
+
+[[tables]]
+# LB9
+name = "SOT_QU_PF"
+left = "SOT_QU_PF"
 right = "SA_MC_MN"
 
 [[tables]]
@@ -1292,7 +1316,7 @@ break_state = false
 
 [[rules]]
 # LB19a
-left = [ "QU_PF", "QU_PI", "QU", "SOT_QU_PI_LB15A" ]
+left = [ "QU_PF", "QU_PI", "QU" ]
 right = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "H3", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 
@@ -1300,6 +1324,12 @@ break_state = false
 # LB19a
 left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
 right = [ "QU_PF" ]
+break_state = false
+
+[[rules]]
+# LB19a (sot QU x)
+left = [ "SOT_QU_PF", "SOT_QU_PI_LB15A" ]
+right = [ "Any" ]
 break_state = false
 
 [[rules]]
