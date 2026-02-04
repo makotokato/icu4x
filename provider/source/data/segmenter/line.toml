@@ -763,14 +763,14 @@ interm_break_state = true
 
 [[tables]]
 #LB20a
-name = "BK_HY_LB20A"
+name = "ZW_HY_LB20A"
 left = "ZW"
 right = "HY"
 interm_break_state = true
 
 [[tables]]
 #LB20a
-name = "BK_HY_LB20A"
+name = "ZW_HY_LB20A"
 left = "ZW"
 right = "HH"
 interm_break_state = true
@@ -1310,7 +1310,7 @@ break_state = true
 [[rules]]
 # LB20a
 # (LB1 AL = AI, AL, SA or XX)
-left = [ "BK_HY_LB20A", "SP_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
+left = [ "BK_HY_LB20A", "SP_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A", "ZW_HY_LB20A" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "XX", "XX_ExtPict", "SA" ]
 #right = [ "AL", "AL_EastAsian", "AL_DottedCircle", "HL" ]
 break_state = false
