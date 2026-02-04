@@ -1430,6 +1430,7 @@ mod tests {
         assert_eq!(get_linebreak_property('\u{3000}'), BA_EASTASIAN);
         assert_eq!(get_linebreak_property('\u{16FE4}'), GL_EASTASIAN);
         assert_eq!(get_linebreak_property('\u{05BE}'), HH);
+        assert_eq!(get_linebreak_property('\u{00AB}'), QU_PI);
         assert_eq!(get_linebreak_property('\u{EFFFD}'), XX);
         assert_eq!(get_linebreak_property('\u{1019}'), SA);
         assert_eq!(get_linebreak_property('\u{103C}'), SA_MC_MN);
@@ -1542,6 +1543,7 @@ mod tests {
         assert_eq!(is_break(BA, GL_EASTASIAN), true);
 
         assert_eq!(is_break(QU_PF, AL), false);
+        assert_eq!(is_break(HH, QU_PI), false);
     }
 
     #[test]
