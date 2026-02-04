@@ -1343,6 +1343,12 @@ break_state = false
 [[rules]]
 # LB21a
 left = [ "HL_HY" ]
+right = [ "HL" ]
+break_state = true
+
+[[rules]]
+# LB21a
+left = [ "HL_HY" ]
 right = [ "Any" ]
 break_state = false
 
