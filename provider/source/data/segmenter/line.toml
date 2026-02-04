@@ -692,6 +692,13 @@ left = "B2_SP"
 right = "SP"
 
 [[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "ID_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
 # LB20a
 name = "SP_HY_LB20A"
 left = "BK"
@@ -1294,6 +1301,12 @@ break_state = false
 left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
 right = [ "QU_PF" ]
 break_state = false
+
+[[rules]]
+# LB19a
+left = [ "EastAsian_QU" ]
+right = [ "eot" ]
+break_state = true
 
 [[rules]]
 # LB20
