@@ -760,19 +760,31 @@ left = "NL"
 right = "HH"
 interm_break_state = true
 
-[[tables]]
+#[[tables]]
 #LB20a
-name = "SP_HY_LB20A"
-left = "SP"
-right = "HY"
-interm_break_state = true
+#name = "SP_HY_LB20A"
+#left = "SP"
+#right = "HY"
+#interm_break_state = true
+
+#[[tables]]
+#LB20a
+#name = "SP_HY_LB20A"
+#left = "SP"
+#right = "HH"
+#interm_break_state = true
 
 [[tables]]
-#LB20a
+# LB9/LB20a
 name = "SP_HY_LB20A"
-left = "SP"
-right = "HH"
-interm_break_state = true
+left = "SP_HY_LB20A"
+right = "CM"
+
+[[tables]]
+# LB9/LB20a
+name = "SP_HY_LB20A"
+left = "SP_HY_LB20A"
+right = "CM_EastAsian"
 
 [[tables]]
 #LB14/LB20a

@@ -631,6 +631,8 @@ impl<'data> LineSegmenterBorrowed<'data> {
             iter: input.char_indices(),
             len: input.len(),
             current_pos_data: None,
+            /// Last position data cached for LB20a
+            last_pos_data: None,
             result_cache: Vec::new(),
             data: self.data,
             options: self.options,
@@ -650,6 +652,7 @@ impl<'data> LineSegmenterBorrowed<'data> {
             iter: Utf8CharIndices::new(input),
             len: input.len(),
             current_pos_data: None,
+            last_pos_data: None,
             result_cache: Vec::new(),
             data: self.data,
             options: self.options,
@@ -664,6 +667,7 @@ impl<'data> LineSegmenterBorrowed<'data> {
             iter: Latin1Indices::new(input),
             len: input.len(),
             current_pos_data: None,
+            last_pos_data: None,
             result_cache: Vec::new(),
             data: self.data,
             options: self.options,
@@ -679,6 +683,7 @@ impl<'data> LineSegmenterBorrowed<'data> {
             iter: Utf16Indices::new(input),
             len: input.len(),
             current_pos_data: None,
+            last_pos_data: None,
             result_cache: Vec::new(),
             data: self.data,
             options: self.options,
@@ -858,6 +863,7 @@ pub struct LineBreakIterator<'data, 's, Y: LineBreakType> {
     iter: Y::IterAttr<'s>,
     len: usize,
     current_pos_data: Option<(usize, Y::CharType)>,
+    last_pos_data: Option<(usize, Y::CharType)>,
     result_cache: Vec<usize>,
     data: &'data RuleBreakData<'data>,
     options: ResolvedLineBreakOptions,
@@ -897,6 +903,8 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
         // position must be suppressed.
         let mut lb8a_after_lb9 = false;
 
+        let mut possible_lb20a = self.is_possible_lb20a();
+
         'a: loop {
             debug_assert!(!self.is_eof());
             let left_codepoint = self.get_current_codepoint()?;
@@ -920,6 +928,22 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         _ => left_prop,
                     }
                 }
+                possible_lb20a = false;
+            } else if possible_lb20a {
+                // LB20a hack. Example,
+                // LB18  ... SP /
+                // LB20a ... SP (HY | HH) x (AL | HL)
+                // This rules become SP / (HY | HH) x (AL | HL).
+                if left_prop == HY || left_prop == HH {
+                    left_prop = match self
+                        .data
+                        .get_break_state_from_table(self.data.sot_property, left_prop)
+                    {
+                        BreakState::Index(index) => index,
+                        _ => left_prop,
+                    }
+                }
+                possible_lb20a = false;
             }
             self.advance_iter();
 
@@ -1072,6 +1096,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                             if break_state == BreakState::NoMatch {
                                 self.iter = previous_iter;
                                 self.current_pos_data = previous_pos_data;
+                                self.last_pos_data = None;
                                 if previous_is_after_zwj {
                                     // Do not break [AK] [ZWJ] ÷ [AS] (eot).
                                     continue 'a;
@@ -1100,6 +1125,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                             BreakState::NoMatch => {
                                 self.iter = previous_iter;
                                 self.current_pos_data = previous_pos_data;
+                                self.last_pos_data = None;
                                 if after_zwj {
                                     // Break [AK] ÷ [AS] [ZWJ] [XX],
                                     // but not [AK] [ZWJ] ÷ [AS] [ZWJ] [XX].
@@ -1152,6 +1178,7 @@ enum StringBoundaryPosType {
 
 impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
     fn advance_iter(&mut self) {
+        self.last_pos_data = self.current_pos_data;
         self.current_pos_data = self.iter.next();
     }
 
@@ -1191,6 +1218,23 @@ impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
 
     fn get_current_codepoint(&self) -> Option<Y::CharType> {
         self.current_pos_data.map(|(_, codepoint)| codepoint)
+    }
+
+    fn is_possible_lb20a(&self) -> bool {
+        if let Some((_, codepoint)) = self.last_pos_data {
+            let property = self.get_linebreak_property(codepoint);
+            property == BK
+                || property == CR
+                || property == LF
+                || property == NL
+                || property == SP
+                || property == ZW
+                || property == CB
+                || property == GL
+                || property == GL_EASTASIAN
+        } else {
+            self.get_current_position().unwrap_or(0) == 0
+        }
     }
 
     fn get_linebreak_property(&self, codepoint: Y::CharType) -> u8 {
@@ -1283,6 +1327,7 @@ where
     // Restore iterator to move to head of complex string
     iter.iter = start_iter;
     iter.current_pos_data = start_point;
+    iter.last_pos_data = None;
     let breaks = iter.complex.complex_language_segment_str(&s);
     iter.result_cache = breaks;
     let first_pos = *iter.result_cache.first()?;
@@ -1366,6 +1411,7 @@ impl LineBreakType for Utf16 {
         // Restore iterator to move to head of complex string
         iterator.iter = start_iter;
         iterator.current_pos_data = start_point;
+        iterator.last_pos_data = None;
         let breaks = iterator.complex.complex_language_segment_utf16(&s);
         iterator.result_cache = breaks;
         // result_cache vector is utf-16 index that is in BMP.
