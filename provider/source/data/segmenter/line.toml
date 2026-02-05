@@ -251,14 +251,14 @@ right = "SP"
 
 [[tables]]
 #LB15a/LB19a
-name = "SOT_QU_PI_LB15A"
+name = "SOT_QU_PI"
 left = "sot"
 right = "QU_PI"
 
 [[tables]]
 # LB15a
 name = "QU_SP_LB15A"
-left = "SOT_QU_PI_LB15A"
+left = "SOT_QU_PI"
 right = "SP"
 
 # The following transitions are X QU_PI → QU unless X is a state that
@@ -1280,7 +1280,7 @@ break_state = false
 
 [[rules]]
 # LB15a
-left = [ "QU_SP_LB15A", "SOT_QU_PI_LB15A" ]
+left = [ "QU_SP_LB15A", "QU_PI", "SOT_QU_PI" ]
 right = [ "Any" ]
 break_state = false
 
@@ -1334,7 +1334,7 @@ break_state = false
 
 [[rules]]
 # LB19
-left = [ "QU", "QU_PI", "SOT_QU_PI_LB15A" ]
+left = [ "QU", "QU_PI", "SOT_QU_PI" ]
 right = [ "Any" ]
 break_state = false
 
@@ -1364,7 +1364,7 @@ break_state = false
 
 [[rules]]
 # LB19a (sot QU x)
-left = [ "SOT_QU_PF", "SOT_QU_PI_LB15A" ]
+left = [ "SOT_QU_PF", "SOT_QU_PI" ]
 right = [ "Any" ]
 break_state = false
 
