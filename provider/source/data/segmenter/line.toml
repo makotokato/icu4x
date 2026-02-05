@@ -1624,7 +1624,7 @@ break_state = true
 
 [[rules]]
 # LB31
-left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25" ]
+left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_SY_CL_LB25" ]
 right = [ "Any" ]
 break_state = true
 
