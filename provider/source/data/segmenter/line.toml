@@ -775,6 +775,18 @@ interm_break_state = true
 #interm_break_state = true
 
 [[tables]]
+#LB15a + LB20a
+name = "SOT_HY_LB20A"
+left = "QU_SP_LB15A"
+right = "HY"
+
+[[tables]]
+#LB15a + LB20a
+name = "SOT_HH_LB20A"
+left = "QU_SP_LB15A"
+right = "HH"
+
+[[tables]]
 # LB9/LB20a
 name = "SP_HY_LB20A"
 left = "SP_HY_LB20A"
