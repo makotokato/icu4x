@@ -694,9 +694,22 @@ right = "QU_PI"
 interm_break_state = true
 
 [[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "OP_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
 #LB19a
 name = "SOT_QU_PF"
 left = "sot"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "AL"
 right = "QU_PF"
 
 [[tables]]
