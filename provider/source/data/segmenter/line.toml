@@ -1210,7 +1210,7 @@ break_state = false
 
 [[rules]]
 # LB7
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A", "EastAsian_QU" ]
 right = [ "SP", "ZW" ]
 break_state = false
 
