@@ -504,18 +504,6 @@ right = "QU_PI"
 [[tables]]
 # LB15a
 name = "QU"
-left = "NS"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
-left = "NS_EastAsian"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
 left = "NU"
 right = "QU_PI"
 
@@ -695,6 +683,13 @@ right = "SP"
 # LB19a
 name = "EastAsian_QU"
 left = "ID_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "NS_EastAsian"
 right = "QU_PI"
 interm_break_state = true
 
@@ -1352,7 +1347,7 @@ break_state = false
 
 [[rules]]
 # LB19a
-left = [ "QU_PF", "QU_PI", "QU" ]
+left = [ "QU_PF", "QU_PI", "QU", "EastAsian_QU" ]
 right = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "H3", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 
