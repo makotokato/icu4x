@@ -98,6 +98,7 @@ name = "GL_EastAsian"
 name = "H2"
 
 [[tables]]
+# All H3 is EastAsain
 name = "H3"
 
 [[tables]]
@@ -328,10 +329,11 @@ left = "BA"
 right = "QU_PI"
 
 [[tables]]
-# LB15a
+# LB15a/LB19a
 name = "QU"
 left = "BA_EastAsian"
 right = "QU_PI"
+interm_break_state = true
 
 [[tables]]
 # LB15a
@@ -710,6 +712,12 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "AL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "VI"
 right = "QU_PF"
 
 [[tables]]
@@ -1354,14 +1362,14 @@ break_state = false
 
 [[rules]]
 # LB19a - Unless surrounded by East Asian
-left = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "H3", "HL", "HH", "HY", "ID", "ID_CN", "IN", "NS", "NU", "OP", "PO", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
+left = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "HL", "HH", "HY", "ID", "ID_CN", "IN", "NS", "NU", "OP", "PO", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
 right = [ "QU_PI", "QU_PF", "QU" ]
 break_state = false
 
 [[rules]]
 # LB19a
 left = [ "QU_PF", "QU_PI", "QU", "EastAsian_QU" ]
-right = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "H3", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
+right = [ "AI", "AL", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EM", "EX", "GL", "H2", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 
 [[rules]]

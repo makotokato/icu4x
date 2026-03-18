@@ -200,12 +200,10 @@ fn run_line_break_extra_test() {
     line_break_test("./tests/testdata/LineBreakExtraTest.txt");
 }
 
-/*
 #[test]
 fn run_line_break_random_test() {
-    line_break_test("./tests/testdata/LineBreakRandomTest.txt");
+    line_break_test("./tests/testdata/LineBreakRandomTest1.txt");
 }
-*/
 
 fn word_break_test(file: &'static str) {
     let test_iter = TestContentIterator::new(file);
