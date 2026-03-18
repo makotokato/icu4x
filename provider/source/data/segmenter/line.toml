@@ -1284,7 +1284,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI" ]
+left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
