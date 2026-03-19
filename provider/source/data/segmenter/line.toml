@@ -429,12 +429,6 @@ right = "QU_PI"
 [[tables]]
 # LB15a
 name = "QU"
-left = "EX_EastAsian"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
 left = "H2"
 right = "QU_PI"
 
@@ -712,6 +706,13 @@ interm_break_state = true
 # LB19a
 name = "EastAsian_QU"
 left = "EM"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "EX_EastAsian"
 right = "QU_PI"
 interm_break_state = true
 
@@ -1464,9 +1465,9 @@ break_state = false
 #break_state = false
 
 [[rules]]
-# LB20a isn't matched, but LB25
+# LB20a isn't matched, but LB19/LB25
 left = [ "GL_HY_LB20A" ]
-right = [ "NU" ]
+right = [ "NU", "QU_PF", "QU" ]
 break_state = false
 
 [[rules]]
