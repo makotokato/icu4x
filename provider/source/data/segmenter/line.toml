@@ -1438,7 +1438,7 @@ break_state = false
 [[rules]]
 # LB19a
 left = [ "EastAsian_QU" ]
-right = [ "QU" ]
+right = [ "QU", "QU_PF" ]
 break_state = false
 
 [[rules]]
