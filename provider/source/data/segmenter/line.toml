@@ -1300,7 +1300,7 @@ break_state = false
 
 [[rules]]
 # LB12a
-left = [ "HL_HY", "OP_SP", "RI_RI", "AK_VI" ]
+left = [ "HL_HY", "OP_SP", "RI_RI", "AK_VI", "NU_SY_CP_LB25" ]
 right = [ "GL", "GL_EastAsian" ]
 break_state = false
 
@@ -1457,7 +1457,13 @@ break_state = false
 #break_state = false
 
 [[rules]]
-# LB20a
+# LB20a isn't matched, but LB25
+left = [ "GL_HY_LB20A" ]
+right = [ "NU" ]
+break_state = false
+
+[[rules]]
+# LB20a isn't matched
 left = [ "GL_HY_LB20A" ]
 right = [ "Any" ]
 break_state = true
@@ -1552,7 +1558,7 @@ break_state = false
 
 [[rules]]
 # LB25
-left = [ "PO", "PO_EAW", "PR", "PR_EAW", "HY", "SOT_HY_LB20A", "IS", "NU", "NU_IS_LB25", "NU_SY_LB25", "PO_OP_LB25", "PO_OP_IS_LB25", "PR_OP_LB25", "PR_OP_IS_LB25" ]
+left = [ "PO", "PO_EAW", "PR", "PR_EAW", "HY", "SOT_HY_LB20A", "IS", "NU", "NU_IS_LB25", "NU_SY_LB25", "PO_OP_LB25", "PO_OP_IS_LB25", "PR_OP_LB25", "PR_OP_IS_LB25", "GL_HY_LB20A" ]
 right = [ "NU" ]
 break_state = false
 
