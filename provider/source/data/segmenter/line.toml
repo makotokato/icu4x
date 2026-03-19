@@ -414,11 +414,11 @@ name = "QU"
 left = "EB"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "EB_EastAsian"
-right = "QU_PI"
+#name = "QU"
+#left = "EB_EastAsian"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -698,6 +698,13 @@ right = "SP"
 # LB19a
 name = "EastAsian_QU"
 left = "CJ"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "EB_EastAsian"
 right = "QU_PI"
 interm_break_state = true
 
