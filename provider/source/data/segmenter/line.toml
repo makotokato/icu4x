@@ -462,17 +462,17 @@ right = "QU_PI"
 #left = "ID_EastAsian"
 #right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "IN"
-right = "QU_PI"
+#name = "QU"
+#left = "IN"
+#right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "IN_EastAsian"
-right = "QU_PI"
+#name = "QU"
+#left = "IN_EastAsian"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -687,6 +687,13 @@ interm_break_state = true
 # LB19a
 name = "EastAsian_QU"
 left = "ID_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "IN_EastAsian"
 right = "QU_PI"
 interm_break_state = true
 

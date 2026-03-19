@@ -913,7 +913,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             let after_zwj = lb8a_after_lb9 || (lb9_left.is_none() && left_prop == ZWJ);
             let is_sot = self.get_current_position().unwrap_or(0) == 0;
             if is_sot {
-                // LB20a hack
+                // LB19a/LB20a hack
                 if left_prop == HY
                     || left_prop == HH
                     || left_prop == QU_PI
