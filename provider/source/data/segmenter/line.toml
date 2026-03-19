@@ -347,13 +347,6 @@ name = "QU"
 left = "BA"
 right = "QU_PI"
 
-#[[tables]]
-# LB15a/LB19a
-#name = "QU"
-#left = "BA_EastAsian"
-#right = "QU_PI"
-#interm_break_state = true
-
 [[tables]]
 # LB15a
 name = "QU"
@@ -424,12 +417,6 @@ right = "QU_PI"
 # LB15a
 name = "QU"
 left = "EX"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
-left = "H2"
 right = "QU_PI"
 
 [[tables]]
@@ -522,11 +509,11 @@ name = "QU"
 left = "PO"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "PO_EAW"
-right = "QU_PI"
+#name = "QU"
+#left = "PO_EAW"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -726,6 +713,13 @@ interm_break_state = true
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "H2"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "ID_EastAsian"
 right = "QU_PI"
 interm_break_state = true
@@ -754,6 +748,13 @@ interm_break_state = true
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "PO_EAW"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "PR_EAW"
 right = "QU_PI"
 interm_break_state = true
@@ -768,6 +769,12 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "AL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "GL"
 right = "QU_PF"
 
 [[tables]]
@@ -1262,7 +1269,7 @@ break_state = true
 
 [[rules]]
 # LB6
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A", "EastAsian_QU" ]
 right = [ "BK", "CR", "LF", "NL" ]
 break_state = false
 
@@ -1418,14 +1425,14 @@ break_state = false
 
 [[rules]]
 # LB19a - Unless surrounded by East Asian
-left = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "H2", "HL", "HH", "HY", "ID", "ID_CN", "IN", "NS", "NU", "OP", "PO", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
+left = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "HL", "HH", "HY", "ID", "ID_CN", "IN", "NS", "NU", "OP", "PO", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
 right = [ "QU_PI", "QU_PF", "QU" ]
 break_state = false
 
 [[rules]]
 # LB19a
 left = [ "QU_PF", "QU_PI", "QU", "EastAsian_QU" ]
-right = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "AK", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "H2", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
+right = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "AK", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EAW", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 
 [[rules]]
