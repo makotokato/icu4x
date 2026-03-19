@@ -348,11 +348,11 @@ name = "QU"
 left = "CB"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "CJ"
-right = "QU_PI"
+#name = "QU"
+#left = "CJ"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -480,11 +480,11 @@ name = "QU"
 left = "IS"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "JL"
-right = "QU_PI"
+#name = "QU"
+#left = "JL"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -679,6 +679,13 @@ right = "SP"
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "CJ"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "EM"
 right = "QU_PI"
 interm_break_state = true
@@ -694,6 +701,13 @@ interm_break_state = true
 # LB19a
 name = "EastAsian_QU"
 left = "IN_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
+left = "JL"
 right = "QU_PI"
 interm_break_state = true
 
