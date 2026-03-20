@@ -737,6 +737,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "QU"
+left = "EB"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
 left = "CM"
 right = "QU_PF"
 
@@ -1534,7 +1540,7 @@ break_state = false
 
 [[rules]]
 # LB22
-left = [ "Any", "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25" ]
+left = [ "Any", "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_IS_LB25" ]
 right = [ "IN", "IN_EastAsian" ]
 break_state = false
 
