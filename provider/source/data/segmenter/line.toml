@@ -724,8 +724,14 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "AL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
+left = "AL_DottedCircle"
 right = "QU_PF"
 
 [[tables]]
@@ -750,6 +756,12 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "GL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
+left = "IS"
 right = "QU_PF"
 
 [[tables]]
@@ -1173,6 +1185,12 @@ right = "VI"
 [[tables]]
 # LB28a
 name = "AK_VI"
+left = "AL_DottedCircle_LB28A"
+right = "VI"
+
+[[tables]]
+# LB28a
+name = "AK_VI"
 left = "AS"
 right = "VI"
 
@@ -1298,7 +1316,7 @@ break_state = false
 
 [[rules]]
 # LB7
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "NU_SY_CP_LB25" ]
 right = [ "ZW" ]
 break_state = false
 
@@ -1549,7 +1567,7 @@ break_state = false
 # (LB1 AL = AI, AL, SA or XX)
 # (LB1 CM = SA_MC_MN)
 # (LB10 AL = CM)
-left = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "XX", "XX_ExtPict", "HL", "CM", "CM_EastAsian", "SA_MC_MN", "ZWJ" ]
+left = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "XX", "XX_ExtPict", "HL", "CM", "CM_EastAsian", "SA_MC_MN", "ZWJ", "AL_DottedCircle_LB28A" ]
 right = [ "NU" ]
 break_state = false
 
