@@ -401,8 +401,6 @@ fn generate_rule_break_data(
 
                 "line" => {
                     if p.name == "ID_CN"
-                        || p.name == "PO_EastAsian"
-                        || p.name == "PR_EAW"
                         || p.name == "QU_PI"
                         || p.name == "QU_PF"
                         || p.name == "SA_MC_MN"
@@ -419,6 +417,8 @@ fn generate_rule_break_data(
                         || p.name == "IN_EastAsian"
                         || p.name == "NS_EastAsian"
                         || p.name == "OP_EastAsian"
+                        || p.name == "PO_EastAsian"
+                        || p.name == "PR_EastAsian"
                         || p.name == "XX_ExtPict"
                     {
                         for i in 0..(CODEPOINT_TABLE_LEN as u32) {
@@ -451,16 +451,8 @@ fn generate_rule_break_data(
 
                                 LineBreak::PrefixNumeric => {
                                     // For CSS
-                                    if p.name == "PR_EAW" && is_cjk_fullwidth(eaw, i) {
+                                    if p.name == "PR_EastAsian" && is_east_asian(eaw, i) {
                                         properties_map[i as usize] = property_index;
-                                    }
-                                    if p.name == "PR_EAW" {
-                                        if is_half_wide(eaw, i) {
-                                            println!("PR HALF {:?}", i);
-                                        }
-                                        if is_ambiguous(eaw, i) {
-                                            println!("PR AMB {:?}", i);
-                                        }
                                     }
                                 }
 

@@ -123,7 +123,7 @@ const PO_EASTASIAN: u8 = 51;
 #[allow(dead_code)]
 const PR: u8 = 52;
 #[allow(dead_code)]
-const PR_EAW: u8 = 53;
+const PR_EASTASIAN: u8 = 53;
 #[allow(dead_code)]
 const QU: u8 = 54;
 #[allow(dead_code)]
@@ -759,6 +759,7 @@ impl RuleBreakData<'_> {
 
 #[inline]
 fn is_break_utf32_by_loose(
+    left_codepoint: u32,
     right_codepoint: u32,
     left_prop: u8,
     right_prop: u8,
@@ -827,9 +828,19 @@ fn is_break_utf32_by_loose(
     }
     // breaks after prefixes:
     // Characters with the Unicode Line Break property PR and the East Asian Width property
-    if left_prop == PR_EAW {
+    if left_prop == PR_EASTASIAN && left_codepoint != 0x20a9 {
         return Some(ja_zh);
+    } else if left_prop == PR {
+        // Ambiguous characters should be CJK
+        if left_codepoint == 0x00a4
+            || left_codepoint == 0x00b1
+            || left_codepoint == 0x20ac
+            || left_codepoint == 0x2116
+        {
+            return Some(ja_zh);
+        }
     }
+
     None
 }
 
@@ -1017,6 +1028,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 }
                 LineBreakStrictness::Loose => {
                     if let Some(breakable) = is_break_utf32_by_loose(
+                        left_codepoint.into(),
                         right_codepoint.into(),
                         left_prop,
                         right_prop,
