@@ -119,7 +119,7 @@ const OP_EASTASIAN: u8 = 49;
 #[allow(dead_code)]
 const PO: u8 = 50;
 #[allow(dead_code)]
-const PO_EAW: u8 = 51;
+const PO_EASTASIAN: u8 = 51;
 #[allow(dead_code)]
 const PR: u8 = 52;
 #[allow(dead_code)]
@@ -810,8 +810,20 @@ fn is_break_utf32_by_loose(
 
     // breaks before suffixes:
     // Characters with the Unicode Line Break property PO and the East Asian Width property
-    if right_prop == PO_EAW {
+    if right_prop == PO_EASTASIAN {
         return Some(ja_zh);
+    } else if right_prop == PO {
+        // Ambiguous characters should be CJK
+        if right_codepoint == 0x00B0
+            || right_codepoint == 0x2030
+            || right_codepoint == 0x2032
+            || right_codepoint == 0x2033
+            || right_codepoint == 0x2035
+            || right_codepoint == 0x2103
+            || right_codepoint == 0x2109
+        {
+            return Some(ja_zh);
+        }
     }
     // breaks after prefixes:
     // Characters with the Unicode Line Break property PR and the East Asian Width property

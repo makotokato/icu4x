@@ -206,6 +206,21 @@ fn generate_rule_break_data(
         )
     }
 
+    fn is_wide(eaw: CodePointMapDataBorrowed<EastAsianWidth>, codepoint: u32) -> bool {
+        matches!(
+            eaw.get32(codepoint),
+            EastAsianWidth::Fullwidth | EastAsianWidth::Wide
+        )
+    }
+
+    fn is_half_wide(eaw: CodePointMapDataBorrowed<EastAsianWidth>, codepoint: u32) -> bool {
+        matches!(eaw.get32(codepoint), EastAsianWidth::Halfwidth)
+    }
+
+    fn is_ambiguous(eaw: CodePointMapDataBorrowed<EastAsianWidth>, codepoint: u32) -> bool {
+        matches!(eaw.get32(codepoint), EastAsianWidth::Ambiguous)
+    }
+
     // As of Unicode 14.0.0, the break property and the largest codepoint defined in UCD are
     // summarized in the following list. See details in the property txt in
     // https://www.unicode.org/Public/14.0.0/ucd/
@@ -386,7 +401,7 @@ fn generate_rule_break_data(
 
                 "line" => {
                     if p.name == "ID_CN"
-                        || p.name == "PO_EAW"
+                        || p.name == "PO_EastAsian"
                         || p.name == "PR_EAW"
                         || p.name == "QU_PI"
                         || p.name == "QU_PF"
@@ -429,8 +444,7 @@ fn generate_rule_break_data(
                                 }
 
                                 LineBreak::PostfixNumeric => {
-                                    // For CSS
-                                    if p.name == "PO_EAW" && is_cjk_fullwidth(eaw, i) {
+                                    if p.name == "PO_EastAsian" && is_east_asian(eaw, i) {
                                         properties_map[i as usize] = property_index;
                                     }
                                 }
@@ -439,6 +453,14 @@ fn generate_rule_break_data(
                                     // For CSS
                                     if p.name == "PR_EAW" && is_cjk_fullwidth(eaw, i) {
                                         properties_map[i as usize] = property_index;
+                                    }
+                                    if p.name == "PR_EAW" {
+                                        if is_half_wide(eaw, i) {
+                                            println!("PR HALF {:?}", i);
+                                        }
+                                        if is_ambiguous(eaw, i) {
+                                            println!("PR AMB {:?}", i);
+                                        }
                                     }
                                 }
 
