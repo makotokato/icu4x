@@ -311,11 +311,11 @@ name = "QU"
 left = "AL"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "AL_EastAsian"
-right = "QU_PI"
+#name = "QU"
+#left = "AL_EastAsian"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -749,6 +749,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "QU"
+left = "JV"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
 left = "NS"
 right = "QU_PF"
 
@@ -762,6 +768,11 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "XX"
+right = "QU_PF"
+
+[[tables]]
+name = "QU"
+left = "EastAsian_QU"
 right = "QU_PF"
 
 # End of the X(Not EA) QU_PF → QU transitions.
@@ -1414,7 +1425,7 @@ break_state = false
 [[rules]]
 # LB19a
 left = [ "QU_PF", "QU_PI", "QU", "EastAsian_QU" ]
-right = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "AK", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JL", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EastAsian", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
+right = [ "AI", "AL", "AL_DottedCircle", "AP", "AS", "AK", "B2", "BA", "BB", "CB", "CL", "CM", "EB", "EX", "GL", "HL", "HH", "HY", "ID", "ID_CN", "IN", "JT", "JV", "NS", "NU", "OP", "PO", "PO_EastAsian", "PR", "RI", "VF", "VI", "XX", "XX_ExtPict" ]
 break_state = false
 
 [[rules]]
@@ -1433,6 +1444,12 @@ break_state = false
 # LB19a (sot QU x)
 left = [ "SOT_QU_PF", "SOT_QU_PI" ]
 right = [ "Any" ]
+break_state = false
+
+[[rules]]
+# LB13 and LB19a
+left = [ "EastAsian_QU" ]
+right = [ "CL", "CP", "EX", "SY" ]
 break_state = false
 
 [[rules]]
