@@ -359,12 +359,6 @@ name = "QU"
 left = "CB"
 right = "QU_PI"
 
-#[[tables]]
-# LB15a
-#name = "QU"
-#left = "CJ"
-#right = "QU_PI"
-
 [[tables]]
 # LB15a
 name = "QU"
@@ -374,19 +368,7 @@ right = "QU_PI"
 [[tables]]
 # LB15a
 name = "QU"
-left = "CL_EastAsian"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
 left = "CM"
-right = "QU_PI"
-
-[[tables]]
-# LB15a
-name = "QU"
-left = "CM_EastAsian"
 right = "QU_PI"
 
 [[tables]]
@@ -406,12 +388,6 @@ right = "QU_PI"
 name = "QU"
 left = "EB"
 right = "QU_PI"
-
-#[[tables]]
-# LB15a
-#name = "QU"
-#left = "EB_EastAsian"
-#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -478,12 +454,6 @@ right = "QU_PI"
 name = "QU"
 left = "PO"
 right = "QU_PI"
-
-#[[tables]]
-# LB15a
-#name = "QU"
-#left = "PO_EAW"
-#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -562,7 +532,7 @@ right = "QU_PI"
 name = "QU"
 left = "RI_RI"
 right = "QU_PI"
-# End of the X QU_PI → QU transitions.
+# End of the X(Not EA) QU_PI → QU transitions.
 
 [[tables]]
 # LB15a
@@ -656,6 +626,13 @@ interm_break_state = true
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "CL_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "CJ"
 right = "QU_PI"
 interm_break_state = true
@@ -730,6 +707,8 @@ left = "PR_EastAsian"
 right = "QU_PI"
 interm_break_state = true
 
+# Start of the X(Not EA) QU_PF → QU transitions.
+
 [[tables]]
 #LB19a
 name = "SOT_QU_PF"
@@ -740,6 +719,18 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "AL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "AS"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "CM"
 right = "QU_PF"
 
 [[tables]]
@@ -759,6 +750,14 @@ right = "QU_PF"
 name = "QU"
 left = "VI"
 right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
+left = "XX"
+right = "QU_PF"
+
+# End of the X(Not EA) QU_PF → QU transitions.
 
 #[[tables]]
 # LB20a
