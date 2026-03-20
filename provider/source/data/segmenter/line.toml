@@ -780,6 +780,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "QU"
+left = "NS"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
 left = "VI"
 right = "QU_PF"
 
