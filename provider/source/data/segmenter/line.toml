@@ -736,7 +736,7 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "AS"
 right = "QU_PF"
 
@@ -761,6 +761,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_PF"
+left = "ID"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "IS"
 right = "QU_PF"
 
@@ -778,7 +784,13 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
+left = "OP"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "NU"
 right = "QU_PF"
 
@@ -790,7 +802,7 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "XX"
 right = "QU_PF"
 
