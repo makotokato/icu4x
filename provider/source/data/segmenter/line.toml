@@ -293,11 +293,11 @@ name = "QU"
 left = "AI"
 right = "QU_PI"
 
-[[tables]]
+#[[tables]]
 # LB15a
-name = "QU"
-left = "AI_EastAsian"
-right = "QU_PI"
+#name = "QU"
+#left = "AI_EastAsian"
+#right = "QU_PI"
 
 [[tables]]
 # LB15a
@@ -612,6 +612,13 @@ right = "SP"
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "AI_EastAsian"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "AL_EastAsian"
 right = "QU_PI"
 interm_break_state = true
@@ -743,6 +750,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_PF"
+left = "B2"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "BA"
 right = "QU_PF"
 
@@ -768,6 +781,12 @@ right = "QU_PF"
 #LB19a
 name = "QU"
 left = "GL"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
+left = "HH"
 right = "QU_PF"
 
 [[tables]]
@@ -1122,6 +1141,11 @@ name = "NU_SY_CL_LB25"
 left = "NU_IS_LB25"
 right = "CL_EastAsian"
 
+[[table]]
+name = "NU_SY_CL_LB25"
+left = "NU_IS_LB25"
+right = "SY"
+
 [[tables]]
 # LB25
 name = "NU_SY_CL_LB25"
@@ -1400,7 +1424,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A" ]
+left = [ "Any", "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_LB25" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
