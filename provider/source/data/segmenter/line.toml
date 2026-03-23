@@ -937,19 +937,19 @@ name = "SOT_HY_LB20A"
 left = "OP_SP"
 right = "HY"
 
-[[tables]]
+#[[tables]]
 #LB20a
-name = "ZW_HY_LB20A"
-left = "ZW"
-right = "HY"
-interm_break_state = true
+#name = "ZW_HY_LB20A"
+#left = "ZW"
+#right = "HY"
+#interm_break_state = true
 
-[[tables]]
+#[[tables]]
 #LB20a
-name = "ZW_HY_LB20A"
-left = "ZW"
-right = "HH"
-interm_break_state = true
+#name = "ZW_HY_LB20A"
+#left = "ZW"
+#right = "HH"
+#interm_break_state = true
 
 [[tables]]
 #LB20a
@@ -1533,7 +1533,7 @@ break_state = true
 [[rules]]
 # LB20a
 # (LB1 AL = AI, AL, SA or XX)
-left = [ "GL_HY_LB20A", "SP_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A", "ZW_HY_LB20A" ]
+left = [ "GL_HY_LB20A", "SP_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "XX", "XX_ExtPict", "SA" ]
 break_state = false
 

@@ -1081,8 +1081,8 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     return result;
                 }
 
-                if (left_prop == CB) && (right_prop == HY || right_prop == HH) {
-                    // LB20a (CB / (HY | HH) x (AL | HL))
+                if (left_prop == CB || left_prop == ZW) && (right_prop == HY || right_prop == HH) {
+                    // LB20a ((CB | ZW) / (HY | HH) x (AL | HL))
                     if let Some((_, next_char)) = self.peek_iter() {
                         let next_prop = self.get_linebreak_property(next_char);
                         if next_prop == AL
