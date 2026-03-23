@@ -96,6 +96,7 @@ name = "GL"
 name = "GL_EastAsian"
 
 [[tables]]
+# All H2 is EastAsain
 name = "H2"
 
 [[tables]]
@@ -682,6 +683,13 @@ interm_break_state = true
 [[tables]]
 # LB19a
 name = "EastAsian_QU"
+left = "H3"
+right = "QU_PI"
+interm_break_state = true
+
+[[tables]]
+# LB19a
+name = "EastAsian_QU"
 left = "ID_EastAsian"
 right = "QU_PI"
 interm_break_state = true
@@ -720,6 +728,16 @@ name = "EastAsian_QU"
 left = "PR_EastAsian"
 right = "QU_PI"
 interm_break_state = true
+
+[[tables]]
+name = "EastAsian_QU"
+left = "EastAsian_QU"
+right = "CM"
+
+[[tables]]
+name = "EastAsian_QU"
+left = "EastAsian_QU"
+right = "CM_EastAsian"
 
 # Start of the X(Not EA) QU_PF → QU transitions.
 
@@ -1394,7 +1412,7 @@ break_state = false
 
 [[rules]]
 # LB11
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "EastAsian_QU" ]
 right = [ "WJ" ]
 break_state = false
 
@@ -1612,7 +1630,7 @@ break_state = false
 
 [[rules]]
 # LB22
-left = [ "Any", "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_IS_LB25" ]
+left = [ "Any", "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_CL_LB25" ]
 right = [ "IN", "IN_EastAsian" ]
 break_state = false
 
