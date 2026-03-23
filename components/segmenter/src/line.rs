@@ -1071,6 +1071,15 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         }
                     }
                 }
+
+                if (left_prop == CR || left_prop == BK) && right_prop == QU_PF {
+                    // LB19a (CR / QU (PF) x Any)
+                    let result = self.get_current_position();
+                    if self.peek_iter().is_some() {
+                        self.advance_iter();
+                    }
+                    return result;
+                }
             }
 
             // If break_state is equals or grater than 0, it is alias of property.
