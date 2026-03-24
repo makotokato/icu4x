@@ -929,6 +929,12 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
+name = "QU"
+left = "WJ"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
 name = "SOT_QU_PF"
 left = "XX"
 right = "QU_PF"

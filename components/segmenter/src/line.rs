@@ -1283,8 +1283,6 @@ impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
                 || property == SP
                 || property == ZW
                 || property == CB
-                || property == GL
-                || property == GL_EASTASIAN
         } else {
             self.get_current_position().unwrap_or(0) == 0
         }
