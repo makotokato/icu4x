@@ -1465,7 +1465,7 @@ break_state = false
 
 [[rules]]
 # LB6 - Any x [BK | CR | LF | NL]
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_IS_LB25" ]
 right = [ "BK", "CR", "LF", "NL" ]
 break_state = false
 
@@ -1543,7 +1543,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25" ]
+left = [ "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "AL_DottedCircle_LB28A" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
@@ -1714,7 +1714,7 @@ break_state = false
 
 [[rules]]
 # LB21 - Any x (BA | HH | HY | NS)
-left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_LB25", "GL_HY_LB20A" ]
+left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_LB25", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25" ]
 right = [ "BA", "BA_EastAsian", "HH", "HY", "CJ", "NS", "NS_EastAsian" ] # NS = CJ or NS
 break_state = false
 
@@ -1792,11 +1792,17 @@ right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "
 break_state = false
 
 [[rules]]
-# LB24
+# LB24 - (AL | HL) x (PR | PO)
 # (LB1 AL = AI, AL, SA or XX)
 # (LB1 CM = SA_MC_MN)
 # (LB10 AL = CM)
 left = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "SA_MC_MN", "XX", "XX_ExtPict", "HL", "CM", "CM_EastAsian", "ZWJ" ]
+right = [ "PR", "PR_EastAsian", "PO", "PO_EastAsian" ]
+break_state = false
+
+[[rules]]
+# LB24 - (AL | HL) x (PR | PO)
+left = [ "AL_DottedCircle_LB28A" ]
 right = [ "PR", "PR_EastAsian", "PO", "PO_EastAsian" ]
 break_state = false
 
