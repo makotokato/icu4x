@@ -964,6 +964,15 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         BreakState::Index(index) => index,
                         _ => left_prop,
                     }
+                } else if left_prop == QU_PF {
+                    // LB19a ... CR / QU (PF) x Any
+                    left_prop = match self
+                        .data
+                        .get_break_state_from_table(self.data.sot_property, left_prop)
+                    {
+                        BreakState::Index(index) => index,
+                        _ => left_prop,
+                    }
                 }
             }
             possible_lb20a = false;

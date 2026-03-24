@@ -809,19 +809,19 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "EB"
 right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "EX"
 right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "GL"
 right = "QU_PF"
 
@@ -875,13 +875,13 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "JV"
 right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "NS"
 right = "QU_PF"
 
@@ -935,7 +935,13 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
+left = "VF"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "VI"
 right = "QU_PF"
 
@@ -949,6 +955,12 @@ right = "QU_PF"
 #LB19a
 name = "SOT_QU_PF"
 left = "XX"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
+left = "XX_ExtPict"
 right = "QU_PF"
 
 [[tables]]
@@ -1407,6 +1419,12 @@ right = "AK"
 # LB28a
 name = "AL_DottedCircle_LB28A"
 left = "AL_DottedCircle"
+right = "AL_DottedCircle"
+
+[[tables]]
+# LB28a
+name = "AL_DottedCircle_LB28A"
+left = "AL_DottedCircle_LB28A"
 right = "AL_DottedCircle"
 
 [[tables]]
