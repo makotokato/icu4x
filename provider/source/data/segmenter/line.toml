@@ -816,6 +816,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "QU"
+left = "EX"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "QU"
 left = "GL"
 right = "QU_PF"
 
@@ -906,6 +912,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_PF"
+left = "SOT_QU_PF"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "PR"
 right = "QU_PF"
 
@@ -929,7 +941,7 @@ right = "QU_PF"
 
 [[tables]]
 #LB19a
-name = "QU"
+name = "SOT_QU_PF"
 left = "WJ"
 right = "QU_PF"
 
@@ -1088,7 +1100,7 @@ right = "HY"
 
 [[tables]]
 #LB20a
-name = "GL_HY_LB20A"
+name = "GL_HH_LB20A"
 left = "GL"
 right = "HH"
 
@@ -1100,7 +1112,7 @@ right = "HY"
 
 [[tables]]
 #LB20a
-name = "GL_HY_LB20A"
+name = "GL_HH_LB20A"
 left = "GL_EastAsian"
 right = "HH"
 
@@ -1434,14 +1446,14 @@ left = "RI"
 right = "RI"
 
 [[rules]]
-# LB3
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+# LB3 - Any / eot
+left = [ "Any" ]
 right = [ "eot" ]
 break_state = true
 
 [[rules]]
-# LB3
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_LB15B", "QU_LB15B", "RI_RI", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25" ]
+# LB3 - Any / eot
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_LB15B", "QU_LB15B", "RI_RI", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "GL_HH_LB20A", "GL_HY_LB20A" ]
 right = [ "eot" ]
 break_state = true
 
@@ -1471,7 +1483,7 @@ break_state = false
 
 [[rules]]
 # LB6 - Any x [BK | CR | LF | NL]
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_IS_LB25" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "GL_HH_LB20A", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_IS_LB25" ]
 right = [ "BK", "CR", "LF", "NL" ]
 break_state = false
 
@@ -1483,13 +1495,13 @@ break_state = false
 
 [[rules]]
 # LB7 - Any x SP
-left = [ "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "GL_HY_LB20A" ]
+left = [ "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A" ]
 right = [ "SP" ]
 break_state = false
 
 [[rules]]
 # LB7 - Any x ZW
-left = [ "B2_SP", "CL_CP_SP", "OP_SP", "QU_SP_LB15A", "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_SY_LB25" ]
+left = [ "B2_SP", "CL_CP_SP", "OP_SP", "QU_SP_LB15A", "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_SY_LB25" ]
 right = [ "ZW" ]
 break_state = false
 
@@ -1549,7 +1561,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "AL_DottedCircle_LB28A" ]
+left = [ "RI_RI", "SOT_HY_LB20A", "SOT_HH_LB20A", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "AL_DottedCircle_LB28A" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
@@ -1585,7 +1597,7 @@ break_state = false
 
 [[rules]]
 # LB15d - x IS
-left = [ "SOT_HY_LB20A", "SOT_HH_LB20A", "RI_RI", "B2_SP", "CL_CP_SP", "NU_SY_CP_LB25", "GL_HY_LB20A", "AL_DottedCircle_LB28A", "EastAsian_QU", "AK_VI" ]
+left = [ "SOT_HY_LB20A", "SOT_HH_LB20A", "RI_RI", "B2_SP", "CL_CP_SP", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_LB28A", "EastAsian_QU", "AK_VI" ]
 right = [ "IS" ]
 break_state = false
 
@@ -1675,21 +1687,27 @@ right = [ "Any" ]
 break_state = false
 
 [[rules]]
-# LB20
+# LB20 - Any / CB
+left = [ "Any" ]
+right = [ "CB" ]
+break_state = true
+
+[[rules]]
+# LB20 - Any / CB
+left = [ "HL_HY", "NU_SY_LB25", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "GL_HH_LB20A", "GL_HY_LB20A" ]
+right = [ "CB" ]
+break_state = true
+
+[[rules]]
+# LB20 - CB / Any
 left = [ "CB" ]
 right = [ "Any" ]
 break_state = true
 
 [[rules]]
-# LB20
-left = [ "Any", "HL_HY", "NU_SY_LB25", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
-right = [ "CB" ]
-break_state = true
-
-[[rules]]
 # LB20a
 # (LB1 AL = AI, AL, SA or XX)
-left = [ "GL_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A" ]
+left = [ "GL_HY_LB20A", "SOT_HH_LB20A", "SOT_HY_LB20A", "GL_HH_LB20A" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "XX", "XX_ExtPict", "SA" ]
 break_state = false
 
@@ -1702,15 +1720,15 @@ break_state = false
 
 [[rules]]
 # LB20a isn't matched, but LB19/LB25
-left = [ "GL_HY_LB20A" ]
-right = [ "NU", "QU_PF", "QU" ]
+left = [ "GL_HY_LB20A", "GL_HH_LB20A" ]
+right = [ "QU_PF", "QU" ]
 break_state = false
 
-[[rules]]
+#[[rules]]
 # LB20a isn't matched
-left = [ "GL_HY_LB20A" ]
-right = [ "Any" ]
-break_state = true
+#left = [ "GL_HY_LB20A" ]
+#right = [ "Any" ]
+#break_state = true
 
 [[rules]]
 # LB21 - Any x (BA | HH | HY | NS)
@@ -1843,6 +1861,12 @@ right = [ "NU" ]
 break_state = false
 
 [[rules]]
+# LB25 - HY x NU
+left = [ "GL_HY_LB20A" ]
+right = [ "NU" ]
+break_state = false
+
+[[rules]]
 # LB25 isn't matched
 left = [ "NU_SY_LB25" ]
 right = [ "Any" ]
@@ -1966,13 +1990,7 @@ break_state = false
 
 [[rules]]
 # LB31
-left = [ "AL_DottedCircle_LB28A" ]
-right = [ "Any" ]
-break_state = true
-
-[[rules]]
-# LB31
-left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_SY_CL_LB25" ]
+left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_SY_CL_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_LB28A" ]
 right = [ "Any" ]
 break_state = true
 
