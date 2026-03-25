@@ -1530,39 +1530,39 @@ right = [ "SP", "ZW" ]
 break_state = false
 
 [[rules]]
-# LB7 - Any x SP
-left = [ "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A" ]
-right = [ "SP" ]
+# LB7 - Any x [SP | ZW]
+left = [ "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_LB28A" ]
+right = [ "SP", "ZW" ]
 break_state = false
 
 [[rules]]
 # LB7 - Any x ZW
-left = [ "B2_SP", "CL_CP_SP", "OP_SP", "QU_SP_LB15A", "HL_HY", "RI_RI", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_SY_LB25" ]
+left = [ "B2_SP", "CL_CP_SP", "OP_SP", "QU_SP_LB15A" ]
 right = [ "ZW" ]
 break_state = false
 
 [[rules]]
-# LB8
+# LB8 - ZW SP* x Any
 left = [ "ZW" ]
 right = [ "Any" ]
 break_state = true
 
 [[rules]]
-# LB11
-left = [ "WJ" ]
-right = [ "Any" ]
-break_state = false
-
-[[rules]]
-# LB11
+# LB11 - Any x WJ
 left = [ "Any" ]
 right = [ "WJ" ]
 break_state = false
 
 [[rules]]
-# LB11
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+# LB11 - Any x WJ
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A", "AL_DottedCircle_LB28A", "GL_HY_LB20A", "GL_HH_LB20A" ]
 right = [ "WJ" ]
+break_state = false
+
+[[rules]]
+# LB11 - WJ x Any
+left = [ "WJ" ]
+right = [ "Any" ]
 break_state = false
 
 [[rules]]
