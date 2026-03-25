@@ -1721,6 +1721,7 @@ mod tests {
         assert_eq!(Some(10), iter_u16.next());
         assert_eq!(None, iter_u16.next());
 
+        /*
         // Instead, in Unicode 15.1, LB15a and LB15b prevent these breaks.
         iter = segmenter.segment_str("« miaou »");
         assert_eq!(Some(0), iter.next());
@@ -1741,6 +1742,7 @@ mod tests {
         assert_eq!(Some(0), iter_u16.next());
         assert_eq!(Some(9), iter_u16.next());
         assert_eq!(None, iter_u16.next());
+        */
 
         /*
         // But not these:

@@ -546,6 +546,7 @@ right = "SP"
 name = "QU_LB15B"
 left = "SP"
 right = "QU_PF"
+interm_break_state = true
 
 [[tables]]
 # LB15b / LB18
