@@ -906,6 +906,12 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_PF"
+left = "QU"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_PF"
 left = "QU_PF"
 right = "QU_PF"
 
@@ -1537,37 +1543,43 @@ break_state = false
 
 [[rules]]
 # LB11
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+left = [ "Any" ]
 right = [ "WJ" ]
 break_state = false
 
 [[rules]]
 # LB11
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
 right = [ "WJ" ]
 break_state = false
 
 [[rules]]
-# LB12
+# LB12 - GL x Any
 left = [ "GL", "GL_EastAsian" ]
 right = [ "Any" ]
 break_state = false
 
 [[rules]]
-# LB12a
-left = [ "HL_HY", "OP_SP", "RI_RI", "AK_VI", "NU_SY_CP_LB25" ]
-right = [ "GL", "GL_EastAsian" ]
-break_state = false
-
-[[rules]]
-# LB12a
-left = [ "B2_SP", "CL_CP_SP", "SP", "BA", "BA_EastAsian", "HY", "HH", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+# LB12a - [^SP BA HY HH] x GL
+left = [ "SP", "BA", "BA_EastAsian", "HH", "HY" ]
 right = [ "GL", "GL_EastAsian" ]
 break_state = true
 
 [[rules]]
-# LB12a
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+# LB12a - [^SP BA HY HH] x GL
+left = [ "B2_SP", "CL_CP_SP", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
+right = [ "GL", "GL_EastAsian" ]
+break_state = true
+
+[[rules]]
+# LB12a - [^SP BA HY HH] x GL
+left = [ "Any" ]
+right = [ "GL", "GL_EastAsian" ]
+break_state = false
+
+[[rules]]
+# LB12a - [^SP BA HY HH] x GL
+left = [ "RI_RI", "AK_VI", "NU_SY_CP_LB25", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH_LB20A" ]
 right = [ "GL", "GL_EastAsian" ]
 break_state = false
 
@@ -1756,7 +1768,7 @@ break_state = false
 
 [[rules]]
 # LB21 - Any x (BA | HH | HY | NS)
-left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_LB25", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25" ]
+left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_LB25", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25", "AL_DottedCircle_LB28A" ]
 right = [ "BA", "BA_EastAsian", "HH", "HY", "CJ", "NS", "NS_EastAsian" ] # NS = CJ or NS
 break_state = false
 
@@ -1773,7 +1785,7 @@ right = [ "HL" ]
 break_state = true
 
 [[rules]]
-# LB21a
+# LB21a - HL (HY | HH) x [^HL]
 left = [ "HL_HY" ]
 right = [ "Any" ]
 break_state = false
@@ -1792,12 +1804,12 @@ break_state = false
 
 [[rules]]
 # LB22 - x IN
-left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_CL_LB25", "AL_DottedCircle_LB28A" ]
+left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH_LB20A", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_CL_LB25", "AL_DottedCircle_LB28A", "GL_HH_LB20A" ]
 right = [ "IN", "IN_EastAsian" ]
 break_state = false
 
 [[rules]]
-# LB23
+# LB23 - (AL | HL) x NU 
 # (LB1 AL = AI, AL, SA or XX)
 # (LB1 CM = SA_MC_MN)
 # (LB10 AL = CM)
@@ -1806,7 +1818,7 @@ right = [ "NU" ]
 break_state = false
 
 [[rules]]
-# LB23
+# LB23 - NU x (AL | HL)
 # (LB1 AL = AI, AL, SA or XX)
 left = [ "NU" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "SA", "XX", "XX_ExtPict", "HL" ]
