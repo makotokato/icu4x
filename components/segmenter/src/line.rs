@@ -1081,13 +1081,56 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     }
                 }
 
-                if (left_prop == CR || left_prop == BK) && right_prop == QU_PF {
-                    // LB19a (CR / QU (PF) x Any)
+                // LB15a Any x QU_Pf ( SP | GL | WJ | CL | QU | CP | EX | IS | SY | BK | CR | LF | NL | ZW | eot )
+                // LB19a Any (x or /) QU x Any
+
+                if (left_prop == BK || left_prop == CR || left_prop == LF || left_prop == NL)
+                    && right_prop == QU_PF
+                {
+                    // LB19a  - (BK | CR | LF | NL) / QU(PF) x Any
                     let result = self.get_current_position();
                     if self.peek_iter().is_some() {
                         self.advance_iter();
                     }
                     return result;
+                }
+
+                if left_prop == SP && right_prop == QU_PF {
+                    // LB18 is after LB15a
+                    let result = self.get_current_position();
+                    if let Some((_, next_char)) = self.peek_iter() {
+                        let next_prop = self.get_linebreak_property(next_char);
+                        if next_prop != SP
+                            && next_prop != GL
+                            && next_prop != GL_EASTASIAN
+                            && next_prop != WJ
+                            && next_prop != CL
+                            && next_prop != CL_EASTASIAN
+                            && next_prop != QU
+                            && next_prop != QU_PI
+                            && next_prop != QU_PF
+                            && next_prop != CP
+                            && next_prop != EX
+                            && next_prop != EX_EASTASIAN
+                            && next_prop != IS
+                            && next_prop != SY
+                            && next_prop != BK
+                            && next_prop != CR
+                            && next_prop != LF
+                            && next_prop != NL
+                            && next_prop != ZW
+                        {
+                            // LB15a isn't matched.
+                            self.advance_iter();
+                            return result;
+                        }
+
+                        if next_prop == CM_EASTASIAN {
+                            panic!("Unexpected CM_EASTASIAN after SP QU_PF");
+                            self.advance_iter();
+                            return result;
+                        }
+                    }
                 }
 
                 if (left_prop == BK
