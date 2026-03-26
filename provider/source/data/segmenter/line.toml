@@ -417,7 +417,7 @@ right = "QU_PI"
 [[tables]]
 # LB15a
 name = "QU"
-left = "SOT_HY_LB20A"
+left = "SOT_HY"
 right = "QU_PI"
 
 [[tables]]
@@ -787,12 +787,6 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_Pf"
-left = "AL_DottedCircle_DottedCircle"
-right = "QU_PF"
-
-[[tables]]
-#LB19a
-name = "SOT_QU_Pf"
 left = "AS"
 right = "QU_PF"
 
@@ -860,12 +854,6 @@ right = "QU_PF"
 #LB19a
 name = "SOT_QU_Pf"
 left = "HL"
-right = "QU_PF"
-
-[[tables]]
-#LB19a
-name = "SOT_QU_Pf"
-left = "HL_HY"
 right = "QU_PF"
 
 [[tables]]
@@ -1003,7 +991,25 @@ right = "QU_PF"
 [[tables]]
 #LB19a
 name = "SOT_QU_Pf"
+left = "AL_DottedCircle_DottedCircle"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_Pf"
 left = "SOT_HH"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_Pf"
+left = "HL_HY"
+right = "QU_PF"
+
+[[tables]]
+#LB19a
+name = "SOT_QU_Pf"
+left = "SOT_HY"
 right = "QU_PF"
 
 [[tables]]
@@ -1085,7 +1091,7 @@ right = "QU_PF"
 
 [[tables]]
 #LB15a + LB20a
-name = "SOT_HY_LB20A"
+name = "SOT_HY"
 left = "QU_SP_LB15A"
 right = "HY"
 
@@ -1115,7 +1121,7 @@ right = "HH"
 
 [[tables]]
 #LB14/LB20a
-name = "SOT_HY_LB20A"
+name = "SOT_HY"
 left = "OP_SP"
 right = "HY"
 
@@ -1173,7 +1179,7 @@ right = "HH"
 
 [[tables]]
 #LB20a
-name = "SOT_HY_LB20A"
+name = "SOT_HY"
 left = "sot"
 right = "HY"
 
@@ -1514,7 +1520,7 @@ break_state = true
 
 [[rules]]
 # LB3 - Any / eot
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_Pf", "SP_QU_Pf", "RI_RI", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "SOT_HY_LB20A", "SOT_HH", "GL_HH_LB20A", "GL_HY_LB20A" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "CB_QU_Pf", "SP_QU_Pf", "RI_RI", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "SOT_HY", "SOT_HH", "GL_HH_LB20A", "GL_HY_LB20A" ]
 right = [ "eot" ]
 break_state = true
 
@@ -1544,13 +1550,13 @@ break_state = false
 
 [[rules]]
 # LB6 - Any x [BK | CR | LF | NL]
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "GL_HH_LB20A", "SOT_HY_LB20A", "SOT_HH", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_LB25" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "GL_HY_LB20A", "GL_HH_LB20A", "SOT_HY", "SOT_HH", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_LB25" ]
 right = [ "BK", "CR", "LF", "NL" ]
 break_state = false
 
 [[rules]]
 # LB7
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH" ]
+left = [ "Any", "SOT_HY", "SOT_HH" ]
 right = [ "SP", "ZW" ]
 break_state = false
 
@@ -1580,7 +1586,7 @@ break_state = false
 
 [[rules]]
 # LB11 - Any x WJ
-left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH", "AL_DottedCircle_DottedCircle", "GL_HY_LB20A", "GL_HH_LB20A" ]
+left = [ "B2_SP", "CL_CP_SP", "HL_HY", "OP_SP", "QU_SP_LB15A", "RI_RI", "AK_VI", "NU_SY_LB25", "SOT_HY", "SOT_HH", "AL_DottedCircle_DottedCircle", "GL_HY_LB20A", "GL_HH_LB20A" ]
 right = [ "WJ" ]
 break_state = false
 
@@ -1604,7 +1610,7 @@ break_state = true
 
 [[rules]]
 # LB12a - [^SP BA HY HH] x GL
-left = [ "B2_SP", "CL_CP_SP", "SOT_HY_LB20A", "SOT_HH" ]
+left = [ "B2_SP", "CL_CP_SP", "SOT_HY", "SOT_HH" ]
 right = [ "GL", "GL_EastAsian" ]
 break_state = true
 
@@ -1616,7 +1622,7 @@ break_state = false
 
 [[rules]]
 # LB12a - [^SP BA HY HH] x GL
-left = [ "RI_RI", "AK_VI", "NU_SY_CP_LB25", "NU_SY_LB25", "SOT_HY_LB20A", "SOT_HH", "NU_SY_CL_LB25" ]
+left = [ "RI_RI", "AK_VI", "NU_SY_CP_LB25", "NU_SY_LB25", "SOT_HY", "SOT_HH", "NU_SY_CL_LB25" ]
 right = [ "GL", "GL_EastAsian" ]
 break_state = false
 
@@ -1628,7 +1634,7 @@ break_state = false
 
 [[rules]]
 # LB13
-left = [ "RI_RI", "SOT_HY_LB20A", "SOT_HH", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "AL_DottedCircle_DottedCircle" ]
+left = [ "RI_RI", "SOT_HY", "SOT_HH", "B2_SP", "CL_CP_SP", "QU_SP_LB15A", "AK_VI", "NU_IS_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "NU_SY_LB25", "NU_SY_CL_LB25", "NU_SY_CP_LB25", "AL_DottedCircle_DottedCircle" ]
 right = [ "CL", "CL_EastAsian", "CP", "EX", "EX_EastAsian", "SY" ]
 break_state = false
 
@@ -1664,7 +1670,7 @@ break_state = false
 
 [[rules]]
 # LB15d - x IS
-left = [ "SOT_HY_LB20A", "SOT_HH", "RI_RI", "B2_SP", "CL_CP_SP", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_DottedCircle", "EastAsian_QU", "AK_VI" ]
+left = [ "SOT_HY", "SOT_HH", "RI_RI", "B2_SP", "CL_CP_SP", "NU_SY_CP_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_DottedCircle", "EastAsian_QU", "AK_VI" ]
 right = [ "IS" ]
 break_state = false
 
@@ -1694,7 +1700,7 @@ break_state = true
 
 [[rules]]
 # LB19
-left = [ "Any", "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH" ]
+left = [ "Any", "RI_RI", "AK_VI", "SOT_HY", "SOT_HH" ]
 right = [ "QU", "QU_PF" ]
 break_state = false
 
@@ -1712,7 +1718,7 @@ break_state = false
 
 [[rules]]
 # LB19 - x [QU - \p{Pi}]
-left = [ "Any", "SOT_HY_LB20A", "SOT_HH" ]
+left = [ "Any", "SOT_HY", "SOT_HH" ]
 right = [ "QU_PF" ]
 break_state = false
 
@@ -1724,7 +1730,7 @@ break_state = false
 
 [[rules]]
 # LB19a - [^$EastAsian] x QU
-left = [ "SOT_HH", "SOT_HY_LB20A", "NU_IS_LB25", "NU_SY_LB25" ]
+left = [ "SOT_HH", "SOT_HY", "NU_IS_LB25", "NU_SY_LB25" ]
 right = [ "QU_PI", "QU_PF", "QU" ]
 break_state = false
 
@@ -1761,7 +1767,7 @@ break_state = true
 
 [[rules]]
 # LB20 - Any / CB
-left = [ "HL_HY", "NU_SY_LB25", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH", "GL_HH_LB20A", "GL_HY_LB20A" ]
+left = [ "HL_HY", "NU_SY_LB25", "NU_IS_LB25", "SOT_HY", "SOT_HH", "GL_HH_LB20A", "GL_HY_LB20A" ]
 right = [ "CB" ]
 break_state = true
 
@@ -1774,7 +1780,7 @@ break_state = true
 [[rules]]
 # LB20a
 # (LB1 AL = AI, AL, SA or XX)
-left = [ "GL_HY_LB20A", "SOT_HH", "SOT_HY_LB20A", "GL_HH_LB20A" ]
+left = [ "GL_HY_LB20A", "SOT_HH", "SOT_HY", "GL_HH_LB20A" ]
 right = [ "AI", "AI_EastAsian", "AL", "AL_EastAsian", "AL_DottedCircle", "HL", "XX", "XX_ExtPict", "SA" ]
 break_state = false
 
@@ -1805,7 +1811,7 @@ break_state = false
 
 [[rules]]
 # LB21 - Any x (BA | HH | HY | NS)
-left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH", "NU_SY_LB25", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25", "AL_DottedCircle_DottedCircle", "GL_HH_LB20A" ]
+left = [ "RI_RI", "AK_VI", "SOT_HY", "SOT_HH", "NU_SY_LB25", "NU_IS_LB25", "GL_HY_LB20A", "NU_SY_CL_LB25", "AL_DottedCircle_DottedCircle", "GL_HH_LB20A" ]
 right = [ "BA", "BA_EastAsian", "HH", "HY", "CJ", "NS", "NS_EastAsian" ] # NS = CJ or NS
 break_state = false
 
@@ -1841,7 +1847,7 @@ break_state = false
 
 [[rules]]
 # LB22 - Any x IN
-left = [ "RI_RI", "AK_VI", "SOT_HY_LB20A", "SOT_HH", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_CL_LB25", "AL_DottedCircle_DottedCircle", "GL_HY_LB20A", "GL_HH_LB20A" ]
+left = [ "RI_RI", "AK_VI", "SOT_HY", "SOT_HH", "NU_SY_CP_LB25", "NU_IS_LB25", "NU_SY_CL_LB25", "AL_DottedCircle_DottedCircle", "GL_HY_LB20A", "GL_HH_LB20A" ]
 right = [ "IN", "IN_EastAsian" ]
 break_state = false
 
@@ -1905,7 +1911,7 @@ break_state = false
 
 [[rules]]
 # LB25
-left = [ "PO", "PO_EastAsian", "PR", "PR_EastAsian", "HY", "SOT_HY_LB20A", "IS", "NU", "NU_IS_LB25", "NU_SY_LB25", "PR_OP_LB25", "PR_OP_IS_LB25", "GL_HY_LB20A" ]
+left = [ "PO", "PO_EastAsian", "PR", "PR_EastAsian", "HY", "SOT_HY", "IS", "NU", "NU_IS_LB25", "NU_SY_LB25", "PR_OP_LB25", "PR_OP_IS_LB25", "GL_HY_LB20A" ]
 right = [ "NU" ]
 break_state = false
 
@@ -2057,7 +2063,7 @@ break_state = false
 
 [[rules]]
 # LB31
-left = [ "AK_VI", "NU_IS_LB25", "SOT_HY_LB20A", "SOT_HH", "NU_SY_CP_LB25", "NU_SY_CL_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_DottedCircle" ]
+left = [ "AK_VI", "NU_IS_LB25", "SOT_HY", "SOT_HH", "NU_SY_CP_LB25", "NU_SY_CL_LB25", "GL_HY_LB20A", "GL_HH_LB20A", "AL_DottedCircle_DottedCircle" ]
 right = [ "Any" ]
 break_state = true
 
