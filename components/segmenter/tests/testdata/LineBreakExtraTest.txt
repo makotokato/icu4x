@@ -15,3 +15,8 @@
 × AA02 ÷ 1192D × 200D × 0020 ÷ # [AS] [AK] [ZWJ] [SP]
 × FFFC × 2E09 × 0020 ÷ 2E08 ÷ # [CB] [QU] [SP] [QU]
 # × AA14 × 200D × A9A3 × 116C9 ÷ # [AS] [ZWJ] [AK] [NU]
+× 2E17 × 2E03 × 1F466 ÷ 1F3DD ÷ # [ZW] [HH] [QU] [EB] [ID]
+× 0020 × 2E0A × 309A × 300D ÷ # [SP] [QU] [CM] [CP]
+× 200B ÷ 2E0A × 1F3FD × 302E ÷ # [ZW] [QU] [EM] [CM]
+× 000D ÷ 201D × 302B × 1B1F8 ÷ 1F027 ÷ # [SP] [QU] [CM] [CP]
+

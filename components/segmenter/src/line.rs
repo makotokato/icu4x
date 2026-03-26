@@ -1095,7 +1095,13 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 {
                     // Apply LB15a
                     let result = self.get_current_position();
-                    if self.peek_iter().is_some() {
+                    if let Some((_, next_char)) = self.peek_iter() {
+                        let mut next_prop = self.get_linebreak_property(next_char);
+                        if next_prop == CM || next_prop == CM_EASTASIAN {
+                            self.advance_iter();
+                            self.skip_combining_mark();
+                            return result;
+                        }
                         self.advance_iter();
                     }
                     return result;
@@ -1136,6 +1142,8 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     }
                 }
 
+                // LB20a -> (BK | CR | LF | NL | SP | ZW | CB) / (HY | HH) x (AL | HL)
+
                 if (left_prop == BK
                     || left_prop == CB
                     || left_prop == CR
@@ -1145,7 +1153,6 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     || left_prop == ZW)
                     && (right_prop == HY || right_prop == HH)
                 {
-                    // LB20a -> (BK | CR | LF | NL | SP | ZW | CB) / (HY | HH) x (AL | HL)
                     if let Some((_, next_char)) = self.peek_iter() {
                         let next_prop = self.get_linebreak_property(next_char);
                         if next_prop == AL
@@ -1341,6 +1348,19 @@ impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
                 || property == CB
         } else {
             self.get_current_position().unwrap_or(0) == 0
+        }
+    }
+
+    fn skip_combining_mark(&mut self) {
+        if let Some(mut property) = self.get_current_linebreak_property() {
+            while property == CM || property == CM_EASTASIAN {
+                if let Some((_, codepoint)) = self.peek_iter() {
+                    self.advance_iter();
+                    property = self.get_linebreak_property(codepoint);
+                    continue;
+                }
+                return;
+            }
         }
     }
 
