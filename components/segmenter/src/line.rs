@@ -966,6 +966,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     }
                 } else if left_prop == QU_PF {
                     // LB19a ... CR / QU (PF) x Any
+                    /*
                     left_prop = match self
                         .data
                         .get_break_state_from_table(self.data.sot_property, left_prop)
@@ -973,6 +974,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         BreakState::Index(index) => index,
                         _ => left_prop,
                     }
+                    */
                 }
             }
             possible_lb20a = false;
@@ -1084,10 +1086,14 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 // LB15a Any x QU_Pf ( SP | GL | WJ | CL | QU | CP | EX | IS | SY | BK | CR | LF | NL | ZW | eot )
                 // LB19a Any (x or /) QU x Any
 
-                if (left_prop == BK || left_prop == CR || left_prop == LF || left_prop == NL)
+                if (left_prop == BK
+                    || left_prop == CR
+                    || left_prop == LF
+                    || left_prop == NL
+                    || left_prop == ZW)
                     && right_prop == QU_PF
                 {
-                    // LB19a  - (BK | CR | LF | NL) / QU(PF) x Any
+                    // Apply LB15a
                     let result = self.get_current_position();
                     if self.peek_iter().is_some() {
                         self.advance_iter();
@@ -1100,6 +1106,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     let result = self.get_current_position();
                     if let Some((_, next_char)) = self.peek_iter() {
                         let next_prop = self.get_linebreak_property(next_char);
+
                         if next_prop != SP
                             && next_prop != GL
                             && next_prop != GL_EASTASIAN
@@ -1119,14 +1126,10 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                             && next_prop != LF
                             && next_prop != NL
                             && next_prop != ZW
+                            && next_prop != CM
+                            && next_prop != CM_EASTASIAN
                         {
                             // LB15a isn't matched.
-                            self.advance_iter();
-                            return result;
-                        }
-
-                        if next_prop == CM_EASTASIAN {
-                            panic!("Unexpected CM_EASTASIAN after SP QU_PF");
                             self.advance_iter();
                             return result;
                         }
