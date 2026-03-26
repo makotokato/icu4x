@@ -1096,7 +1096,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     // Apply LB15a
                     let result = self.get_current_position();
                     if let Some((_, next_char)) = self.peek_iter() {
-                        let mut next_prop = self.get_linebreak_property(next_char);
+                        let next_prop = self.get_linebreak_property(next_char);
                         if next_prop == CM || next_prop == CM_EASTASIAN {
                             self.advance_iter();
                             self.skip_combining_mark();
@@ -1234,6 +1234,15 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         {
                             left_prop_pre_lb9 = prop;
                             continue;
+                        }
+
+                        if prop == QU_PF && left_prop_pre_lb9 == SP && index > ZWJ {
+                            // This might be combined property such OP SP* (LB14), but next is
+                            // QU_Pf, it might be LB18 and LB19a
+                            self.iter = previous_iter;
+                            self.current_pos_data = previous_pos_data;
+                            self.last_pos_data = None;
+                            continue 'a;
                         }
 
                         match self.data.get_break_state_from_table(index, prop) {
