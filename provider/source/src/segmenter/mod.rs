@@ -171,20 +171,11 @@ fn generate_rule_break_data(
         right_index: usize,
         break_state: BreakState,
     ) {
-        if left_index == 55 && right_index == 4 {
-            println!("break_state: QU_PF AL {:?}", break_state);
-        }
-        if left_index == 59 && right_index == 31 {
-            println!("break_state: HH {:?}", break_state);
-        }
         let index = left_index * property_length + right_index;
         if break_state_table[index].is_none()
             || break_state_table[index] == Some(BreakState::NoMatch)
         {
             break_state_table[index] = Some(break_state);
-        }
-        if left_index == 59 && right_index == 31 {
-            println!("after break_state: HH {:?}", break_state_table[index]);
         }
     }
 
@@ -582,10 +573,6 @@ fn generate_rule_break_data(
         }
     }
 
-    for n in properties_names.iter() {
-        println!("Property: {}", n);
-    }
-
     // sot and eot
     properties_names.push("sot".to_string());
     properties_names.push("eot".to_string());
@@ -676,11 +663,6 @@ fn generate_rule_break_data(
         }
     }
 
-    if segmenter.segmenter_type == "line" {
-        let index = 59 * properties_names.len() + 31;
-        println!("{:?} {:?}", index, break_state_table[index]);
-    }
-
     // State machine alias
     for p in &segmenter.tables {
         if let Some(left) = &p.left {
@@ -688,12 +670,6 @@ fn generate_rule_break_data(
                 let right_index = get_index_from_name(&properties_names, right).unwrap();
                 let left_index = get_index_from_name(&properties_names, left)
                     .expect("left property should be valid!");
-                if left_index == 59 && right_index == 31 {
-                    println!(
-                        "alias HH before {:?}",
-                        break_state_table[left_index * properties_names.len() + right_index]
-                    );
-                }
 
                 let index = properties_names.iter().position(|n| n.eq(&p.name)).unwrap();
                 break_state_table[left_index * properties_names.len() + right_index] =

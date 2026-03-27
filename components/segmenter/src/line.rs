@@ -1076,34 +1076,16 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 if left_prop == SP && right_prop == QU_PF {
                     // LB18 is after LB15a
                     let result = self.get_current_position();
-                    if let Some((_, next_char)) = self.peek_iter() {
-                        let next_prop = self.get_linebreak_property(next_char);
-
-                        if next_prop != SP
-                            && next_prop != GL
-                            && next_prop != GL_EASTASIAN
-                            && next_prop != WJ
-                            && next_prop != CL
-                            && next_prop != CL_EASTASIAN
-                            && next_prop != QU
-                            && next_prop != QU_PI
-                            && next_prop != QU_PF
-                            && next_prop != CP
-                            && next_prop != EX
-                            && next_prop != EX_EASTASIAN
-                            && next_prop != IS
-                            && next_prop != SY
-                            && next_prop != BK
-                            && next_prop != CR
-                            && next_prop != LF
-                            && next_prop != NL
-                            && next_prop != ZW
-                            && next_prop != CM
-                            && next_prop != CM_EASTASIAN
-                        {
-                            // LB15a isn't matched.
-                            self.advance_iter();
-                            return result;
+                    if let Some((_, next_char)) = self.peek_iter_until_no_combining_mark() {
+                        match self.get_linebreak_property(next_char) {
+                            SP | GL | GL_EASTASIAN | WJ | CL | CL_EASTASIAN | QU | QU_PI
+                            | QU_PF | CP | EX | EX_EASTASIAN | IS | SY | BK | CR | LF | NL | ZW => {
+                                ()
+                            }
+                            _ => {
+                                self.advance_iter();
+                                return result;
+                            }
                         }
                     }
                 }
@@ -1120,19 +1102,14 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     && (right_prop == HY || right_prop == HH)
                 {
                     if let Some((_, next_char)) = self.peek_iter_until_no_combining_mark() {
-                        let next_prop = self.get_linebreak_property(next_char);
-                        if next_prop == AL
-                            || next_prop == AL_EASTASIAN
-                            || next_prop == AL_DOTTED_CIRCLE
-                            || next_prop == HL
-                            || next_prop == AI
-                            || next_prop == AI_EASTASIAN
-                            || next_prop == XX
-                            || next_prop == XX_EXTPICT
-                        {
-                            let result = self.get_current_position();
-                            self.advance_iter();
-                            return result;
+                        match self.get_linebreak_property(next_char) {
+                            AL | AL_EASTASIAN | AL_DOTTED_CIRCLE | HL | AI | AI_EASTASIAN | XX
+                            | XX_EXTPICT => {
+                                let result = self.get_current_position();
+                                self.advance_iter();
+                                return result;
+                            }
+                            _ => (),
                         }
                     }
                 }
