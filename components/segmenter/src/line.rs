@@ -926,8 +926,6 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
         // position must be suppressed.
         let mut lb8a_after_lb9 = false;
 
-        let mut possible_lb20a = self.is_possible_lb20a();
-
         'a: loop {
             debug_assert!(!self.is_eof());
             let left_codepoint = self.get_current_codepoint()?;
@@ -951,7 +949,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         _ => left_prop,
                     }
                 }
-            } else if possible_lb20a {
+            } else if self.is_possible_lb20a() {
                 // LB20a hack. Example,
                 // LB18  ... SP /
                 // LB20a ... SP (HY | HH) x (AL | HL)
@@ -964,20 +962,8 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         BreakState::Index(index) => index,
                         _ => left_prop,
                     }
-                } else if left_prop == QU_PF {
-                    // LB19a ... CR / QU (PF) x Any
-                    /*
-                    left_prop = match self
-                        .data
-                        .get_break_state_from_table(self.data.sot_property, left_prop)
-                    {
-                        BreakState::Index(index) => index,
-                        _ => left_prop,
-                    }
-                    */
                 }
             }
-            possible_lb20a = false;
 
             self.advance_iter();
 
