@@ -955,6 +955,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                 // LB20a ... SP (HY | HH) x (AL | HL)
                 // This rules become SP / (HY | HH) x (AL | HL).
                 if left_prop == HY || left_prop == HH {
+                    /*
                     left_prop = match self
                         .data
                         .get_break_state_from_table(self.data.sot_property, left_prop)
@@ -962,6 +963,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                         BreakState::Index(index) => index,
                         _ => left_prop,
                     }
+                    */
                 }
             }
 
@@ -1139,14 +1141,20 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     || left_prop == ZW)
                     && (right_prop == HY || right_prop == HH)
                 {
-                    if let Some((_, next_char)) = self.peek_iter() {
+                    if let Some((_, next_char)) = self.peek_iter_until_no_combining_mark() {
                         let next_prop = self.get_linebreak_property(next_char);
                         if next_prop == AL
                             || next_prop == AL_EASTASIAN
                             || next_prop == AL_DOTTED_CIRCLE
                             || next_prop == HL
+                            || next_prop == AI
+                            || next_prop == AI_EASTASIAN
+                            || next_prop == XX
+                            || next_prop == XX_EXTPICT
                         {
-                            return self.get_current_position();
+                            let result = self.get_current_position();
+                            self.advance_iter();
+                            return result;
                         }
                     }
                 }
@@ -1295,6 +1303,17 @@ impl<Y: LineBreakType> LineBreakIterator<'_, '_, Y> {
 
     fn peek_iter(&self) -> Option<(usize, Y::CharType)> {
         self.iter.clone().next()
+    }
+
+    fn peek_iter_until_no_combining_mark(&self) -> Option<(usize, Y::CharType)> {
+        let mut iter = self.iter.clone();
+        loop {
+            let data = iter.next()?;
+            let property = self.get_linebreak_property(data.1);
+            if property != CM && property != CM_EASTASIAN {
+                return Some(data);
+            }
+        }
     }
 
     fn is_eof(&self) -> bool {
