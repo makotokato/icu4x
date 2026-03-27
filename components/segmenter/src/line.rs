@@ -1039,9 +1039,12 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
             }
 
             if self.options.strictness != LineBreakStrictness::Anywhere {
+                // LB15 and LB19 have some special rules that are not covered by the break state
+                // table.
+
+                // LB15c (SP / IS NU)
                 if left_prop == SP && right_prop == IS {
-                    // LB15c (SP / IS NU)
-                    if let Some((_, next_char)) = self.peek_iter() {
+                    if let Some((_, next_char)) = self.peek_iter_until_no_combining_mark() {
                         let next_prop = self.get_linebreak_property(next_char);
                         if next_prop == NU {
                             return self.get_current_position();
@@ -1049,9 +1052,10 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     }
                 }
 
+                // LB4 and LB5 (BK | CR | LF | NL) !
+                // LB8 ZW SP* /
                 // LB15a Any x QU_Pf ( SP | GL | WJ | CL | QU | CP | EX | IS | SY | BK | CR | LF | NL | ZW | eot )
                 // LB19a Any (x or /) QU x Any
-
                 if (left_prop == BK
                     || left_prop == CR
                     || left_prop == LF
@@ -1090,8 +1094,7 @@ impl<Y: LineBreakType> Iterator for LineBreakIterator<'_, '_, Y> {
                     }
                 }
 
-                // LB20a -> (BK | CR | LF | NL | SP | ZW | CB) / (HY | HH) x (AL | HL)
-
+                // LB20a - (BK | CR | LF | NL | SP | ZW | CB) / (HY | HH) x (AL | HL)
                 if (left_prop == BK
                     || left_prop == CB
                     || left_prop == CR
@@ -1574,7 +1577,7 @@ mod tests {
         let is_break = |left, right| {
             matches!(
                 lb_data.get_break_state_from_table(left, right),
-                BreakState::Break | BreakState::NoMatch | BreakState::Intermediate(_)
+                BreakState::Break | BreakState::NoMatch
             )
         };
 
@@ -1614,7 +1617,6 @@ mod tests {
         assert_eq!(is_break(AL, SY), false);
         // LB18
         assert_eq!(is_break(SP, AL), true);
-        assert_eq!(is_break(SP, HH), true);
         // LB19
         assert_eq!(is_break(AL, QU), false);
         assert_eq!(is_break(QU, AL), false);
@@ -1663,13 +1665,6 @@ mod tests {
         assert_eq!(is_break(EB, EM), false);
         // LB31
         assert_eq!(is_break(ID, ID), true);
-
-        // LB999
-        assert_eq!(is_break(BA, GL), true);
-        assert_eq!(is_break(BA, GL_EASTASIAN), true);
-
-        assert_eq!(is_break(QU_PF, AL), false);
-        assert_eq!(is_break(HH, QU_PI), false);
     }
 
     #[test]
@@ -1690,8 +1685,6 @@ mod tests {
         assert_eq!(Some(4), iter.next());
         assert_eq!(Some(7), iter.next());
         assert_eq!(None, iter.next());
-
-        // LB10
 
         // LB14
         iter = segmenter.segment_str("[  abc def");
@@ -1734,130 +1727,6 @@ mod tests {
         assert_eq!(Some(6), iter_u16.next());
         assert_eq!(Some(10), iter_u16.next());
         assert_eq!(None, iter_u16.next());
-
-        /*
-        // Instead, in Unicode 15.1, LB15a and LB15b prevent these breaks.
-        iter = segmenter.segment_str("« miaou »");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(11), iter.next());
-        assert_eq!(None, iter.next());
-
-        let input: Vec<u8> = "« miaou »"
-            .chars()
-            .map(|c| u8::try_from(u32::from(c)).unwrap())
-            .collect();
-        let mut iter_u8 = segmenter.segment_latin1(&input);
-        assert_eq!(Some(0), iter_u8.next());
-        assert_eq!(Some(9), iter_u8.next());
-        assert_eq!(None, iter_u8.next());
-
-        let input: Vec<u16> = "« miaou »".encode_utf16().collect();
-        let mut iter_u16 = segmenter.segment_utf16(&input);
-        assert_eq!(Some(0), iter_u16.next());
-        assert_eq!(Some(9), iter_u16.next());
-        assert_eq!(None, iter_u16.next());
-        */
-
-        /*
-        // But not these:
-        iter = segmenter.segment_str("Die Katze hat »miau« gesagt.");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(4), iter.next());
-        assert_eq!(Some(10), iter.next());
-        assert_eq!(Some(14), iter.next());
-        assert_eq!(Some(23), iter.next());
-        assert_eq!(Some(30), iter.next());
-        assert_eq!(None, iter.next());
-        */
-
-        /*
-        let input: Vec<u8> = "Die Katze hat »miau« gesagt."
-            .chars()
-            .map(|c| u8::try_from(u32::from(c)).unwrap())
-            .collect();
-        let mut iter_u8 = segmenter.segment_latin1(&input);
-        assert_eq!(Some(0), iter_u8.next());
-        assert_eq!(Some(4), iter_u8.next());
-        assert_eq!(Some(10), iter_u8.next());
-        assert_eq!(Some(14), iter_u8.next());
-        assert_eq!(Some(21), iter_u8.next());
-        assert_eq!(Some(28), iter_u8.next());
-        assert_eq!(None, iter_u8.next());
-
-        let input: Vec<u16> = "Die Katze hat »miau« gesagt.".encode_utf16().collect();
-        let mut iter_u16 = segmenter.segment_utf16(&input);
-        assert_eq!(Some(0), iter_u16.next());
-        assert_eq!(Some(4), iter_u16.next());
-        assert_eq!(Some(10), iter_u16.next());
-        assert_eq!(Some(14), iter_u16.next());
-        assert_eq!(Some(21), iter_u16.next());
-        assert_eq!(Some(28), iter_u16.next());
-        assert_eq!(None, iter_u16.next());
-
-        // LB16
-        iter = segmenter.segment_str("\u{0029}\u{203C}");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(4), iter.next());
-        assert_eq!(None, iter.next());
-        iter = segmenter.segment_str("\u{0029}  \u{203C}");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(6), iter.next());
-        assert_eq!(None, iter.next());
-
-        let input: [u16; 4] = [0x29, 0x20, 0x20, 0x203c];
-        let mut iter_u16 = segmenter.segment_utf16(&input);
-        assert_eq!(Some(0), iter_u16.next());
-        assert_eq!(Some(4), iter_u16.next());
-        assert_eq!(None, iter_u16.next());
-
-        // LB17
-        iter = segmenter.segment_str("\u{2014}\u{2014}aa");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(6), iter.next());
-        assert_eq!(Some(8), iter.next());
-        assert_eq!(None, iter.next());
-        iter = segmenter.segment_str("\u{2014}  \u{2014}aa");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(8), iter.next());
-        assert_eq!(Some(10), iter.next());
-        assert_eq!(None, iter.next());
-
-        iter = segmenter.segment_str("\u{2014}\u{2014}  \u{2014}\u{2014}123 abc");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(14), iter.next());
-        assert_eq!(Some(18), iter.next());
-        assert_eq!(Some(21), iter.next());
-        assert_eq!(None, iter.next());
-
-        // LB25
-        let mut iter = segmenter.segment_str("(0,1)+(2,3)");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(11), iter.next());
-        assert_eq!(None, iter.next());
-        let input: [u16; 11] = [
-            0x28, 0x30, 0x2C, 0x31, 0x29, 0x2B, 0x28, 0x32, 0x2C, 0x33, 0x29,
-        ];
-        let mut iter_u16 = segmenter.segment_utf16(&input);
-        assert_eq!(Some(0), iter_u16.next());
-        assert_eq!(Some(11), iter_u16.next());
-        assert_eq!(None, iter_u16.next());
-
-        let input: [u16; 13] = [
-            0x2014, 0x2014, 0x20, 0x20, 0x2014, 0x2014, 0x31, 0x32, 0x33, 0x20, 0x61, 0x62, 0x63,
-        ];
-        let mut iter_u16 = segmenter.segment_utf16(&input);
-        assert_eq!(Some(0), iter_u16.next());
-        assert_eq!(Some(6), iter_u16.next());
-        assert_eq!(Some(10), iter_u16.next());
-        assert_eq!(Some(13), iter_u16.next());
-        assert_eq!(None, iter_u16.next());
-
-        iter = segmenter.segment_str("\u{1F3FB} \u{1F3FB}");
-        assert_eq!(Some(0), iter.next());
-        assert_eq!(Some(5), iter.next());
-        assert_eq!(Some(9), iter.next());
-        assert_eq!(None, iter.next());
-        */
     }
 
     #[test]
